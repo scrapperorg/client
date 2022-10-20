@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { ThemeProvider } from '@mui/material';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import theme from 'styles/theme';
+import Loading from 'components/loading';
+import AuthProvider from 'contexts/authContext';
+import CustomRouter from 'router';
+import config from './config';
+
+console.log(config.TEST_ENV_VARIABLE);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <StyledThemeProvider theme={theme}>
+        <AuthProvider>
+          <Suspense fallback={<Loading />}>
+            <CustomRouter />
+          </Suspense>
+        </AuthProvider>
+      </StyledThemeProvider>
+    </ThemeProvider>
   );
 }
 
