@@ -6,8 +6,8 @@ import PATHS from 'constants/paths';
 export default function PrivateRoute() {
   const { isAuthenticated } = useContext(AuthContext);
 
-  if (isAuthenticated) {
-    return <Navigate to={PATHS.MONITOR} />;
+  if (!isAuthenticated) {
+    return <Navigate to={PATHS.LOGIN} />;
   }
 
   return <Outlet />;
