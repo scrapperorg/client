@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PATHS from 'constants/paths';
-import PrivateRoute from 'router/components/privateRoute';
 import PublicRoute from 'router/components/publicRoute';
+import PrivateRoute from 'router/components/privateRoute';
 import Layout from '../components/layout';
 
 const LoginScreen = React.lazy(() => import('screens/login'));
