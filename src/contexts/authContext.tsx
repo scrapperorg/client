@@ -12,7 +12,7 @@ const defaultState: AuthProviderState = {
 export const AuthContext = createContext(defaultState);
 
 const AuthProvider = ({ children }: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
