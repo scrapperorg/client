@@ -7,6 +7,8 @@ import Layout from '../components/layout';
 
 const LoginScreen = React.lazy(() => import('screens/login'));
 const MonitorScreen = React.lazy(() => import('screens/monitor'));
+const RecoverPassword = React.lazy(() => import('screens/recoverPassword'))
+const ResetPassword = React.lazy(() => import('screens/resetPassword'))
 
 export default function CustomRouter() {
   return (
@@ -16,6 +18,8 @@ export default function CustomRouter() {
         {/* Public non-auth routes */}
         <Route element={<PublicRoute />}>
           <Route path={PATHS.LOGIN} element={<LoginScreen />}></Route>
+          <Route path={PATHS.RECOVER_PASSWORD} element={<RecoverPassword />}></Route>
+          <Route path={PATHS.RESET_PASSWORD} element={<ResetPassword />}></Route>
         </Route>
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
