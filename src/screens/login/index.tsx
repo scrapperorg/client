@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Card, TextField, Typography, Box, Divider } from '@mui/material';
+import { Card, TextField, Typography, Box, Divider, Snackbar, Alert } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import joi from 'joi';
 import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
+import { authApiService } from '../../services/api/AuthApiService';
+import { LoadingButton } from '@mui/lab';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 const loginSchema = joi.object({
   email: joi
@@ -24,13 +31,30 @@ const loginSchema = joi.object({
 });
 
 export default function LoginScreen() {
-  const loginForm = useForm({
+  const [showLoading, setShowLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const loginForm = useForm<LoginFormValues>({
     mode: 'onChange',
     defaultValues: { email: '', password: '' },
     resolver: joiResolver(loginSchema),
   });
 
-  console.log(loginForm.formState.errors.email);
+  const handleSubmit = async ({ email, password }: LoginFormValues) => {
+    setShowLoading(true);
+    const response = await authApiService.login(email, password);
+
+    if (!response.success) {
+      setShowLoading(false);
+      setShowError(true);
+      return;
+    }
+
+    setShowLoading(false);
+    // TODO
+    // REDIRECT TO DASHBOARD
+    // ADD TOKEN TO CONTEXT
+    // ADD TOKEN TO AUTH HEADER OF AXIOS INSTANCE
+  };
 
   return (
     <Background>
@@ -44,7 +68,7 @@ export default function LoginScreen() {
           </Typography>
         </HeadersContainer>
 
-        <form onSubmit={loginForm.handleSubmit((data) => console.log(data))}>
+        <form onSubmit={loginForm.handleSubmit(handleSubmit)}>
           <TextField
             fullWidth
             label='Email'
@@ -56,6 +80,7 @@ export default function LoginScreen() {
           <br />
           <TextField
             fullWidth
+            type='password'
             label='Password'
             variant='outlined'
             {...loginForm.register('password')}
@@ -64,9 +89,16 @@ export default function LoginScreen() {
           />
           <br />
 
-          <Button fullWidth type='submit' variant='contained' color='primary' size='large'>
+          <LoadingButton
+            fullWidth
+            type='submit'
+            variant='contained'
+            color='primary'
+            size='large'
+            loading={showLoading}
+          >
             Intra in cont
-          </Button>
+          </LoadingButton>
         </form>
 
         <Box marginY={4}>
@@ -77,6 +109,16 @@ export default function LoginScreen() {
         <br />
         <Link to={PATHS.RECOVER_PASSWORD}>Recupereaza parola</Link>
       </LoginCard>
+
+      <Snackbar
+        open={showError}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
+          Ceva nu a mers bine, te rugam sa incerci din nou
+        </Alert>
+      </Snackbar>
     </Background>
   );
 }

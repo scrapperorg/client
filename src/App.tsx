@@ -7,8 +7,6 @@ import AuthProvider from 'contexts/authContext';
 import CustomRouter from 'router';
 import config from './config';
 
-console.log(config.TEST_ENV_VARIABLE);
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
