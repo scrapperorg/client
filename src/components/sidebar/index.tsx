@@ -27,6 +27,37 @@ export default function TopBar({ sidebarState }: any) {
     sidebarState(false);
   };
 
+  const sidebarButtonsList = [
+    {
+      key: 'Monitor',
+      Icon: GridOnOutlinedIcon,
+    },
+    {
+      key: 'Document',
+      Icon: DescriptionOutlinedIcon,
+    },
+    {
+      key: 'Cautare Documente',
+      Icon: PlagiarismOutlinedIcon,
+    },
+    {
+      key: 'Proiect',
+      Icon: LaptopWindowsOutlinedIcon,
+    },
+    {
+      key: 'Cautare Proiecte',
+      Icon: ScreenSearchDesktopOutlinedIcon,
+    },
+    {
+      key: 'Optiuni',
+      Icon: SettingsOutlinedIcon,
+    },
+    {
+      key: 'Profilul meu',
+      Icon: PersonOutlineOutlinedIcon,
+    },
+  ];
+
   return (
     <>
       {!open && (
@@ -64,49 +95,14 @@ export default function TopBar({ sidebarState }: any) {
             <span>Ion Ionescu</span>
             <span>Specialist</span>
           </StyledListItemHeader>
-
-          <StyledListItem key={'Monitor'} disablePadding>
-            <ListItemIcon>
-              <GridOnOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Monitor'} />
-          </StyledListItem>
-          <StyledListItem key={'Document'} disablePadding>
-            <ListItemIcon>
-              <DescriptionOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Document'} />
-          </StyledListItem>
-          <StyledListItem key={'Cautare Documente'} disablePadding>
-            <ListItemIcon>
-              <PlagiarismOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Cautare Documente'} />
-          </StyledListItem>
-          <StyledListItem key={'Proiect'} disablePadding>
-            <ListItemIcon>
-              <LaptopWindowsOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Proiect'} />
-          </StyledListItem>
-          <StyledListItem key={'Cautare Proiecte'} disablePadding>
-            <ListItemIcon>
-              <ScreenSearchDesktopOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Cautare Proiecte'} />
-          </StyledListItem>
-          <StyledListItem key={'Optiuni'} disablePadding>
-            <ListItemIcon>
-              <SettingsOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Optiuni'} />
-          </StyledListItem>
-          <StyledListItem key={'Profilul meu'} disablePadding>
-            <ListItemIcon>
-              <PersonOutlineOutlinedIcon fontSize='large' />
-            </ListItemIcon>
-            <ListItemText primary={'Profilul meu'} />
-          </StyledListItem>
+          {sidebarButtonsList.map(({ key, Icon }) => (
+            <StyledListItem key={key} disablePadding>
+              <ListItemIcon>
+                <Icon fontSize='large' />
+              </ListItemIcon>
+              <ListItemText primary={key} />
+            </StyledListItem>
+          ))}
         </Box>
       )}
     </>
