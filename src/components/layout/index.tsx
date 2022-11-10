@@ -11,27 +11,15 @@ export default function Layout() {
     setOpen(state);
   };
 
-  console.log(open);
   return (
     <StyledLayout>
       <TopBar />
       <Content>
         <Grid container spacing={2}>
-          <Grid item xs={open ? 2 : 0}>
+          <Grid item xs={open ? 3 : 1}>
             <SideBar sidebarState={sidebarState} />
           </Grid>
-          <Grid
-            item
-            xs={open ? 9 : 11}
-            sx={{
-              m: 'auto',
-              height: '700px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#add8e6',
-            }}
-          >
+          <Grid item xs={open ? 9 : 11}>
             <Outlet />
           </Grid>
         </Grid>
