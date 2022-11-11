@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, AppBar, Toolbar, IconButton, Badge, Tooltip } from '@mui/material';
 import { LeftSide, RightSide, StyledContainer } from './styled';
-import { Person, Notifications, GridOnOutlined } from '@mui/icons-material';
+import {
+  Person as PersonIcon,
+  Notifications as NotificationsIcon,
+  GridOnOutlined as GridOnOutlinedIcon,
+} from '@mui/icons-material';
 
 export default function TopBar() {
   return (
@@ -14,13 +18,13 @@ export default function TopBar() {
               <Box sx={{ display: { md: 'flex' } }}>
                 <Tooltip title='Monitor'>
                   <IconButton size='large' aria-label='dashboard' color='inherit'>
-                    <GridOnOutlined />
+                    <GridOnOutlinedIcon />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title='Notificari'>
                   <IconButton size='large' aria-label='show 3 new notifications' color='inherit'>
                     <Badge badgeContent={3} color='error'>
-                      <Notifications />
+                      <NotificationsIcon />
                     </Badge>
                   </IconButton>
                 </Tooltip>
@@ -32,7 +36,7 @@ export default function TopBar() {
                     aria-haspopup='true'
                     color='inherit'
                   >
-                    <Person />
+                    <PersonIcon />
                   </IconButton>
                 </Tooltip>
               </Box>
