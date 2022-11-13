@@ -1,19 +1,42 @@
-import React from 'react';
-import { Typography } from '@mui/material';
-
-export interface HandleValidateProps {
-  token: string;
-}
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { CircularProgress, Typography } from '@mui/material';
 
 interface TokenValidationProps {
-  token: string | undefined;
   showLoading: boolean;
   showInvalidTokenMessage: boolean;
-  handleValidateToken: (props: HandleValidateProps) => void;
+  handleValidateToken: () => void;
 }
 
-export const TokenValidation = ({ token, handleValidateToken, showLoading, showInvalidTokenMessage }: TokenValidationProps) => (
-  <Typography variant='h2' align='center'>
-    Tokenul este invalid sau expirat
+const LoadingMessage = () => (
+  <LoadingContainer>
+    <CircularProgress />
+  </LoadingContainer>
+)
+
+const InvalidTokenMessage = () => (
+  <Typography variant='h4' align='center'>
+      Linkul de resetare a parolei este invalid, sau a expirat. <br/>
+      Va rugam sa reluati procesul de recuperare a parolei.
   </Typography>
 )
+
+export const TokenValidation = ({ handleValidateToken, showLoading, showInvalidTokenMessage }: TokenValidationProps) => {
+  useEffect(() => {
+    // react will trigger this twice in dev mode: https://stackoverflow.com/questions/72238175/useeffect-is-running-twice-on-mount-in-react
+    (async function() { handleValidateToken() })();
+  }, []);
+
+  const content = showLoading
+    ? <LoadingMessage />
+    : showInvalidTokenMessage
+      ? <InvalidTokenMessage />
+      : null
+
+  return content
+}
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`

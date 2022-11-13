@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import styled from 'styled-components';
-import { TextField, Typography} from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import joi from 'joi';
@@ -26,11 +26,10 @@ const resetPasswordSchema = joi.object({
 
 interface RestFormProps {
   showLoading: boolean;
-  showResetSuccessMessage: boolean;
   handleSubmit: (props: ResetPasswordFormValues) => void;
 }
 
-export const ResetForm = ({ handleSubmit, showLoading, showResetSuccessMessage } : RestFormProps) => {
+export const ResetForm = ({ handleSubmit, showLoading } : RestFormProps) => {
 
   const recoverPasswordForm = useForm<ResetPasswordFormValues>({
     mode: 'onChange',

@@ -1,36 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Card, TextField, Typography, Box, Divider, Snackbar, Alert } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import joi from 'joi';
+import { Card, Typography, Snackbar, Alert } from '@mui/material';
 import { authApiService } from '../../services/api/AuthApiService';
-import { LoadingButton } from '@mui/lab';
+import { RecoverForm, RecoverPasswordFormValues } from './RecoverForm';
 
-interface RecoverPasswordFormValues {
-  email: string;
-  password: string;
-}
 
-const recoverPasswordSchema = joi.object({
-  email: joi
-    .string()
-    .email({ tlds: { allow: false } })
-    .required()
-    .messages({
-      'string.email': 'Adresa de email trebuie sa fie de forma nume@adresa.ceva',
-      'string.empty': 'Acest camp este obligatoriu',
-    }),
-});
+const RecoverSuccessMessage = () => (
+  <Typography variant='h3' align='center'>
+      Verificati-va adresa de email pentru a continua procesul de resetare a parolei.
+  </Typography>
+)
 
 export default function RecoverPasswordScreen() {
   const [showLoading, setShowLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const recoverPasswordForm = useForm<RecoverPasswordFormValues>({
-    mode: 'onChange',
-    defaultValues: { email: '' },
-    resolver: joiResolver(recoverPasswordSchema),
-  });
+  const [isRecoverSentSuccessfuly, setIsRecoverSentSuccessfuly] = useState(false);
 
   const handleSubmit = async ({ email }: RecoverPasswordFormValues) => {
     setShowLoading(true);
@@ -43,43 +27,20 @@ export default function RecoverPasswordScreen() {
     }
 
     setShowLoading(false);
-    // setShowSuccessMessage();
+    setIsRecoverSentSuccessfuly(true);
   };
+
+  const content = isRecoverSentSuccessfuly
+    ? <RecoverSuccessMessage />
+    : <RecoverForm
+        handleSubmit={handleSubmit}
+        showLoading={showLoading}
+      />
 
   return (
     <Background>
       <ContentCard>
-        <HeadersContainer>
-          <Typography variant='h1' align='center'>
-            Recupereaza parola
-          </Typography>
-          <Typography variant='h6' align='center'>
-            Introdu emailul asociat contului tau pentru a iti recupera parola
-          </Typography>
-        </HeadersContainer>
-
-        <form onSubmit={recoverPasswordForm.handleSubmit(handleSubmit)}>
-          <TextField
-            fullWidth
-            label='Email'
-            variant='outlined'
-            error={Boolean(recoverPasswordForm.formState.errors.email)}
-            helperText={recoverPasswordForm.formState.errors.email?.message}
-            {...recoverPasswordForm.register('email')}
-          />
-          <br />
-
-          <LoadingButton
-            fullWidth
-            type='submit'
-            variant='contained'
-            color='primary'
-            size='large'
-            loading={showLoading}
-          >
-            Recupereaza parola
-          </LoadingButton>
-        </form>
+        { content }
       </ContentCard>
 
       <Snackbar
@@ -94,14 +55,6 @@ export default function RecoverPasswordScreen() {
     </Background>
   );
 }
-
-export const FormFullWith = styled.form`
-  width: 100%;
-`;
-
-export const HeadersContainer = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing(8)};
-`;
 
 export const Background = styled.div`
   display: flex;

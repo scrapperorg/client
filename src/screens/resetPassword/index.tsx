@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Card, Snackbar, Alert } from '@mui/material';
+import { Card, Snackbar, Alert, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { ResetForm, ResetPasswordFormValues } from './ResetForm';
-import { HandleValidateProps, TokenValidation } from './TokenValidation';
+import { TokenValidation } from './TokenValidation';
 import { authApiService } from '../../services/api/AuthApiService';
+import { Link } from 'react-router-dom';
+import PATHS from 'constants/paths';
 
+export interface HandleValidateProps {
+  token: string;
+}
 
+const ResetSuccessMessage = () => (
+  <Typography variant='h3' align='center'>
+      Parola a fost resetata cu success. <br/>
+      <Link to={PATHS.LOGIN}>Autentificati-va</Link> cu noua parola aici.
+  </Typography>
+)
 
 export default function ResetPasswordScreen() {
   const [showError, setShowError] = useState(false);
   const [showInvalidTokenMessage, setShowInvalidTokenMessage] = useState(false);
-  const [showResetSuccessMessage, setShowResetSuccessMessage] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
   const [showResetLoading, setShowResetLoading] = useState(false);
-  const [showValidateLoading, setShowValidateLoading] = useState(true);
+  const [showValidateLoading, setShowValidateLoading] = useState(false);
   const [isTokenValidated, setIsTokenValidated] = useState(false);
 
   const { token='' } = useParams();
@@ -29,7 +40,7 @@ export default function ResetPasswordScreen() {
     }
   
     setShowResetLoading(false);
-    setShowResetSuccessMessage(true);
+    setIsPasswordReset(true);
   };
 
   const handleValidateToken = async ({ token }: HandleValidateProps) => {
@@ -37,8 +48,10 @@ export default function ResetPasswordScreen() {
     const response = await authApiService.validateResetPasswordToken(token);
 
     if(response?.status === 404) {
-      setShowValidateLoading(false);
-      setShowInvalidTokenMessage(true);
+      setTimeout(() => {
+        setShowValidateLoading(false);
+        setShowInvalidTokenMessage(true);
+      }, 1000);
       return;
     }
 
@@ -48,19 +61,22 @@ export default function ResetPasswordScreen() {
       return;
     }
 
-    setShowValidateLoading(false);
-    setIsTokenValidated(true);
+    setTimeout(() => {
+      setShowValidateLoading(false);
+      setIsTokenValidated(true);
+    }, 1000);
   }
 
   const content = isTokenValidated
-    ? <ResetForm
-        handleSubmit={handleResetPassword}
-        showLoading={showResetLoading}
-        showResetSuccessMessage={showResetSuccessMessage}
-      />
+    ? 
+      isPasswordReset
+        ? <ResetSuccessMessage />
+        : <ResetForm
+            handleSubmit={handleResetPassword}
+            showLoading={showResetLoading}
+          />
     : <TokenValidation
-        token={token}
-        handleValidateToken={handleValidateToken}  
+        handleValidateToken={() => handleValidateToken({ token })}  
         showLoading={showValidateLoading}
         showInvalidTokenMessage={showInvalidTokenMessage}
     />
