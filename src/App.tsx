@@ -6,15 +6,18 @@ import Loading from 'components/loading';
 import AuthProvider from 'contexts/authContext';
 import CustomRouter from 'router';
 import config from './config';
+import { SidebarProvider } from 'contexts/interactiveComponentsContext';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
         <AuthProvider>
-          <Suspense fallback={<Loading />}>
-            <CustomRouter />
-          </Suspense>
+          <SidebarProvider>
+            <Suspense fallback={<Loading />}>
+              <CustomRouter />
+            </Suspense>
+          </SidebarProvider>
         </AuthProvider>
       </StyledThemeProvider>
     </ThemeProvider>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { SidebarContext } from 'contexts/interactiveComponentsContext';
 import { styled } from '@mui/material/styles';
 import {
   Box,
@@ -12,18 +13,10 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { Menu, ChevronLeft } from '@mui/icons-material';
-import {
-  GridOnOutlined,
-  DescriptionOutlined,
-  PlagiarismOutlined,
-  LaptopWindowsOutlined,
-  ScreenSearchDesktopOutlined,
-  SettingsOutlined,
-  PersonOutlineOutlined,
-} from '@mui/icons-material';
+import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import { SIDEBAR_BUTTONS_LIST } from 'constants/icons';
 
-const drawerWidth = 240;
+const DRAWER_WIDTH = 240;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -33,49 +26,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const sidebarButtonsList = [
-  {
-    key: 'Monitor',
-    Icon: GridOnOutlined,
-  },
-  {
-    key: 'Document',
-    Icon: DescriptionOutlined,
-  },
-  {
-    key: 'Cautare Documente',
-    Icon: PlagiarismOutlined,
-  },
-  {
-    key: 'Proiect',
-    Icon: LaptopWindowsOutlined,
-  },
-  {
-    key: 'Cautare Proiecte',
-    Icon: ScreenSearchDesktopOutlined,
-  },
-  {
-    key: 'Optiuni',
-    Icon: SettingsOutlined,
-  },
-  {
-    key: 'Profilul meu',
-    Icon: PersonOutlineOutlined,
-  },
-];
-
-export default function Sidebar({ sidebarState }: any) {
-  const [open, setOpen] = useState(true);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-    sidebarState(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-    sidebarState(false);
-  };
+export default function Sidebar() {
+  const { isSidebarOpened, toggleSidebar } = useContext(SidebarContext);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -83,18 +35,18 @@ export default function Sidebar({ sidebarState }: any) {
       <IconButton
         color='secondary'
         aria-label='open drawer'
-        onClick={handleDrawerOpen}
+        onClick={toggleSidebar}
         edge='start'
-        sx={{ mr: 2, ...(open && { display: 'none' }) }}
+        sx={{ mr: 2, ...(isSidebarOpened && { display: 'none' }) }}
       >
-        <Menu sx={{ position: 'fixed', left: '5px' }} />
+        <MenuIcon sx={{ position: 'fixed', left: '5px' }} />
       </IconButton>
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: DRAWER_WIDTH,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width: DRAWER_WIDTH,
             boxSizing: 'border-box',
             top: 65,
             backgroundColor: '#111827',
@@ -103,16 +55,16 @@ export default function Sidebar({ sidebarState }: any) {
         }}
         variant='persistent'
         anchor='left'
-        open={open}
+        open={isSidebarOpened}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeft color='secondary' />
+          <IconButton onClick={toggleSidebar}>
+            <ChevronLeftIcon color='secondary' />
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {sidebarButtonsList.map(({ key, Icon }) => (
+          {SIDEBAR_BUTTONS_LIST.map(({ key, Icon }) => (
             <ListItemButton key={key} divider={true}>
               <ListItem key={key}>
                 <ListItemIcon>
