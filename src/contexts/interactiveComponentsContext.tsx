@@ -1,18 +1,18 @@
 import React, { createContext, useState } from 'react';
 
-export interface SidebarState {
-  isSidebarOpened?: boolean;
-  toggleSidebar?: () => void;
+export interface InteractiveComponentsState {
+  isSidebarOpened: boolean;
+  toggleSidebar: () => void;
 }
 
-const sidebarDefaultState: SidebarState = {
+const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   isSidebarOpened: true,
   toggleSidebar: () => null,
 };
 
-export const SidebarContext = createContext(sidebarDefaultState);
+export const InteractiveComponentsContext = createContext(InteractiveComponentsDefaultState);
 
-export const SidebarProvider = ({ children }: any) => {
+export const InteractiveComponentsProvider = ({ children }: any) => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(true);
 
   function toggleSidebar() {
@@ -20,8 +20,8 @@ export const SidebarProvider = ({ children }: any) => {
   }
 
   return (
-    <SidebarContext.Provider value={{ isSidebarOpened, toggleSidebar }}>
+    <InteractiveComponentsContext.Provider value={{ isSidebarOpened, toggleSidebar }}>
       {children}
-    </SidebarContext.Provider>
+    </InteractiveComponentsContext.Provider>
   );
 };

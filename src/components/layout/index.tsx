@@ -4,10 +4,10 @@ import TopBar from 'components/topbar';
 import SideBar from 'components/sidebar';
 import Grid from '@mui/material/Grid';
 import { Outlet } from 'react-router-dom';
-import { SidebarContext } from 'contexts/interactiveComponentsContext';
+import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function Layout() {
-  const { isSidebarOpened } = useContext(SidebarContext);
+  const { isSidebarOpened } = useContext(InteractiveComponentsContext);
 
   return (
     <StyledLayout>

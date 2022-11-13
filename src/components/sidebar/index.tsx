@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SidebarContext } from 'contexts/interactiveComponentsContext';
+import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { styled } from '@mui/material/styles';
 import {
   Box,
@@ -27,7 +27,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Sidebar() {
-  const { isSidebarOpened, toggleSidebar } = useContext(SidebarContext);
+  const { isSidebarOpened, toggleSidebar } = useContext(InteractiveComponentsContext);
 
   return (
     <Box sx={{ display: 'flex' }}>
