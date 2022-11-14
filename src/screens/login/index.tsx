@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Card, TextField, Typography, Box, Divider, Snackbar, Alert } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
 import { authApiService } from '../../services/api/AuthApiService';
 import { LoadingButton } from '@mui/lab';
+import { AuthContext, User } from 'contexts/authContext';
+import { useNavigate } from 'react-router-dom';
+import { axios } from 'config/http';
 
 interface LoginFormValues {
   email: string;
@@ -25,12 +28,14 @@ const loginSchema = joi.object({
     }),
   password: joi
     .string()
-    .alphanum()
+    // .alphanum()
     .required()
     .messages({ 'string.empty': 'Acest camp este obligatoriu' }),
 });
 
 export default function LoginScreen() {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
   const [showLoading, setShowLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const loginForm = useForm<LoginFormValues>({
@@ -49,11 +54,12 @@ export default function LoginScreen() {
       return;
     }
 
+    authContext.setUser(response.payload?.user as User);
+    const token = response.payload?.token as string;
+    localStorage.setItem('token', token);
+    axios.defaults.headers.common['authorization'] = token;
     setShowLoading(false);
-    // TODO
-    // REDIRECT TO DASHBOARD
-    // ADD TOKEN TO CONTEXT
-    // ADD TOKEN TO AUTH HEADER OF AXIOS INSTANCE
+    navigate(PATHS.MONITOR);
   };
 
   return (

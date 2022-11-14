@@ -5,7 +5,6 @@ import { theme } from 'styles/theme';
 import Loading from 'components/loading';
 import AuthProvider from 'contexts/authContext';
 import CustomRouter from 'router';
-import config from './config';
 import { InteractiveComponentsProvider } from 'contexts/interactiveComponentsContext';
 
 function App() {
