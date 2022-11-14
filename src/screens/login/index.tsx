@@ -110,10 +110,7 @@ export default function LoginScreen() {
         <Box marginY={4}>
           <Divider />
         </Box>
-
-        <Link to={PATHS.RESET_PASSWORD}>Am uitat parola</Link>
-        <br />
-        <Link to={PATHS.RECOVER_PASSWORD}>Recupereaza parola</Link>
+        <Link to={PATHS.RECOVER_PASSWORD}>Am uitat parola</Link>
       </LoginCard>
 
       <Snackbar
