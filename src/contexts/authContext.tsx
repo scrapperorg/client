@@ -8,9 +8,6 @@ export interface User {
   email: string;
   role: string;
 }
-
-// const token = localStorage.getItem('token');
-// const user = JSON.parse(localStorage.getItem('user'));
 export interface AuthProviderState {
   isAuthenticated: boolean;
   user: User | undefined;
