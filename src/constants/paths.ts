@@ -1,6 +1,6 @@
 const PATHS = {
   LOGIN: '/login',
-  MONITOR: 'monitor',
+  MONITOR: '/monitor',
   CHILDREN: 'children',
   RECOVER_PASSWORD: '/recover-password',
   RESET_PASSWORD: '/reset-password',

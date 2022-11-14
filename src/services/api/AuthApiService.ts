@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 import { axios } from 'config/http';
-import config from '../../config';
 
 export interface OperationStatus<TPayload> {
   success: boolean;
