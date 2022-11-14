@@ -6,15 +6,18 @@ import Loading from 'components/loading';
 import AuthProvider from 'contexts/authContext';
 import CustomRouter from 'router';
 import config from './config';
+import { InteractiveComponentsProvider } from 'contexts/interactiveComponentsContext';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
         <AuthProvider>
-          <Suspense fallback={<Loading />}>
-            <CustomRouter />
-          </Suspense>
+          <InteractiveComponentsProvider>
+            <Suspense fallback={<Loading />}>
+              <CustomRouter />
+            </Suspense>
+          </InteractiveComponentsProvider>
         </AuthProvider>
       </StyledThemeProvider>
     </ThemeProvider>
