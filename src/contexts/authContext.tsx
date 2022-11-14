@@ -23,9 +23,12 @@ const defaultState: AuthProviderState = {
 
 export const AuthContext = createContext(defaultState);
 
-const AuthProvider = ({ children }: any) => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const token = localStorage.getItem('token');
+export interface AuthProviderProps {
+  children: JSX.Element;
+  token: string | null;
+}
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children, token }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | undefined>();
 
