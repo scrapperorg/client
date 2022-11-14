@@ -6,13 +6,11 @@ import Loading from 'components/loading';
 import AuthProvider from 'contexts/authContext';
 import CustomRouter from 'router';
 
-const token = localStorage.getItem('token');
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
-        <AuthProvider token={token}>
+        <AuthProvider>
           <Suspense fallback={<Loading />}>
             <CustomRouter />
           </Suspense>

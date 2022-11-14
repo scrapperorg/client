@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import Loading from 'components/loading';
 
 export interface User {
@@ -25,16 +25,38 @@ export const AuthContext = createContext(defaultState);
 
 export interface AuthProviderProps {
   children: JSX.Element;
-  token: string | null;
 }
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ children, token }) => {
+export interface UseAuthHookReturnType {
+  isLoading: boolean;
+  user: User | undefined;
+  token: string | null;
+  setUser: (user: User) => void;
+}
+
+const useAuth: () => UseAuthHookReturnType = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<User | undefined>();
+  const [user, _setUser] = useState<User | undefined>();
+  const token = localStorage.getItem('token');
+
+  const setUser = useCallback(
+    (user: User) => {
+      _setUser(user);
+    },
+    [_setUser],
+  );
 
   useEffect(() => {
-    // fetch /refresh token
+    if (token) {
+      // fetch /refresh token
+    }
   }, [setUser, setIsLoading]);
+
+  return { isLoading, user, token, setUser };
+};
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const { isLoading, user, setUser } = useAuth();
 
   if (isLoading) {
     return <Loading />;
