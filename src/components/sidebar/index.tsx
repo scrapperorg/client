@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import {
   Box,
   Drawer,
@@ -13,10 +13,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { Menu as MenuIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import {
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+} from '@mui/icons-material';
 import { SIDEBAR_BUTTONS_LIST } from 'constants/icons';
-
-const DRAWER_WIDTH = 240;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -27,50 +28,70 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Sidebar() {
-  const { isSidebarOpened, toggleSidebar } = useContext(InteractiveComponentsContext);
+  const { isSidebarOpened, toggleSidebar, selectedIndex, selectIndex } = useContext(
+    InteractiveComponentsContext,
+  );
+  const theme = useTheme();
+  const DRAWER_WIDTH = isSidebarOpened ? 210 : 100;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <IconButton
-        color='secondary'
-        aria-label='open drawer'
-        onClick={toggleSidebar}
-        edge='start'
-        sx={{ mr: 2, ...(isSidebarOpened && { display: 'none' }) }}
-      >
-        <MenuIcon sx={{ position: 'fixed', left: '5px' }} />
-      </IconButton>
       <Drawer
         sx={{
           width: DRAWER_WIDTH,
+          transition: 'width 0.2s',
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: DRAWER_WIDTH,
+            transition: 'width 0.2s',
             boxSizing: 'border-box',
             top: 65,
-            backgroundColor: '#111827',
-            color: '#A0AEC0',
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.text.secondary,
           },
         }}
         variant='persistent'
         anchor='left'
-        open={isSidebarOpened}
+        open={true}
       >
         <DrawerHeader>
-          <IconButton onClick={toggleSidebar}>
-            <ChevronLeftIcon color='secondary' />
+          <IconButton
+            onClick={toggleSidebar}
+            sx={[{ '&:hover': { backgroundColor: theme.palette.common.white } }]}
+          >
+            {isSidebarOpened ? (
+              <ChevronLeftIcon color='secondary' />
+            ) : (
+              <ChevronRightIcon color='secondary' />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List
+          sx={{
+            '&& .Mui-selected': {
+              backgroundColor: '#303b54',
+            },
+          }}
+        >
           {SIDEBAR_BUTTONS_LIST.map(({ key, Icon }) => (
-            <ListItemButton key={key} divider={true}>
-              <ListItem key={key}>
+            <ListItemButton
+              key={key}
+              divider={true}
+              selected={selectedIndex === key}
+              onClick={() => selectIndex(key)}
+            >
+              <ListItem
+                key={key}
+                sx={{
+                  height: 89,
+                }}
+              >
                 <ListItemIcon>
                   <Icon fontSize='large' color='secondary' />
                 </ListItemIcon>
-                <ListItemText primary={key} />
+                {isSidebarOpened && <ListItemText primary={key} />}
               </ListItem>
             </ListItemButton>
           ))}
