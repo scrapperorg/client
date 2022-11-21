@@ -14,10 +14,10 @@ export default function Layout() {
       <TopBar />
       <Content>
         <Grid container spacing={2}>
-          <Grid item xs={isSidebarOpened ? 3 : 1}>
+          <Grid item xs={isSidebarOpened ? 3 : 2}>
             <SideBar />
           </Grid>
-          <Grid item xs={isSidebarOpened ? 9 : 11}>
+          <Grid item xs={isSidebarOpened ? 9 : 10}>
             <Outlet />
           </Grid>
         </Grid>
