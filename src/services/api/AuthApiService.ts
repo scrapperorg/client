@@ -29,6 +29,26 @@ export interface RecoverPasswordDto {
 class AuthApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
+  async refreshToken(token: string): Promise<OperationStatus<LoginDto>> {
+    try {
+      const res = await this.httpClient.post<LoginDto>(
+        '/refresh-token',
+        {},
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: res.data,
+      };
+    } catch (err) {
+      return {
+        success: false,
+      };
+    }
+  }
+
   async login(email: string, password: string): Promise<OperationStatus<LoginDto>> {
     try {
       const res = await this.httpClient.post<LoginDto>('/login', { email, password });
@@ -49,13 +69,13 @@ class AuthApiService {
       return {
         success: true,
         payload: res.data,
-      }
+      };
     } catch (err: any) {
       const error: AxiosError = err;
       return {
         success: false,
         status: error.response?.status,
-      }
+      };
     }
   }
 
@@ -64,13 +84,13 @@ class AuthApiService {
       await this.httpClient.post<boolean>(`/validate-reset-password-token`, { token });
       return {
         success: true,
-      }
+      };
     } catch (err: any) {
       const error: AxiosError = err;
       return {
         success: false,
         status: error.response?.status,
-      }
+      };
     }
   }
 
@@ -79,17 +99,15 @@ class AuthApiService {
       await this.httpClient.post<boolean>(`/reset-password`, { token, password });
       return {
         success: true,
-      }
+      };
     } catch (err: any) {
       const error: AxiosError = err;
       return {
         success: false,
         status: error.response?.status,
-      }
+      };
     }
   }
-
 }
-
 
 export const authApiService = new AuthApiService(axios);

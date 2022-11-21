@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import Loading from 'components/loading';
+import { authApiService, LoginDto, OperationStatus } from 'services/api/AuthApiService';
 
 export interface User {
   id: string;
@@ -35,7 +36,7 @@ export interface UseAuthHookReturnType {
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
@@ -49,8 +50,13 @@ const useAuth: () => UseAuthHookReturnType = () => {
   useEffect(() => {
     if (token) {
       // fetch /refresh token
+      authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
+        _setUser(data.payload?.user);
+        localStorage.setItem('token', token);
+      });
     }
-  }, [setUser, setIsLoading]);
+    setIsLoading(false);
+  }, []);
 
   return { isLoading, user, token, setUser };
 };
