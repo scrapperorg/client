@@ -28,21 +28,21 @@ export const InteractiveComponentsProvider = ({ children }: any) => {
   const [selectedIndex, setSelectedIndex] = useState(SIDEBAR_BUTTONS_LIST[0].key);
   const [isProfileModalOpened, setIsProfileModalOpened] = useState(false);
 
-  function toggleSidebar() {
+  const toggleSidebar = () => {
     setIsSidebarOpened(!isSidebarOpened);
-  }
+  };
 
-  function selectIndex(index: string) {
+  const selectIndex = (index: string) => {
     setSelectedIndex(index);
-  }
+  };
 
-  function closeProfileModal() {
+  const closeProfileModal = () => {
     setIsProfileModalOpened(false);
-  }
+  };
 
-  function openProfileModal() {
+  const openProfileModal = () => {
     setIsProfileModalOpened(true);
-  }
+  };
 
   return (
     <InteractiveComponentsContext.Provider

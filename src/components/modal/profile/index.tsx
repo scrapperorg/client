@@ -29,19 +29,19 @@ const style = {
   overflow: 'hidden',
 };
 
-export default function ProfileModal() {
+export const ProfileModal = () => {
   const { isProfileModalOpened, closeProfileModal } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
 
-  function logout() {
+  const logout = () => {
     closeProfileModal();
     //TODO: add logout functionality
-  }
+  };
 
-  function goToProfilePage() {
+  const goToProfilePage = () => {
     closeProfileModal();
     //TODO: route to profile page
-  }
+  };
 
   return (
     <Modal
@@ -58,7 +58,6 @@ export default function ProfileModal() {
       <Fade in={isProfileModalOpened}>
         <Box sx={style}>
           <Box
-            id='test'
             sx={{
               position: 'absolute',
               width: '110%',
@@ -122,4 +121,4 @@ export default function ProfileModal() {
       </Fade>
     </Modal>
   );
-}
+};

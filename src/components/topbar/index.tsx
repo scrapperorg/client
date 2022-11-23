@@ -6,7 +6,7 @@ import {
   Notifications as NotificationsIcon,
   GridOnOutlined as GridOnOutlinedIcon,
 } from '@mui/icons-material';
-import Profile from 'components/modal/profile';
+import { ProfileModal } from 'components/modal/profile';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function TopBar() {
@@ -44,7 +44,7 @@ export default function TopBar() {
                     <PersonIcon />
                   </IconButton>
                 </Tooltip>
-                <Profile />
+                <ProfileModal />
               </Box>
             </RightSide>
           </StyledContainer>
