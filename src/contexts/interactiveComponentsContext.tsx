@@ -6,6 +6,9 @@ export interface InteractiveComponentsState {
   toggleSidebar: () => void;
   selectedIndex: string;
   selectIndex: (index: string) => void;
+  isProfileModalOpened: boolean;
+  closeProfileModal: () => void;
+  openProfileModal: () => void;
 }
 
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
@@ -13,6 +16,9 @@ const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   toggleSidebar: () => null,
   selectedIndex: '',
   selectIndex: () => null,
+  isProfileModalOpened: false,
+  closeProfileModal: () => null,
+  openProfileModal: () => null,
 };
 
 export const InteractiveComponentsContext = createContext(InteractiveComponentsDefaultState);
@@ -20,18 +26,35 @@ export const InteractiveComponentsContext = createContext(InteractiveComponentsD
 export const InteractiveComponentsProvider = ({ children }: any) => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(SIDEBAR_BUTTONS_LIST[0].key);
-
-  function selectIndex(index: string) {
-    setSelectedIndex(index);
-  }
+  const [isProfileModalOpened, setIsProfileModalOpened] = useState(false);
 
   function toggleSidebar() {
     setIsSidebarOpened(!isSidebarOpened);
   }
 
+  function selectIndex(index: string) {
+    setSelectedIndex(index);
+  }
+
+  function closeProfileModal() {
+    setIsProfileModalOpened(false);
+  }
+
+  function openProfileModal() {
+    setIsProfileModalOpened(true);
+  }
+
   return (
     <InteractiveComponentsContext.Provider
-      value={{ isSidebarOpened, toggleSidebar, selectedIndex, selectIndex }}
+      value={{
+        isSidebarOpened,
+        toggleSidebar,
+        selectedIndex,
+        selectIndex,
+        isProfileModalOpened,
+        closeProfileModal,
+        openProfileModal,
+      }}
     >
       {children}
     </InteractiveComponentsContext.Provider>
