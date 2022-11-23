@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import Loading from 'components/loading';
-import { useDocuments } from '../hooks/useDocuments';
+import { useGetDocuments } from '../hooks/useDocuments';
 import { authApiService } from '../../../services/api/AuthApiService';
 
 export interface MonitorProviderState {
@@ -15,7 +15,7 @@ export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
 
-  const [documents, documentsLoading, documentsError] = useDocuments();
+  const [documents, documentsLoading, documentsError] = useGetDocuments();
 
   if (documentsLoading) {
     return <Loading />;

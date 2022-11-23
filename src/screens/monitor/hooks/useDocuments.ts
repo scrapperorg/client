@@ -1,4 +1,7 @@
-import { authApiService } from './../../../services/api/AuthApiService';
+import { DocumentDto } from './../../../services/api/dtos/document';
+import { documentApiService } from './../../../services/api/DocumentApiService';
 import { useApiService } from './useApiService';
 
-export const useDocuments = useApiService<Document[]>(authApiService.getDocuments);
+export const useDocumentApi = useApiService(documentApiService);
+
+export const useGetDocuments = useDocumentApi<DocumentDto[]>(documentApiService.getDocuments);
