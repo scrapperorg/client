@@ -26,6 +26,32 @@ export interface RecoverPasswordDto {
   token: string;
 }
 
+export enum Status {
+  NOU = 'nou',
+  IN_ANALIZA = 'in analiza',
+  REVIZUIT = 'revizuit',
+}
+
+export interface DocumentDto {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  title: string;
+  project: string;
+  identificator: string;
+  publicationDate: Date;
+  source: string;
+  status: Status;
+  assignedUser?: string;
+  deadline?: Date;
+  originalFormat?: string;
+  numberOfPages?: number;
+  textInterpretationPrecision?: number;
+  numberOfIdentifiedArticles?: number;
+  numberOfIdentifiedTerms?: number;
+  attachments?: string[];
+}
+
 class AuthApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
@@ -108,6 +134,24 @@ class AuthApiService {
       };
     }
   }
+
+  async getDocuments(): Promise<OperationStatus<Document[]>> {
+    try {
+      const response = await this.httpClient.get<Document[]>('/document');
+
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
 }
 
 export const authApiService = new AuthApiService(axios);
