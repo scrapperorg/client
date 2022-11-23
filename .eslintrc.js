@@ -30,6 +30,7 @@ module.exports = {
     "prettier"
   ],
   rules: {
+    "@typescript-eslint/no-explicit-any": "off"
   },
   settings: {
     "import/resolver": {
