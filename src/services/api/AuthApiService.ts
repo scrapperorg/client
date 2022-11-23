@@ -1,5 +1,6 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
+import {Role} from "../../constants/roles";
 
 export interface OperationStatus<TPayload> {
   success: boolean;
@@ -12,7 +13,7 @@ export interface UserDto {
   id: string;
   name: string;
   surname: string;
-  role: string;
+  role: Role;
   email: string;
 }
 
