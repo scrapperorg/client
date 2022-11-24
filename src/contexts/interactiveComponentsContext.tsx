@@ -6,9 +6,9 @@ export interface InteractiveComponentsState {
   toggleSidebar: () => void;
   selectedIndex: string;
   selectIndex: (index: string) => void;
-  isProfileModalOpened: boolean;
-  closeProfileModal: () => void;
-  openProfileModal: () => void;
+  isModalOpened: boolean;
+  closeModal: () => void;
+  openModal: () => void;
 }
 
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
@@ -16,17 +16,32 @@ const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   toggleSidebar: () => null,
   selectedIndex: '',
   selectIndex: () => null,
-  isProfileModalOpened: false,
-  closeProfileModal: () => null,
-  openProfileModal: () => null,
+  isModalOpened: false,
+  closeModal: () => null,
+  openModal: () => null,
 };
 
 export const InteractiveComponentsContext = createContext(InteractiveComponentsDefaultState);
 
+export interface UseModalHook {
+  isModalOpened: boolean;
+  closeModal: () => void;
+  openModal: () => void;
+}
+
+const useModal: () => UseModalHook = () => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const closeModal = () => setIsModalOpened(false);
+  const openModal = () => setIsModalOpened(true);
+
+  return { isModalOpened, closeModal, openModal };
+};
+
 export const InteractiveComponentsProvider = ({ children }: any) => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(SIDEBAR_BUTTONS_LIST[0].key);
-  const [isProfileModalOpened, setIsProfileModalOpened] = useState(false);
+  // const [isProfileModalOpened, setIsProfileModalOpened] = useState(false);
+  const { isModalOpened, closeModal, openModal } = useModal();
 
   const toggleSidebar = () => {
     setIsSidebarOpened(!isSidebarOpened);
@@ -36,13 +51,13 @@ export const InteractiveComponentsProvider = ({ children }: any) => {
     setSelectedIndex(index);
   };
 
-  const closeProfileModal = () => {
-    setIsProfileModalOpened(false);
-  };
+  // const closeProfileModal = () => {
+  //   setIsProfileModalOpened(false);
+  // };
 
-  const openProfileModal = () => {
-    setIsProfileModalOpened(true);
-  };
+  // const openProfileModal = () => {
+  //   setIsProfileModalOpened(true);
+  // };
 
   return (
     <InteractiveComponentsContext.Provider
@@ -51,9 +66,12 @@ export const InteractiveComponentsProvider = ({ children }: any) => {
         toggleSidebar,
         selectedIndex,
         selectIndex,
-        isProfileModalOpened,
-        closeProfileModal,
-        openProfileModal,
+        // isProfileModalOpened,
+        // closeProfileModal,
+        // openProfileModal,
+        isModalOpened,
+        closeModal,
+        openModal,
       }}
     >
       {children}
