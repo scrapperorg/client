@@ -10,7 +10,7 @@ import { ProfileModal } from 'components/modal/profile';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function TopBar() {
-  const { openProfileModal } = useContext(InteractiveComponentsContext);
+  const { openModal } = useContext(InteractiveComponentsContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -39,7 +39,7 @@ export default function TopBar() {
                     aria-label='account of current user'
                     aria-haspopup='true'
                     color='inherit'
-                    onClick={openProfileModal}
+                    onClick={openModal}
                   >
                     <PersonIcon />
                   </IconButton>
