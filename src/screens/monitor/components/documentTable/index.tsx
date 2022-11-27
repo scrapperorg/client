@@ -5,10 +5,20 @@ import { DocumentDto } from 'services/api/dtos';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
+  totalNumberOfDocuments: number;
+  page: number;
+  pageSize: number;
+  onPageChange: (page: number) => void | undefined;
 };
 
 export const DocumentsTable = (props: DocumentsTableProps) => {
-  const { documents } = props;
+  const { 
+    documents,
+    totalNumberOfDocuments,
+    page,
+    onPageChange,
+    pageSize
+  } = props;
 
   const columns = [
     'Identificator',
@@ -42,6 +52,10 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
     <GenericTable
       columns={columns}
       tableRows={documentRows}
+      count={totalNumberOfDocuments}
+      page={page}
+      onPageChange={onPageChange}
+      rowsPerPage={pageSize}
     ></GenericTable>
   )
 }

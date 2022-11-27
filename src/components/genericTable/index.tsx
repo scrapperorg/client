@@ -4,16 +4,30 @@ import { TableContainer, Table, TableHead, Paper, TableCell, TableBody, TableRow
 interface GenericTableProps {
   columns: string[];
   tableRows: JSX.Element[];
+  count: number;
+  rowsPerPage: number;
+  page: number;
+  onPageChange: (page: number) => void;
 }
 
 export const GenericTable = (props: GenericTableProps) => {
-  const { columns, tableRows } = props;
+  const {
+    columns,
+    tableRows,
+    count,
+    rowsPerPage,
+    page,
+    onPageChange
+  } = props;
   const tableHeadCells = columns.map((column, i) => (
     <TableCell key={i}>{column}</TableCell>
   ))
 
-  const handlePageChange = () => {
-    console.log('page change');
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ) => {
+    onPageChange(page);
   }
 
   return (
@@ -32,9 +46,9 @@ export const GenericTable = (props: GenericTableProps) => {
       </TableContainer>
       <TablePagination
         component="div"
-        count={tableRows.length}
-        rowsPerPage={2}
-        page={0}
+        count={count}
+        rowsPerPage={rowsPerPage}
+        page={page}
         rowsPerPageOptions={[]}
         onPageChange={handlePageChange}
       />
