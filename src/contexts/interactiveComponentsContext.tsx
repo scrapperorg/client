@@ -32,6 +32,16 @@ export interface UseModalHook {
   openModal: () => void;
 }
 
+export interface UseSidebarHook {
+  isSidebarOpened: boolean;
+  toggleSidebar: () => void;
+}
+
+export interface UseIndexHook {
+  selectedIndex: string;
+  selectIndex: (index: string) => void;
+}
+
 const useModal: () => UseModalHook = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const closeModal = () => setIsModalOpened(false);
@@ -40,20 +50,28 @@ const useModal: () => UseModalHook = () => {
   return { isModalOpened, closeModal, openModal };
 };
 
-export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProviderProps> = ({
-  children,
-}) => {
+const useSidebar: () => UseSidebarHook = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(true);
+  const toggleSidebar = () => setIsSidebarOpened(!isSidebarOpened);
+
+  return { isSidebarOpened, toggleSidebar };
+};
+
+const useIndex: () => UseIndexHook = () => {
   const [selectedIndex, setSelectedIndex] = useState(SIDEBAR_BUTTONS_LIST[0].key);
-  const { isModalOpened, closeModal, openModal } = useModal();
-
-  const toggleSidebar = () => {
-    setIsSidebarOpened(!isSidebarOpened);
-  };
-
   const selectIndex = (index: string) => {
     setSelectedIndex(index);
   };
+
+  return { selectedIndex, selectIndex };
+};
+
+export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProviderProps> = ({
+  children,
+}) => {
+  const { selectedIndex, selectIndex } = useIndex();
+  const { isSidebarOpened, toggleSidebar } = useSidebar();
+  const { isModalOpened, closeModal, openModal } = useModal();
 
   const state: InteractiveComponentsState = {
     isSidebarOpened,
