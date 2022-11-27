@@ -1,5 +1,5 @@
-import { DocumentDto } from '../services/api/dtos/document';
-import { documentApiService } from '../services/api/DocumentApiService';
+import { DocumentDto } from 'services/api/dtos/document';
+import { documentApiService } from 'services/api/DocumentApiService';
 import { useApiService } from './useApiService';
 import { QueryAll } from 'services/api/dtos';
 import { usePaginatedData } from './usePaginated';

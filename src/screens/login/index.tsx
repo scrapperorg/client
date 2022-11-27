@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import joi from 'joi';
 import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
-import { authApiService } from '../../services/api/AuthApiService';
+import { authApiService } from 'services/api/AuthApiService';
 import { LoadingButton } from '@mui/lab';
 import { AuthContext, User } from 'contexts/authContext';
 import { useNavigate } from 'react-router-dom';

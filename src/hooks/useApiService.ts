@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { OperationStatus } from '../services/api/dtos';
+import { OperationStatus } from 'services/api/dtos';
 
 export interface APIServiceResponse<E>{
   data: E | undefined;

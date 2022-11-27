@@ -4,7 +4,7 @@ import { Card, Snackbar, Alert, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { ResetForm, ResetPasswordFormValues } from './ResetForm';
 import { TokenValidation } from './TokenValidation';
-import { authApiService } from '../../services/api/AuthApiService';
+import { authApiService } from 'services/api/AuthApiService';
 import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
 

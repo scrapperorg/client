@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card, Typography, Snackbar, Alert } from '@mui/material';
-import { authApiService } from '../../services/api/AuthApiService';
+import { authApiService } from 'services/api/AuthApiService';
 import { RecoverForm, RecoverPasswordFormValues } from './RecoverForm';
 
 
