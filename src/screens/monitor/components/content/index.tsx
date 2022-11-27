@@ -1,10 +1,14 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useContext } from 'react';
+import { MonitorContext } from 'screens/monitor/context';
+import { DocumentsTable } from '../documentTable';
 
 export default function MonitorContent() {
+
+  const { documents } = useContext(MonitorContext);
+
+  if (!documents) return null
+
   return (
-    <Box>
-      <Typography>Monitor screen content</Typography>
-    </Box>
+    <DocumentsTable documents={documents} />
   );
 }

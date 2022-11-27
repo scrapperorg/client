@@ -1,13 +1,21 @@
+import { QueryAll } from './dtos/generic';
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 
+
+const argsToQuery = (args: Record<string, string | number>) => {
+  const stringifiedArgs: Record<string, string> = {};
+  Object.keys(args).forEach((key: string) => stringifiedArgs[key] = args[key].toString())
+  return new URLSearchParams(stringifiedArgs).toString() 
+}
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
-  async getDocuments(): Promise<OperationStatus<DocumentDto[]>> {
+  async getDocuments(args: Record<string, string | number>): Promise<OperationStatus<QueryAll<DocumentDto>>> {
     try {
-      const response = await this.httpClient.get<DocumentDto[]>('/document');
+      const params = argsToQuery(args);
+      const response = await this.httpClient.get<QueryAll<DocumentDto>>(`/document?${params}`);
 
       return {
         success: true,

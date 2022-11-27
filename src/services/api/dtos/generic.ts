@@ -4,3 +4,7 @@ export interface OperationStatus<TPayload> {
   payload?: TPayload;
   status?: number;
 }
+export interface QueryAll<E> {
+  totalNumberOfResults: number;
+  results: E[];
+}
