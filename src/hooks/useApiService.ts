@@ -11,14 +11,18 @@ export interface APIServiceResponse<E>{
   error: string | undefined;
 }
 
-export const useApiService = <DataType>(apiService: unknown, method: ApiMethod<DataType>) :APIServiceResponse<DataType> => {
+export const useApiService = <DataType>(
+  apiService: unknown,
+  method: ApiMethod<DataType>,
+  ...args: Parameters<ApiMethod<DataType>>
+) :APIServiceResponse<DataType> => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<DataType>();
   const [error, setError] = useState<string | undefined>();
 
   const fetch = async () => {
     setLoading(true);
-    const response = await method.call(apiService);
+    const response = await method.call(apiService, ...args);
     
     if(!response.success) {
       setError(response.error ?? 'Ceva nu a functionat. Va rugam incercati din nou.');

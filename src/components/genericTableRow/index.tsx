@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@mui/material';
 
 interface GenericTableRowProps {
   id: string;
-  values: Array<string | number>;
+  values: Array<string | number | JSX.Element>;
 }
 
 export const GenericTableRow = (props: GenericTableRowProps ) => {

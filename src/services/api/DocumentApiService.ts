@@ -22,6 +22,22 @@ class DocumentApiService {
     }
   }
 
+  async getDocumentById(id: string): Promise<OperationStatus<DocumentDto>> {
+    try {
+      const response = await this.httpClient.get<DocumentDto>(`/document/${id}`);
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
 }
 
 export const documentApiService = new DocumentApiService(axios);
