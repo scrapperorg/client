@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, AppBar, Toolbar, IconButton, Badge, Tooltip } from '@mui/material';
 import { LeftSide, RightSide, StyledContainer } from './styled';
 import {
@@ -6,8 +6,12 @@ import {
   Notifications as NotificationsIcon,
   GridOnOutlined as GridOnOutlinedIcon,
 } from '@mui/icons-material';
+import { ProfileModal } from 'components/modal/profile';
+import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function TopBar() {
+  const { openModal } = useContext(InteractiveComponentsContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static' color='transparent'>
@@ -35,10 +39,12 @@ export default function TopBar() {
                     aria-label='account of current user'
                     aria-haspopup='true'
                     color='inherit'
+                    onClick={openModal}
                   >
                     <PersonIcon />
                   </IconButton>
                 </Tooltip>
+                <ProfileModal />
               </Box>
             </RightSide>
           </StyledContainer>
