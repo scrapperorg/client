@@ -1,5 +1,7 @@
 import React from 'react';
-import { TableContainer, Table, TableHead, Paper, TableCell, TableBody, TableRow, TablePagination } from '@mui/material';
+import { TableContainer, Table, TableHead, Paper, TableCell, TableBody, TableRow, TablePagination, useTheme } from '@mui/material';
+import { tableCellClasses } from '@mui/material/TableCell';
+import styled from 'styled-components';
 
 interface GenericTableProps {
   columns: string[];
@@ -19,8 +21,11 @@ export const GenericTable = (props: GenericTableProps) => {
     page,
     onPageChange
   } = props;
+
+  const theme = useTheme();
+
   const tableHeadCells = columns.map((column, i) => (
-    <TableCell key={i}>{column}</TableCell>
+    <StyledTableCell key={i} theme={theme}>{column}</StyledTableCell>
   ))
 
   const handlePageChange = (
@@ -30,6 +35,7 @@ export const GenericTable = (props: GenericTableProps) => {
     onPageChange(page);
   }
 
+  
   return (
     <Paper>
       <TableContainer component={Paper}>
@@ -55,3 +61,10 @@ export const GenericTable = (props: GenericTableProps) => {
     </Paper>
   )
 }
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.text.secondary,
+  },
+}));

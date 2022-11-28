@@ -57,7 +57,7 @@ export const usePaginatedApiService = <DataType>(apiService: unknown, method: Ap
   const [data, setData] = useState<DataType>();
   const [error, setError] = useState<string | undefined>();
   const [page, setPage] = useState<number>(0);
-  const pageSize = 2;
+  const pageSize = 5;
 
   const fetch = async (page: number, pageSize: number) => {
     setLoading(true);
