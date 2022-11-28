@@ -1,66 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Card, TextField, Typography, Box, Divider, Snackbar, Alert } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import joi from 'joi';
 import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
-import { authApiService } from '../../services/api/AuthApiService';
 import { LoadingButton } from '@mui/lab';
-import { AuthContext, User } from 'contexts/authContext';
-import { useNavigate } from 'react-router-dom';
-import { axios } from 'config/http';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
-const loginSchema = joi.object({
-  email: joi
-    .string()
-    .email({ tlds: { allow: false } })
-    .required()
-    .messages({
-      'string.email': 'Adresa de email trebuie sa fie de forma nume@adresa.ceva',
-      'string.empty': 'Acest camp este obligatoriu',
-    }),
-  password: joi
-    .string()
-    // .alphanum()
-    .required()
-    .messages({ 'string.empty': 'Acest camp este obligatoriu' }),
-});
+import {useLoginForm} from "./hooks/useLoginForm";
 
 export default function LoginScreen() {
-  const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
-  const [showLoading, setShowLoading] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const loginForm = useForm<LoginFormValues>({
-    mode: 'onChange',
-    defaultValues: { email: '', password: '' },
-    resolver: joiResolver(loginSchema),
-  });
-
-  const handleSubmit = async ({ email, password }: LoginFormValues) => {
-    setShowLoading(true);
-    const response = await authApiService.login(email, password);
-
-    if (!response.success) {
-      setShowLoading(false);
-      setShowError(true);
-      return;
-    }
-
-    authContext.setUser(response.payload?.user as User);
-    const token = response.payload?.token as string;
-    localStorage.setItem('token', token);
-    axios.defaults.headers.common['authorization'] = token;
-    setShowLoading(false);
-    navigate(PATHS.MONITOR);
-  };
+  const { handleSubmit, showLoading, showError, loginForm, setShowError } = useLoginForm();
 
   return (
     <Background>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import PATHS from 'constants/paths';
 import PublicRoute from 'router/components/publicRoute';
 import PrivateRoute from 'router/components/privateRoute';
@@ -24,7 +24,7 @@ export default function CustomRouter() {
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<Layout />}>
-            <Route path={PATHS.MONITOR} element={<MonitorScreen />}></Route>
+            <Route path={PATHS.MONITOR} element={<MonitorScreen />} />
           </Route>
         </Route>
       </Routes>
