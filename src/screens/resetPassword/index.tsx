@@ -29,7 +29,7 @@ export default function ResetPasswordScreen() {
 
   const { token='' } = useParams();
 
-  const handleResetPassword = async ({ password, repeat_password }: ResetPasswordFormValues) => {
+  const handleResetPassword = async ({ password }: ResetPasswordFormValues) => {
     setShowResetLoading(true);
     const response = await authApiService.resetPassword(token, password);
   

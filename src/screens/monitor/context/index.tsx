@@ -12,8 +12,8 @@ const defaultState: MonitorProviderState = {
 export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
-  const [data, setData] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [data] = useState(true);
+  const [isLoading] = useState(false);
 
   if (isLoading) {
     return <Loading />;
