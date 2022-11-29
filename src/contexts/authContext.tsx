@@ -2,13 +2,14 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import Loading from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
 import { LoginDto, OperationStatus } from 'services/api/dtos';
+import {Role} from "constants/roles";
 
 export interface User {
   id: string;
   name: string;
   surname: string;
   email: string;
-  role: string;
+  role: Role;
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;

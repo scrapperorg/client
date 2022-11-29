@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import styled from 'styled-components';
 import { Card, Snackbar, Alert, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { ResetForm, ResetPasswordFormValues } from './ResetForm';
-import { TokenValidation } from './TokenValidation';
-import { authApiService } from 'services/api/AuthApiService';
+import { ResetForm } from './components/resetForm';
+import { TokenValidation } from './components/tokenValidation';
 import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
-
-export interface HandleValidateProps {
-  token: string;
-}
+import {useResetPasswordForm} from "./hooks/useResetPasswordForm";
 
 const ResetSuccessMessage = () => (
   <Typography variant='h3' align='center'>
@@ -20,52 +15,11 @@ const ResetSuccessMessage = () => (
 )
 
 export default function ResetPasswordScreen() {
-  const [showError, setShowError] = useState(false);
-  const [showInvalidTokenMessage, setShowInvalidTokenMessage] = useState(false);
-  const [isPasswordReset, setIsPasswordReset] = useState(false);
-  const [showResetLoading, setShowResetLoading] = useState(false);
-  const [showValidateLoading, setShowValidateLoading] = useState(false);
-  const [isTokenValidated, setIsTokenValidated] = useState(false);
-
-  const { token='' } = useParams();
-
-  const handleResetPassword = async ({ password, repeat_password }: ResetPasswordFormValues) => {
-    setShowResetLoading(true);
-    const response = await authApiService.resetPassword(token, password);
-  
-    if (!response.success) {
-      setShowResetLoading(false);
-      setShowError(true);
-      return;
-    }
-  
-    setShowResetLoading(false);
-    setIsPasswordReset(true);
-  };
-
-  const handleValidateToken = async ({ token }: HandleValidateProps) => {
-    setShowValidateLoading(true);
-    const response = await authApiService.validateResetPasswordToken(token);
-
-    if(response?.status === 404) {
-      setTimeout(() => {
-        setShowValidateLoading(false);
-        setShowInvalidTokenMessage(true);
-      }, 1000);
-      return;
-    }
-
-    if(!response.success) {
-      setShowValidateLoading(false);
-      setShowError(true)
-      return;
-    }
-
-    setTimeout(() => {
-      setShowValidateLoading(false);
-      setIsTokenValidated(true);
-    }, 1000);
-  }
+  const {
+    isTokenValidated, isPasswordReset, handleResetPassword,
+    handleValidateToken, showResetLoading, showValidateLoading,
+    showInvalidTokenMessage, showError, token, setShowError
+  } = useResetPasswordForm();
 
   const content = isTokenValidated
     ? 
@@ -99,8 +53,6 @@ export default function ResetPasswordScreen() {
     </Background>
   );
 }
-
-
 
 export const Background = styled.div`
   display: flex;

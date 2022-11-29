@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import PATHS from 'constants/paths';
 import PublicRoute from 'router/components/publicRoute';
 import PrivateRoute from 'router/components/privateRoute';

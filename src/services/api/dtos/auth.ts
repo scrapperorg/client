@@ -1,8 +1,10 @@
+import {Role} from "constants/roles";
+
 export interface UserDto {
   id: string;
   name: string;
   surname: string;
-  role: string;
+  role: Role;
   email: string;
 }
 
