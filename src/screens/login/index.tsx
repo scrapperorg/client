@@ -73,10 +73,6 @@ export default function LoginScreen() {
   );
 }
 
-export const FormFullWith = styled.form`
-  width: 100%;
-`;
-
 export const HeadersContainer = styled.div`
   margin-bottom: ${(props) => props.theme.spacing(8)};
 `;

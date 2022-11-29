@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import Loading from 'components/loading';
 import {useAuthenticatedUser} from "./hooks/useAuthenticatedUser";
-import {UserDto} from "../../services/api/AuthApiService";
+import {UserDto} from "services/api/dtos";
 
 export interface AuthProviderState {
   isAuthenticated: boolean;

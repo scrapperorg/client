@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
-import {authApiService, LoginDto, OperationStatus, UserDto} from "services/api/AuthApiService";
+import {authApiService} from "services/api/AuthApiService";
 import {useLocalStorage} from "hooks/useLocalStorage";
+import {LoginDto, OperationStatus, UserDto} from "services/api/dtos";
 
 export type UseAuthenticatedUserState = {
     isLoading: boolean;

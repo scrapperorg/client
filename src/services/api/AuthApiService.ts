@@ -1,31 +1,6 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
-import {Role} from "../../constants/roles";
-
-export interface OperationStatus<TPayload> {
-  success: boolean;
-  error?: string;
-  payload?: TPayload;
-  status?: number;
-}
-
-export interface UserDto {
-  id: string;
-  name: string;
-  surname: string;
-  role: Role;
-  email: string;
-}
-
-export interface LoginDto {
-  token: string;
-  user: UserDto;
-}
-
-export interface RecoverPasswordDto {
-  userId: string;
-  token: string;
-}
+import { LoginDto, OperationStatus, RecoverPasswordDto } from './dtos';
 
 class AuthApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
@@ -109,6 +84,7 @@ class AuthApiService {
       };
     }
   }
+
 }
 
 export const authApiService = new AuthApiService(axios);

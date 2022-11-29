@@ -17,7 +17,7 @@ export default function TopBar() {
       <AppBar position='static' color='transparent'>
         <Toolbar>
           <StyledContainer>
-            <LeftSide>Left side</LeftSide>
+            <LeftSide></LeftSide>
             <RightSide>
               <Box sx={{ display: { md: 'flex' } }}>
                 <Tooltip title='Monitor'>

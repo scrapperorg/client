@@ -1,14 +1,26 @@
-import React from 'react';
-import {Box, Button, Typography} from '@mui/material';
-import {useNavigate} from "react-router-dom";
-import PATHS from "constants/paths";
+import React, { useContext } from 'react';
+import { MonitorContext } from 'screens/monitor/context';
+import { DocumentsTable } from '../documentTable';
 
 export default function MonitorContent() {
-    const navigate = useNavigate()
-    return (
-        <Box>
-            <Typography>Monitor screen content</Typography>
-            <Button onClick={() => navigate(PATHS.TEST)}></Button>
-        </Box>
-    );
+
+  const {
+    documents,
+    totalNumberOfDocuments,
+    page,
+    onPageChange,
+    pageSize,
+  } = useContext(MonitorContext);
+
+  if (!documents) return null
+
+  return (
+    <DocumentsTable
+      documents={documents}
+      totalNumberOfDocuments={totalNumberOfDocuments}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={onPageChange}
+    />
+  );
 }
