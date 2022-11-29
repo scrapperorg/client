@@ -18,7 +18,7 @@ const defaultState: MonitorProviderState = {
   totalNumberOfDocuments: 0,
   page: 0,
   pageSize: 2,
-  onPageChange: (page: number) => { console.log('method not implemented') }
+  onPageChange: (page: number) => { console.log(`method not implemented. page: ${page}`) }
 };
 
 export const MonitorContext = createContext(defaultState);

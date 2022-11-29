@@ -18,7 +18,7 @@ export const DocumentDetailsContext = createContext(defaultState);
 const DocumentDetailsDataProvider = ({ children }: any) => {
   const { id='' } = useParams();
 
-  const { data, loading, error } = useApiService<DocumentDto>(documentApiService, documentApiService.getDocumentById, id);
+  const { data, loading } = useApiService<DocumentDto>(documentApiService, documentApiService.getDocumentById, id);
 
   if (loading) {
     return <Loading />;
