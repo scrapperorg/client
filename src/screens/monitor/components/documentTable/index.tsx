@@ -48,7 +48,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
 
   const theme = useTheme();
 
-  const documentRows = documents && documents.map(document => (
+  const documentRows = documents.map(document => (
       <GenericTableRow
         id={document.id}
         key={document.id}

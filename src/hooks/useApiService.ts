@@ -3,7 +3,7 @@ import { OperationStatus } from 'services/api/dtos';
 
 
 
-export type ApiMethod<E> = (...args: any[]) => Promise<OperationStatus<E>>
+export type ApiMethod<ResponseType> = (...args: any[]) => Promise<OperationStatus<ResponseType>>
 
 export interface APIServiceResponse<E>{
   data: E | undefined;
@@ -46,7 +46,7 @@ export const useApiService = <DataType>(
   return {data, loading, error};
 }
 
-interface PaginatedData<E> extends APIServiceResponse<E>{
+interface PaginatedData<ResponseType> extends APIServiceResponse<ResponseType>{
   page: number;
   pageSize: number;
   onPageChange: (page: number) => void;
