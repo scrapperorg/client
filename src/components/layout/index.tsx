@@ -7,20 +7,20 @@ import { Outlet } from 'react-router-dom';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function Layout() {
-    const { isSidebarOpened } = useContext(InteractiveComponentsContext);
-    return (
-        <StyledLayout>
-            <TopBar />
-            <Content>
-                <Grid container spacing={2}>
-                    <Grid item xs={isSidebarOpened ? 3 : 2}>
-                        <SideBar />
-                    </Grid>
-                    <Grid item xs={isSidebarOpened ? 9 : 10}>
-                        <Outlet />
-                    </Grid>
-                </Grid>
-            </Content>
-        </StyledLayout>
-    );
+  const { isSidebarOpened } = useContext(InteractiveComponentsContext);
+  return (
+    <StyledLayout>
+      <TopBar />
+      <Content>
+        <Grid container>
+          <Grid item xs={isSidebarOpened ? 2 : 1}>
+            <SideBar />
+          </Grid>
+          <Grid item xs={isSidebarOpened ? 10 : 11}>
+            <Outlet />
+          </Grid>
+        </Grid>
+      </Content>
+    </StyledLayout>
+  );
 }
