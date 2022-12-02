@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Container from '@mui/material/Container';
 
 export const StyledLayout = styled.div`
   width: 100%;
@@ -7,9 +6,9 @@ export const StyledLayout = styled.div`
   flex-direction: column;
 `;
 
-export const Content = styled(Container)`
+export const Content = styled.div`
   && {
-    width: 100%;
+    width: 95%;
     padding-top: 30px;
     padding-bottom: 30px;
   }
