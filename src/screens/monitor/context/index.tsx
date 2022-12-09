@@ -1,8 +1,7 @@
 import React, { createContext } from 'react';
 import Loading from 'components/loading';
-import { DocumentDto, QueryAll, } from 'services/api/dtos';
-import { documentApiService } from 'services/api/DocumentApiService';
-import { usePaginatedApiService } from 'hooks/useApiService';
+import { DocumentDto } from 'services/api/dtos';
+import {useDocuments} from "../hooks/useDocuments";
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
@@ -10,6 +9,7 @@ export interface MonitorProviderState {
   page: number;
   pageSize: number;
   error?: string;
+  fetch: (page: number, pageSize: number) => void;
   onPageChange: (page: number) => void;
 }
 
@@ -18,29 +18,16 @@ const defaultState: MonitorProviderState = {
   totalNumberOfDocuments: 0,
   page: 0,
   pageSize: 2,
+  fetch: () => { console.log('method not implemented') },
   onPageChange: (page: number) => { console.log(`method not implemented. page: ${page}`) }
 };
 
 export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
-  const { page, pageSize, data, loading, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments);
+  const documentsState = useDocuments();
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  const state: MonitorProviderState = {
-    documents: data?.results ?? defaultState.documents,
-    totalNumberOfDocuments: data?.totalNumberOfResults ?? defaultState.totalNumberOfDocuments,
-    error,
-    page,
-    pageSize: pageSize ||  defaultState.pageSize,
-    onPageChange: onPageChange || defaultState.onPageChange,
-  };
-
-
-  return <MonitorContext.Provider value={state}>{children}</MonitorContext.Provider>;
+  return <MonitorContext.Provider value={documentsState}>{children}</MonitorContext.Provider>;
 };
 
 export default MonitorDataProvider;
