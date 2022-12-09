@@ -1,5 +1,4 @@
 import React, { createContext } from 'react';
-import Loading from 'components/loading';
 import { DocumentDto } from 'services/api/dtos';
 import {useDocuments} from "../hooks/useDocuments";
 

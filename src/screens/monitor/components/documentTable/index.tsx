@@ -4,7 +4,7 @@ import { GenericTableRow } from 'components/genericTableRow';
 import { DocumentDto } from 'services/api/dtos';
 import { Link } from 'react-router-dom';
 
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import {DocumentMarks} from "./components/DocumentMarks";
 import { Status } from 'services/api/dtos/document';
