@@ -11,10 +11,18 @@ const StyledBox = styled(Box)`
 
 export const ActionButtons = () => {
 
-    return <StyledBox>
-        <IconButton><DownloadIcon fontSize="small"/></IconButton>
-        <IconButton><RemoveRedEyeIcon fontSize="small"/></IconButton>
-        <IconButton><SearchIcon fontSize="small"/></IconButton>
-    </StyledBox>
+    return (
+        <StyledBox>
+            <IconButton>
+                <DownloadIcon fontSize='small' />
+            </IconButton>
+            <IconButton>
+                <RemoveRedEyeIcon fontSize='small' />
+            </IconButton>
+            <IconButton>
+                <SearchIcon fontSize='small' />
+            </IconButton>
+        </StyledBox>
+    )
 }
 

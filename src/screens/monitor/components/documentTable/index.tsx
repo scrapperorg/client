@@ -8,6 +8,7 @@ import { Box, useTheme } from '@mui/material';
 import styled from 'styled-components';
 import {DocumentMarks} from "./components/DocumentMarks";
 import { Status } from 'services/api/dtos/document';
+import {ActionButtons} from "./components/ActionButtons";
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
@@ -40,11 +41,12 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
       id={document.id}
       key={document.id}
       values={[
-        document.identificator,
+        <DocumentMarks document={document} key={`marks-for-${document.id}`} />,
+        document.identifier,
         <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>
           {document.title}
         </StyledLink>, // todo: use constant
-        document.project,
+        document.project.title,
         document.publicationDate.toString(),
         document.source,
         document.status,
