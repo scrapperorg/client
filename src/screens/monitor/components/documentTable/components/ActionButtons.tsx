@@ -9,10 +9,12 @@ const StyledBox = styled(Box)`
   display: flex;
 `;
 
-export const ActionButtons = () => (
-    <StyledBox>
+export const ActionButtons = () => {
+
+    return <StyledBox>
         <IconButton><DownloadIcon fontSize="small"/></IconButton>
         <IconButton><RemoveRedEyeIcon fontSize="small"/></IconButton>
         <IconButton><SearchIcon fontSize="small"/></IconButton>
     </StyledBox>
-)
+}
+
