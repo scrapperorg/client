@@ -6,14 +6,22 @@ import { InteractiveComponentsContext } from 'contexts/interactiveComponentsCont
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { Modal } from 'components/modal';
+import PATHS from 'constants/paths';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from 'contexts/authContext';
+import { authApiService } from 'services/api/AuthApiService';
 
 export const ProfileModal = () => {
   const { isModalOpened, closeModal } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
+  const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
   const logout = () => {
     closeModal();
-    //TODO: add logout functionality
+    setUser(undefined);
+    authApiService.logout();
+    navigate(PATHS.LOGIN);
   };
 
   const goToProfilePage = () => {

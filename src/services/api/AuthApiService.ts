@@ -39,6 +39,11 @@ class AuthApiService {
     }
   }
 
+  async logout() {
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['authorization'];
+  }
+
   async recoverPassword(email: string): Promise<OperationStatus<RecoverPasswordDto>> {
     try {
       const res = await this.httpClient.post<RecoverPasswordDto>('/recover-password', { email });
@@ -84,7 +89,6 @@ class AuthApiService {
       };
     }
   }
-
 }
 
 export const authApiService = new AuthApiService(axios);

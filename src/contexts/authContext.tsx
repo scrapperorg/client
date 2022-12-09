@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import Loading from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
 import { LoginDto, OperationStatus } from 'services/api/dtos';
-import {Role} from "constants/roles";
+import { Role } from 'constants/roles';
 
 export interface User {
   id: string;
@@ -14,7 +14,7 @@ export interface User {
 export interface AuthProviderState {
   isAuthenticated: boolean;
   user: User | undefined;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
 }
 
 const defaultState: AuthProviderState = {
@@ -34,7 +34,7 @@ export interface UseAuthHookReturnType {
   isLoading: boolean;
   user: User | undefined;
   token: string | null;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
@@ -43,7 +43,7 @@ const useAuth: () => UseAuthHookReturnType = () => {
   const token = localStorage.getItem('token');
 
   const setUser = useCallback(
-    (user: User) => {
+    (user: User | undefined) => {
       _setUser(user);
     },
     [_setUser],
@@ -73,7 +73,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const state: AuthProviderState = {
     user,
     isAuthenticated: Boolean(user),
-    setUser: (user: User) => {
+    setUser: (user: User | undefined) => {
       setUser(user);
     },
   };
