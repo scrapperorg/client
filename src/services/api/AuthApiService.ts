@@ -39,7 +39,7 @@ class AuthApiService {
     }
   }
 
-  async logout() {
+  logout() {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['authorization'];
   }
