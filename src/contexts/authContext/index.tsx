@@ -1,12 +1,13 @@
 import React, { createContext } from 'react';
 import Loading from 'components/loading';
-import {useAuthenticatedUser} from "./hooks/useAuthenticatedUser";
-import {UserDto} from "services/api/dtos";
+import { useAuthenticatedUser } from './hooks/useAuthenticatedUser';
+import { UserDto } from 'services/api/dtos';
 
 export interface AuthProviderState {
   isAuthenticated: boolean;
   user: UserDto | undefined;
   setUser: (user: UserDto) => void;
+  logoutUser: () => void;
 }
 
 const defaultState: AuthProviderState = {
@@ -14,6 +15,7 @@ const defaultState: AuthProviderState = {
   isAuthenticated: false,
   // eslint-disable-next-line
   setUser: () => {},
+  logoutUser: () => undefined,
 };
 
 export const AuthContext = createContext(defaultState);
@@ -23,7 +25,7 @@ export interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { user, isLoading, setUser, isAuthenticated } = useAuthenticatedUser();
+  const { user, isLoading, setUser, isAuthenticated, logoutUser } = useAuthenticatedUser();
 
   if (isLoading) {
     return <Loading />;
@@ -33,6 +35,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     isAuthenticated,
     setUser,
+    logoutUser,
   };
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;

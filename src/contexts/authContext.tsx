@@ -15,6 +15,7 @@ export interface AuthProviderState {
   isAuthenticated: boolean;
   user: User | undefined;
   setUser: (user: User | undefined) => void;
+  logoutUser: () => void;
 }
 
 const defaultState: AuthProviderState = {
@@ -22,6 +23,7 @@ const defaultState: AuthProviderState = {
   isAuthenticated: false,
   // eslint-disable-next-line
   setUser: () => {},
+  logoutUser: () => undefined,
 };
 
 export const AuthContext = createContext(defaultState);
@@ -35,6 +37,7 @@ export interface UseAuthHookReturnType {
   user: User | undefined;
   token: string | null;
   setUser: (user: User | undefined) => void;
+  logoutUser: () => void;
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
@@ -49,6 +52,12 @@ const useAuth: () => UseAuthHookReturnType = () => {
     [_setUser],
   );
 
+  const logoutUser = () => {
+    setUser(undefined);
+    authApiService.logout();
+    localStorage.removeItem('token');
+  };
+
   useEffect(() => {
     if (token) {
       // fetch /refresh token
@@ -60,11 +69,11 @@ const useAuth: () => UseAuthHookReturnType = () => {
     setIsLoading(false);
   }, []);
 
-  return { isLoading, user, token, setUser };
+  return { isLoading, user, token, setUser, logoutUser };
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { isLoading, user, setUser } = useAuth();
+  const { isLoading, user, setUser, logoutUser } = useAuth();
 
   if (isLoading) {
     return <Loading />;
@@ -75,6 +84,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAuthenticated: Boolean(user),
     setUser: (user: User | undefined) => {
       setUser(user);
+    },
+    logoutUser: () => {
+      logoutUser();
     },
   };
 

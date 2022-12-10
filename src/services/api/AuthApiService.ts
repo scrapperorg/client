@@ -40,7 +40,6 @@ class AuthApiService {
   }
 
   logout() {
-    localStorage.removeItem('token');
     delete axios.defaults.headers.common['authorization'];
   }
 
