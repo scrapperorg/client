@@ -1,3 +1,5 @@
+import { ProjectDto } from "./project";
+
 export enum Status {
   NOU = 'nou',
   IN_ANALIZA = 'in analiza',
@@ -9,8 +11,8 @@ export interface DocumentDto {
   createdAt: Date;
   updatedAt: Date;
   title: string;
-  project: string;
-  identificator: string;
+  project: ProjectDto;
+  identifier: string;
   publicationDate: Date;
   source: string;
   status: Status;

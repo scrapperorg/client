@@ -7,8 +7,15 @@ class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
   async getDocuments(page: number, pageSize: number): Promise<OperationStatus<QueryAll<DocumentDto>>> {
+    const token = localStorage.getItem('token')
+
     try {
-      const response = await this.httpClient.get<QueryAll<DocumentDto>>(`/document?page=${page}&pageSize=${pageSize}`);
+      const response = await this.httpClient.get<QueryAll<DocumentDto>>(
+        `/document?page=${page}&pageSize=${pageSize}`,
+        {
+          headers: { authorization: token },
+        }
+      );
       return {
         success: true,
         payload: response.data,
@@ -23,8 +30,15 @@ class DocumentApiService {
   }
 
   async getDocumentById(id: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token')
+
     try {
-      const response = await this.httpClient.get<DocumentDto>(`/document/${id}`);
+      const response = await this.httpClient.get<DocumentDto>(
+        `/document/${id}`,
+        {
+          headers: { authorization: token },
+        }
+      );
       return {
         success: true,
         payload: response.data,
