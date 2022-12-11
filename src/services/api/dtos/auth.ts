@@ -6,6 +6,7 @@ export interface UserDto {
   surname: string;
   role: Role;
   email: string;
+  sourcesOfInterest: string[];
 }
 
 export interface LoginDto {
