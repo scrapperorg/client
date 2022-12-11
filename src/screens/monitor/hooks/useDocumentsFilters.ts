@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { userApiService } from "services/api/UserApiService";
 
 
-export const useDocumentsFilters = () => {
+export function useDocumentsFilters() {
   const [sourcesOfInterest, setSourcesOfInterest] = useState<string[]>([]);
 
   const { user } = useContext(AuthContext);
@@ -14,9 +14,9 @@ export const useDocumentsFilters = () => {
   }, [user?.sourcesOfInterest])
 
 
-  const updateSourcesOfInterest = (sources: string[]) => {
+  const updateSourcesOfInterest = async (sources: string[]) => {
     setSourcesOfInterest(sources);
-    userApiService.updateSourcesOfInterest(sources);
+    await userApiService.updateSourcesOfInterest(sources);
   }
 
   return {

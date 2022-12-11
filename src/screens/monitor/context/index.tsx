@@ -1,10 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext } from 'react';
 import Loading from 'components/loading';
 import { DocumentDto, QueryAll, } from 'services/api/dtos';
 import { documentApiService } from 'services/api/DocumentApiService';
 import { usePaginatedApiService } from 'hooks/useApiService';
 import { useDocumentsFilters } from '../hooks/useDocumentsFilters';
-import { AuthContext } from 'contexts/authContext';
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
@@ -33,7 +32,7 @@ const MonitorDataProvider = ({ children }: any) => {
 
   const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters()
 
-  const { page, pageSize, data, loading, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments);
+  const { page, pageSize, data, loading, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
 
   if (loading) {
     return <Loading />;

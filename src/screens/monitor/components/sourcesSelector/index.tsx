@@ -21,7 +21,7 @@ export const SourcesSelector = (props: SelectorProps) => {
   const sources = sources_of_interest_list.map(source => (
     <StyledMenuItem key={source} value={source}>
       <Checkbox checked={selectedOptions.indexOf(source) > -1}/>
-      <ListItemText primary={source}/>
+      <ListItemText primary={source.replace('_', ' ')}/>
     </StyledMenuItem>
   ))
 
@@ -45,7 +45,7 @@ export const SourcesSelector = (props: SelectorProps) => {
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {(selected as string[]).map((value: string) => (
-              <Chip key={value} label={value} />
+              <Chip key={value} label={value.replace('_', ' ')} />
             ))}
           </Box>
         )}

@@ -6,12 +6,16 @@ import { OperationStatus, DocumentDto } from './dtos';
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
-  async getDocuments(page: number, pageSize: number): Promise<OperationStatus<QueryAll<DocumentDto>>> {
+  async getDocuments(
+    sourcesOfInterest: string[] = [],
+    page: number,
+    pageSize: number): Promise<OperationStatus<QueryAll<DocumentDto>>> {
     const token = localStorage.getItem('token')
 
     try {
+      const sourcesQueryParams = sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('');
       const response = await this.httpClient.get<QueryAll<DocumentDto>>(
-        `/document?page=${page}&pageSize=${pageSize}`,
+        `/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`,
         {
           headers: { authorization: token },
         }
