@@ -7,13 +7,14 @@ class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
   async getDocuments(
-    sourcesOfInterest: string[] = [],
     page: number,
-    pageSize: number): Promise<OperationStatus<QueryAll<DocumentDto>>> {
+    pageSize: number,
+    sourcesOfInterest: string[] = []
+  ): Promise<OperationStatus<QueryAll<DocumentDto>>> {
     const token = localStorage.getItem('token')
 
     try {
-      const sourcesQueryParams = sourcesOfInterest && sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('') || '';
+      const sourcesQueryParams = sourcesOfInterest && sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('');
       const response = await this.httpClient.get<QueryAll<DocumentDto>>(
         `/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`,
         {

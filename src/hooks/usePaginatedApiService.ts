@@ -21,7 +21,7 @@ export const usePaginatedApiService = <DataType>(
 
     const fetch = useCallback(async (page: number, pageSize: number, ...args: Parameters<ApiMethod<DataType>>) => {
         setLoading(true);
-        const response = await method.call(apiService, ...args, page, pageSize);
+        const response = await method.call(apiService, page, pageSize, ...args);
 
         if(!response.success) {
             setError(response.error ?? 'Ceva nu a functionat. Va rugam incercati din nou.');
