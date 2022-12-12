@@ -8,7 +8,7 @@ export const StyledLayout = styled.div`
 
 export const Content = styled.div`
   && {
-    width: 95%;
+    width: calc(100% - 20px);
     padding-top: 30px;
     padding-bottom: 30px;
   }
