@@ -7,6 +7,7 @@ export const StyledContainer = styled(Container)`
     justify-content: space-between;
     flex-direction: row;
     display: flex;
+    max-width: inherit;
   }
 `;
 

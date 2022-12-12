@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import { DocumentDto, QueryAll, } from 'services/api/dtos';
 import { documentApiService } from 'services/api/DocumentApiService';
 import { useDocumentsFilters } from '../hooks/useDocumentsFilters';
-import { usePaginatedApiService } from "hooks/usePaginatedApiService";
+import { usePaginatedApiService } from 'hooks/usePaginatedApiService';
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
