@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { authApiService } from 'services/api/AuthApiService';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { LoginDto, OperationStatus, UserDto } from 'services/api/dtos';
@@ -29,11 +29,11 @@ export function useAuthenticatedUser(): UseAuthenticatedUserState {
     setIsLoading(false);
   }, []);
 
-  const logoutUser = () => {
+  const logoutUser = useCallback(() => {
     setUser(undefined);
     authApiService.logout();
     localStorage.removeItem('token');
-  };
+  }, [setUser]);
 
   return {
     user,
