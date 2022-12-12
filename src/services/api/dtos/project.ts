@@ -1,7 +1,7 @@
-export interface ProjectDTO {
+export interface ProjectDto {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  title: string;
   presentsInterest: boolean;
+  title: string;
 }
