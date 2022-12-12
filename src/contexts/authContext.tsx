@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import Loading from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
 import { LoginDto, OperationStatus } from 'services/api/dtos';
-import {Role} from "constants/roles";
+import { Role } from 'constants/roles';
 
 export interface User {
   id: string;
@@ -15,7 +15,8 @@ export interface User {
 export interface AuthProviderState {
   isAuthenticated: boolean;
   user: User | undefined;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
+  logoutUser: () => void;
 }
 
 const defaultState: AuthProviderState = {
@@ -23,6 +24,7 @@ const defaultState: AuthProviderState = {
   isAuthenticated: false,
   // eslint-disable-next-line
   setUser: () => {},
+  logoutUser: () => undefined,
 };
 
 export const AuthContext = createContext(defaultState);
@@ -35,7 +37,8 @@ export interface UseAuthHookReturnType {
   isLoading: boolean;
   user: User | undefined;
   token: string | null;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
+  logoutUser: () => void;
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
@@ -44,11 +47,17 @@ const useAuth: () => UseAuthHookReturnType = () => {
   const token = localStorage.getItem('token');
 
   const setUser = useCallback(
-    (user: User) => {
+    (user: User | undefined) => {
       _setUser(user);
     },
     [_setUser],
   );
+
+  const logoutUser = () => {
+    setUser(undefined);
+    authApiService.logout();
+    localStorage.removeItem('token');
+  };
 
   useEffect(() => {
     if (token) {
@@ -61,11 +70,11 @@ const useAuth: () => UseAuthHookReturnType = () => {
     setIsLoading(false);
   }, []);
 
-  return { isLoading, user, token, setUser };
+  return { isLoading, user, token, setUser, logoutUser };
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { isLoading, user, setUser } = useAuth();
+  const { isLoading, user, setUser, logoutUser } = useAuth();
 
   if (isLoading) {
     return <Loading />;
@@ -74,8 +83,11 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const state: AuthProviderState = {
     user,
     isAuthenticated: Boolean(user),
-    setUser: (user: User) => {
+    setUser: (user: User | undefined) => {
       setUser(user);
+    },
+    logoutUser: () => {
+      logoutUser();
     },
   };
 

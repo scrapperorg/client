@@ -6,14 +6,16 @@ import { InteractiveComponentsContext } from 'contexts/interactiveComponentsCont
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { Modal } from 'components/modal';
+import { AuthContext } from 'contexts/authContext';
 
 export const ProfileModal = () => {
   const { isModalOpened, closeModal } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
+  const { logoutUser } = useContext(AuthContext);
 
   const logout = () => {
     closeModal();
-    //TODO: add logout functionality
+    logoutUser();
   };
 
   const goToProfilePage = () => {
