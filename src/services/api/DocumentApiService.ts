@@ -13,7 +13,7 @@ class DocumentApiService {
     const token = localStorage.getItem('token')
 
     try {
-      const sourcesQueryParams = sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('');
+      const sourcesQueryParams = sourcesOfInterest && sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('') || '';
       const response = await this.httpClient.get<QueryAll<DocumentDto>>(
         `/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`,
         {
@@ -26,6 +26,7 @@ class DocumentApiService {
       }
     } catch (err: any) {
       const error: AxiosError = err;
+      console.log(error);
       return {
         success: false,
         error: error.response?.statusText,

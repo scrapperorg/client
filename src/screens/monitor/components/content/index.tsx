@@ -20,15 +20,15 @@ export default function MonitorContent() {
   } = useContext(MonitorContext);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      await fetch(page, pageSize);
+    const interval = setTimeout(async () => {
+      await fetch(page, pageSize, sourcesOfInterest);
       if (page === 0) {
         setTime(new Date());
       }
     }, 5000);
 
     return () => {
-      clearInterval(interval);
+      clearTimeout(interval);
     }
   }, [time]);
 

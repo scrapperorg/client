@@ -1,9 +1,8 @@
 import React, { createContext } from 'react';
-import Loading from 'components/loading';
 import { DocumentDto, QueryAll, } from 'services/api/dtos';
 import { documentApiService } from 'services/api/DocumentApiService';
-import { usePaginatedApiService } from 'hooks/useApiService';
 import { useDocumentsFilters } from '../hooks/useDocumentsFilters';
+import { usePaginatedApiService } from "hooks/usePaginatedApiService";
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
@@ -12,7 +11,7 @@ export interface MonitorProviderState {
   pageSize: number;
   error?: string;
   sourcesOfInterest: string[];
-  fetch: (page: number, pageSize: number) => void;
+  fetch: (page: number, pageSize: number, sourceOfInterest?: string[]) => void;
   onPageChange: (page: number) => void;
   updateSourcesOfInterest: (sources: string[]) => void;
 }
@@ -34,11 +33,7 @@ const MonitorDataProvider = ({ children }: any) => {
 
   const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters()
 
-  const { page, pageSize, data, loading, fetch, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
-
-  if (loading) {
-    return <Loading />;
-  }
+  const { page, pageSize, data, fetch, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
 
   const state: MonitorProviderState = {
     documents: data?.results ?? defaultState.documents,
