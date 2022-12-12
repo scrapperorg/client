@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseISO, format } from 'date-fns';
 import { GenericTable } from 'components/genericTable';
 import { GenericTableRow } from 'components/genericTableRow';
 import { DocumentDto } from 'services/api/dtos';
@@ -45,7 +46,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
           document.identifier,
           <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>, // todo: use constant
           document.project.title,
-          document.publicationDate.toString(),
+          format(parseISO(document.publicationDate.toString()), 'iii, d LLL yyyy'), 
           document.source,
           document.status,
           document.numberOfIdentifiedTerms || 0,
