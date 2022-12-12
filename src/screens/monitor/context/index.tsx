@@ -3,6 +3,7 @@ import Loading from 'components/loading';
 import { DocumentDto, QueryAll, } from 'services/api/dtos';
 import { documentApiService } from 'services/api/DocumentApiService';
 import { usePaginatedApiService } from 'hooks/useApiService';
+import { useDocumentsFilters } from '../hooks/useDocumentsFilters';
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
@@ -10,7 +11,9 @@ export interface MonitorProviderState {
   page: number;
   pageSize: number;
   error?: string;
+  sourcesOfInterest: string[];
   onPageChange: (page: number) => void;
+  updateSourcesOfInterest: (sources: string[]) => void;
 }
 
 const defaultState: MonitorProviderState = {
@@ -18,13 +21,18 @@ const defaultState: MonitorProviderState = {
   totalNumberOfDocuments: 0,
   page: 0,
   pageSize: 2,
-  onPageChange: (page: number) => { console.log(`method not implemented. page: ${page}`) }
+  sourcesOfInterest: [],
+  onPageChange: (page: number) => { console.log(`method not implemented. page: ${page}`) },
+  updateSourcesOfInterest: (sources: string[]) => { console.log(`method not implemented. sources: ${sources}`) }
 };
 
 export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
-  const { page, pageSize, data, loading, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments);
+
+  const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters()
+
+  const { page, pageSize, data, loading, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
 
   if (loading) {
     return <Loading />;
@@ -36,7 +44,9 @@ const MonitorDataProvider = ({ children }: any) => {
     error,
     page,
     pageSize: pageSize ||  defaultState.pageSize,
+    sourcesOfInterest,
     onPageChange: onPageChange || defaultState.onPageChange,
+    updateSourcesOfInterest: updateSourcesOfInterest || defaultState.updateSourcesOfInterest
   };
 
 

@@ -49,25 +49,23 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
 
   const theme = useTheme();
 
-  const documentRows = documents.map((document) => (
-    <GenericTableRow
-      className={`${document.status[0] === Status.NOU ? 'new' : ''}`}
-      id={document.id}
-      key={document.id}
-      values={[
-        document.identificator,
-        <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>
-          {document.title}
-        </StyledLink>, // todo: use constant
-        document.project,
-        document.publicationDate.toString(),
-        document.source,
-        document.status,
-        document.numberOfIdentifiedTerms || 0,
-        <ActionButtons key={`action-for-${document.id}`} />,
-      ]}
-    />
-  ));
+  const documentRows = documents.map(document => (
+      <GenericTableRow
+        id={document.id}
+        key={document.id}
+        className={`${document.status[0] === Status.NOU ? 'new' : ''}`}
+        values={[
+          document.identifier,
+          <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>, // todo: use constant
+          document.project.title,
+          document.publicationDate.toString(),
+          document.source,
+          document.status,
+          document.numberOfIdentifiedTerms || 0,
+          <ActionButtons key={`action-for-${document.id}`}/>
+          ]
+        }/>
+  ))
 
   return (
     <GenericTable

@@ -10,6 +10,7 @@ export interface User {
   surname: string;
   email: string;
   role: Role;
+  sourcesOfInterest: string[];
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;
