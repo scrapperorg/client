@@ -11,6 +11,7 @@ export interface DocumentDto {
   createdAt: Date;
   updatedAt: Date;
   title: string;
+  isRulesBreaker: boolean;
   project: ProjectDto;
   identifier: string;
   publicationDate: Date;

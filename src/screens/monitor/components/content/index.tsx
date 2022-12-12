@@ -1,11 +1,12 @@
 import { Box } from '@mui/system';
-import React, { useContext } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
 import { DocumentsTable } from '../documentTable';
 import { SourcesSelector } from '../sourcesSelector';
 
 export default function MonitorContent() {
+  const [time, setTime] = useState(new Date());
 
   const {
     documents,
@@ -15,7 +16,21 @@ export default function MonitorContent() {
     pageSize,
     sourcesOfInterest,
     updateSourcesOfInterest,
+    fetch
   } = useContext(MonitorContext);
+
+  useEffect(() => {
+    const interval = setTimeout(async () => {
+      await fetch(page, pageSize, sourcesOfInterest);
+      if (page === 0) {
+        setTime(new Date());
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(interval);
+    }
+  }, [time]);
 
   if (!documents) return null
 
