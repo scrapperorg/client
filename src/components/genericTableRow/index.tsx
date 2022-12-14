@@ -30,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: '#81B9D7',
     '& > th': {
       fontWeight: 700,
-      '&:nth-child(6)': {
+      '&:nth-child(7)': {
         textTransform: 'uppercase',
       },
     },
