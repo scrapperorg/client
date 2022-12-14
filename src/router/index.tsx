@@ -10,6 +10,7 @@ const MonitorScreen = React.lazy(() => import('screens/monitor'));
 const RecoverPasswordScreen = React.lazy(() => import('screens/recoverPassword'))
 const ResetPasswordScreen = React.lazy(() => import('screens/resetPassword'))
 const DocumentDetailsScreen = React.lazy(() => import('screens/documentDetails'))
+const ProjectDetailsScreen = React.lazy(() => import('screens/projectDetails'))
 
 export default function CustomRouter() {
   return (
@@ -27,6 +28,7 @@ export default function CustomRouter() {
           <Route element={<Layout />}>
             <Route path={PATHS.MONITOR} element={<MonitorScreen />}></Route>
             <Route path={PATHS.DOCUMENT_DETAILS} element={<DocumentDetailsScreen />}></Route>
+            <Route path={PATHS.PROJECT_DETAILS} element={<ProjectDetailsScreen />}></Route>
           </Route>
         </Route>
       </Routes>
