@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext} from 'react';
 import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
 import { DocumentsTable } from '../documentTable';
