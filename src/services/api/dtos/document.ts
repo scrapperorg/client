@@ -1,4 +1,5 @@
 import { ProjectDto } from "./project";
+import {UserDto} from "./auth";
 
 export enum Status {
   NOU = 'nou',
@@ -17,7 +18,7 @@ export interface DocumentDto {
   publicationDate: Date;
   source: string;
   status: Status;
-  assignedUser?: string;
+  assignedUser?: UserDto;
   deadline?: Date;
   originalFormat?: string;
   numberOfPages?: number;
