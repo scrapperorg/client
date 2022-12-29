@@ -1,13 +1,8 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import {Button, Card, CardContent, Chip, Stack, Typography} from "@mui/material";
-import {DocumentDto} from "../../../../services/api/dtos";
 
-interface DocumentProcessedDataProps {
-    document: DocumentDto;
-}
-
-function DocumentProcessedData({}: DocumentProcessedDataProps) {
+function DocumentProcessedData() {
     return (
         <Grid container spacing={4}>
             <Grid item md={10}>

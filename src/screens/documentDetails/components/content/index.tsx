@@ -45,7 +45,7 @@ export default function DocumentDetailsContent() {
             </Box>
 
             <Box sx={{mb: 4}}>
-                <DocumentProcessedData document={document}/>
+                <DocumentProcessedData/>
             </Box>
 
             <Box sx={{mb: 4}}>
