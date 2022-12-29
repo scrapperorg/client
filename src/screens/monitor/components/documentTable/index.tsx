@@ -10,6 +10,7 @@ import {DocumentMarks} from "./components/DocumentMarks";
 import { Status } from 'services/api/dtos/document';
 import {ActionButtons} from "./components/ActionButtons";
 import { FormattedDate } from 'components/formatedDate';
+import {Translations} from "../../../../constants/translations";
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
@@ -36,18 +37,18 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
 
   const theme = useTheme();
 
-  const documentRows = documents.map(document => (
+    const documentRows = documents.map(document => (
       <GenericTableRow
         id={document.id}
         key={document.id}
-        className={`${document.status[0] === Status.NOU ? 'new' : ''}`}
+        className={`${document.status === Status.NOU ? 'new' : ''}`}
         values={[
           <DocumentMarks document={document} key={`marks-for-${document.id}`} />,
           document.identifier,
           <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>, // todo: use constant
           document.project.title,
           <FormattedDate key={`date-for-${document.id}`} date={document.publicationDate} />,
-          document.source,
+          Translations[document.source],
           document.status,
           document.numberOfIdentifiedTerms || 0,
           <ActionButtons key={`action-for-${document.id}`}/>

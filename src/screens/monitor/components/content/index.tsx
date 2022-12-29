@@ -1,13 +1,12 @@
 import { Box } from '@mui/system';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
 import { DocumentsTable } from '../documentTable';
 import { SourcesSelector } from '../sourcesSelector';
+import {useLongPolling} from "../../hooks/useLongPolling";
 
 export default function MonitorContent() {
-  const [time, setTime] = useState(new Date());
-
   const {
     documents,
     totalNumberOfDocuments,
@@ -19,18 +18,7 @@ export default function MonitorContent() {
     fetch
   } = useContext(MonitorContext);
 
-  useEffect(() => {
-    const interval = setTimeout(async () => {
-      await fetch(page, pageSize, sourcesOfInterest);
-      if (page === 0) {
-        setTime(new Date());
-      }
-    }, 5000);
-
-    return () => {
-      clearTimeout(interval);
-    }
-  }, [time]);
+  useLongPolling({ fetch, pageSize, page, sourcesOfInterest });
 
   if (!documents) return null
 
