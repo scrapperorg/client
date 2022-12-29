@@ -34,7 +34,6 @@ const columns = [
 
 export const DocumentsTable = (props: DocumentsTableProps) => {
   const { documents, totalNumberOfDocuments, page, onPageChange, pageSize } = props;
-  console.log(documents);
 
   const theme = useTheme();
 
