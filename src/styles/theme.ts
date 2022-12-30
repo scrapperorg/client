@@ -23,20 +23,25 @@ export const theme: ThemeOptions = createTheme({
   typography: {
     h1: {
       fontSize: '32px',
-      fontWeight: 'bold',
+      fontWeight: '600',
       marginBottom: '16px',
     },
     h2: {
       fontSize: '24px',
+      fontWeight: '600',
+      marginBottom: '12px',
     },
     h3: {
       fontSize: '20px',
+      fontWeight: '500'
     },
     h4: {
       fontSize: '18px',
+      fontWeight: '500'
     },
     h5: {
       fontSize: '16px',
+      fontWeight: '400'
     },
     h6: {
       fontSize: '14px',
