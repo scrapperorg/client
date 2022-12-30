@@ -10,8 +10,8 @@ interface DocumentActivityProps {
 
 function DocumentActivity({document}: DocumentActivityProps) {
 
-    const assignedUser = (document.assignedUser?.surname && document.assignedUser?.name)
-        ? `${document.assignedUser?.surname} ${document.assignedUser?.name}`
+    const assignedUser = document.assignedUser
+        ? `${document.assignedUser.surname} ${document.assignedUser.name}`
         : 'Nu exista un responsabil asignat';
 
     return (
