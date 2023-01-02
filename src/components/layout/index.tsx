@@ -12,11 +12,11 @@ export default function Layout() {
     <StyledLayout>
       <TopBar />
       <Content>
-        <Grid container>
-          <Grid item xs={isSidebarOpened ? 2 : 1}>
+        <Grid container spacing={isSidebarOpened ? 50 : 0}>
+          <Grid item xs={isSidebarOpened ? 1.5 : 1}>
             <SideBar />
           </Grid>
-          <Grid item xs={isSidebarOpened ? 10 : 11}>
+          <Grid item xs={isSidebarOpened ? 10.5 : 11} sx={{ paddingRight: '30px' }}>
             <Outlet />
           </Grid>
         </Grid>
