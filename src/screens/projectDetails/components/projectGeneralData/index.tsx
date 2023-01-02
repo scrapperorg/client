@@ -1,16 +1,13 @@
 import React from 'react';
 import { ProjectDto } from "services/api/dtos";
-import { Box, Button, Card, CardContent, Chip, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, Chip, Grid, Stack, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 interface ProjectGeneralDataProps {
   project: ProjectDto;
 }
 
-
 export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
-
-const theme = useTheme();
 
   return (
     <Box sx={{ mb: 4 }}>
@@ -35,17 +32,17 @@ const theme = useTheme();
                   </PropertiesGrid>
                 
                   <Grid item md={8}>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareGuvern || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.proceduraLegislativa || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.cameraDecizionala || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.termenAdoptare || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.tipInitiativa || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.caracter || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project.esteProceduraDeUrgenta ? 'da' : 'nu'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.stadiu || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.initiator || '-'}</Typography>
-                      <Typography variant="h5" sx={{mb: 3}}>{project?.consultati || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareGuvern || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.proceduraLegislativa || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.cameraDecizionala || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.termenAdoptare || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.tipInitiativa || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.caracter || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project.esteProceduraDeUrgenta ? 'da' : 'nu'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.stadiu || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.initiator || '-'}</Typography>
+                    <Typography variant="h5" sx={{mb: 3}}>{project?.consultati || '-'}</Typography>
                   </Grid> 
                 </Grid>
               </GeneralDataCardContent>
