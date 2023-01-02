@@ -65,9 +65,9 @@ const useAuth: () => UseAuthHookReturnType = () => {
       authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
         _setUser(data.payload?.user);
         localStorage.setItem('token', token);
+        setIsLoading(false);
       });
     }
-    setIsLoading(false);
   }, []);
 
   return { isLoading, user, token, setUser, logoutUser };
@@ -76,6 +76,7 @@ const useAuth: () => UseAuthHookReturnType = () => {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { isLoading, user, setUser, logoutUser } = useAuth();
 
+  console.log('isLoading', isLoading);
   if (isLoading) {
     return <Loading />;
   }
