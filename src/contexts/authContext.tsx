@@ -76,7 +76,6 @@ const useAuth: () => UseAuthHookReturnType = () => {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { isLoading, user, setUser, logoutUser } = useAuth();
 
-  console.log('isLoading', isLoading);
   if (isLoading) {
     return <Loading />;
   }
