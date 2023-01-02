@@ -45,8 +45,8 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
         values={[
           <DocumentMarks document={document} key={`marks-for-${document.id}`} />,
           document.identifier,
-          <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>, // todo: use constant
-          document.project.title,
+          <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>,
+          <StyledLink to={`/project/${document.project.id}`} key={document.project.id} theme={theme}>{document.project.title}</StyledLink>,
           <FormattedDate key={`date-for-${document.id}`} date={document.publicationDate} />,
           Translations[document.source],
           document.status,

@@ -1,8 +1,7 @@
-import { Typography } from '@mui/material';
-import PATHS from 'constants/paths';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { ProjectDetailsContext } from 'screens/projectDetails/context';
+import { ProjectGeneralData } from '../projectGeneralData';
+import { ProjectHeader } from '../projectHeader';
 
 export default function ProjectDetailsContent () {
 
@@ -12,8 +11,8 @@ export default function ProjectDetailsContent () {
 
   return (
     <>
-    <Link to={PATHS.MONITOR}>inapoi</Link>
-    <Typography>{project.title}</Typography>
+      <ProjectHeader project={project} />
+      <ProjectGeneralData project={project} />
     </>
   );
 }
