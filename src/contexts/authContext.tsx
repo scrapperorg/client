@@ -65,9 +65,9 @@ const useAuth: () => UseAuthHookReturnType = () => {
       authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
         _setUser(data.payload?.user);
         localStorage.setItem('token', token);
+        setIsLoading(false);
       });
     }
-    setIsLoading(false);
   }, []);
 
   return { isLoading, user, token, setUser, logoutUser };
