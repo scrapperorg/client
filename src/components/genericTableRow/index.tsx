@@ -6,7 +6,7 @@ import styled from 'styled-components';
 interface GenericTableRowProps {
   id: string;
   values: Array<string | number | JSX.Element>;
-  className: string;
+  className?: string;
 }
 
 export const GenericTableRow = (props: GenericTableRowProps) => {

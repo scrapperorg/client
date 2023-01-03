@@ -1,3 +1,5 @@
+import { DocumentDto } from "./document";
+
 export interface ProjectDto {
   id: string;
   createdAt: Date;
@@ -5,6 +7,7 @@ export interface ProjectDto {
   presentsInterest: boolean;
   title: string;
 
+  documents: DocumentDto[];
 
   numarInregistrareSenat?: string;
   numarInregistrareGuvern?: string;

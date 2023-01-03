@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 
 import { useTheme } from '@mui/material';
 import styled from 'styled-components';
-import {DocumentMarks} from "./components/DocumentMarks";
 import { Status } from 'services/api/dtos/document';
-import {ActionButtons} from "./components/ActionButtons";
 import { FormattedDate } from 'components/formatedDate';
-import {Translations} from "../../../../constants/translations";
+import { Translations } from "../../../../constants/translations";
+import { DocumentMarks } from 'components/documentsTableDocumentMarks';
+import { ActionButtons } from 'components/documentsTableActionButtons';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
