@@ -15,7 +15,7 @@ export interface DocumentMarksProps {
 
 export const DocumentMarks = ({ document }: DocumentMarksProps) => {
     return <StyledBox>
-        {document.project.presentsInterest && <Tooltip title='Proiect de interes/cu impact' placement='top'><StarsIcon color="primary" fontSize="small"/></Tooltip>}
+        {document.project?.presentsInterest && <Tooltip title='Proiect de interes/cu impact' placement='top'><StarsIcon color="primary" fontSize="small"/></Tooltip>}
         {document.isRulesBreaker && <Tooltip title='Document ce contravine normelor in vigoare' placement='top'><WarningIcon color="warning" fontSize="small"/></Tooltip>}
     </StyledBox>
 }

@@ -6,10 +6,10 @@ import styled from 'styled-components';
 interface GenericTableProps {
   columns: string[];
   tableRows: JSX.Element[];
-  count: number;
-  rowsPerPage: number;
-  page: number;
-  onPageChange: (page: number) => void;
+  count?: number;
+  rowsPerPage?: number;
+  page?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export const GenericTable = (props: GenericTableProps) => {
@@ -32,7 +32,7 @@ export const GenericTable = (props: GenericTableProps) => {
     event: React.MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => {
-    onPageChange(page);
+    if(onPageChange) onPageChange(page);
   }
 
   
@@ -50,14 +50,21 @@ export const GenericTable = (props: GenericTableProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={count}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        rowsPerPageOptions={[]}
-        onPageChange={handlePageChange}
-      />
+      {
+        typeof count !== 'undefined'
+        && typeof rowsPerPage !== 'undefined'
+        && typeof page !== 'undefined'
+        && typeof onPageChange !== 'undefined'
+        && (
+          <TablePagination
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          rowsPerPageOptions={[]}
+          onPageChange={handlePageChange}
+        />
+        )}
     </Paper>
   )
 }
