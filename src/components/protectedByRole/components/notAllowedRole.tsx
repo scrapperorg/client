@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Box, CircularProgress, Typography} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const StyledLoading = styled(Box)`
   width: 100%;
@@ -12,9 +12,9 @@ const StyledLoading = styled(Box)`
 `;
 
 export function NotAllowedRole() {
-    return (
-        <StyledLoading>
-            <Typography>Sorry, you are not allowed to see this section.</Typography>
-        </StyledLoading>
-    );
+  return (
+    <StyledLoading>
+      <Typography>Sorry, you are not allowed to see this section.</Typography>
+    </StyledLoading>
+  );
 }

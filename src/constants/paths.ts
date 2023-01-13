@@ -7,6 +7,8 @@ const PATHS = {
   RESET_PASSWORD: '/reset-password/:token',
   DOCUMENT_DETAILS: '/document/:id',
   PROJECT_DETAILS: '/project/:id',
+  PROJECTS_SEARCH: '/projects-search',
+  DOCUMENTS_SEARCH: '/documents-search',
 };
 
 export default PATHS;

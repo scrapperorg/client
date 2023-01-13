@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { SIDEBAR_BUTTONS_LIST } from 'constants/icons';
 
 export interface InteractiveComponentsState {
-  isSidebarOpened: boolean;
+  isCollapsed: boolean;
   toggleSidebar: () => void;
   selectedIndex: string;
   selectIndex: (index: string) => void;
@@ -12,7 +12,7 @@ export interface InteractiveComponentsState {
 }
 
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
-  isSidebarOpened: true,
+  isCollapsed: false,
   toggleSidebar: () => null,
   selectedIndex: '',
   selectIndex: () => null,
@@ -33,7 +33,7 @@ export interface UseModalHook {
 }
 
 export interface UseSidebarHook {
-  isSidebarOpened: boolean;
+  isCollapsed: boolean;
   toggleSidebar: () => void;
 }
 
@@ -51,10 +51,10 @@ const useModal: () => UseModalHook = () => {
 };
 
 const useSidebar: () => UseSidebarHook = () => {
-  const [isSidebarOpened, setIsSidebarOpened] = useState(true);
-  const toggleSidebar = () => setIsSidebarOpened(!isSidebarOpened);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
-  return { isSidebarOpened, toggleSidebar };
+  return { isCollapsed, toggleSidebar };
 };
 
 const useIndex: () => UseIndexHook = () => {
@@ -70,11 +70,11 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
   children,
 }) => {
   const { selectedIndex, selectIndex } = useIndex();
-  const { isSidebarOpened, toggleSidebar } = useSidebar();
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const { isModalOpened, closeModal, openModal } = useModal();
 
   const state: InteractiveComponentsState = {
-    isSidebarOpened,
+    isCollapsed,
     toggleSidebar,
     selectedIndex,
     selectIndex,
