@@ -4,27 +4,32 @@ import { LeftSide, RightSide, StyledContainer } from './styled';
 import {
   Person as PersonIcon,
   Notifications as NotificationsIcon,
-  GridOnOutlined as GridOnOutlinedIcon,
+  MenuOpen as MenuOpenIcon,
+  Menu as MenuIcon,
 } from '@mui/icons-material';
 import { ProfileModal } from 'components/modal/profile';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export default function TopBar() {
-  const { openModal } = useContext(InteractiveComponentsContext);
+  const { openModal, toggleSidebar, isCollapsed } = useContext(InteractiveComponentsContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static' color='transparent'>
+      <AppBar position='relative' color='transparent'>
         <Toolbar>
           <StyledContainer>
-            <LeftSide></LeftSide>
+            <LeftSide>
+              <IconButton
+                size='large'
+                aria-label='dashboard'
+                color='inherit'
+                onClick={toggleSidebar}
+              >
+                {!isCollapsed ? <MenuOpenIcon /> : <MenuIcon />}
+              </IconButton>
+            </LeftSide>
             <RightSide>
               <Box sx={{ display: { md: 'flex' } }}>
-                <Tooltip title='Monitor'>
-                  <IconButton size='large' aria-label='dashboard' color='inherit'>
-                    <GridOnOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
                 <Tooltip title='Notificari'>
                   <IconButton size='large' aria-label='show 3 new notifications' color='inherit'>
                     <Badge badgeContent={3} color='error'>

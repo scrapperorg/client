@@ -20,3 +20,8 @@ export const LeftSide = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const TopBarWrapper = styled.div`
+  height: 48px;
+  box-shadow: 0 1px 1px rgba(100, 116, 139, 0.06), 0 1px 2px rgba(100, 116, 139, 0.1);
+`;

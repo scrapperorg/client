@@ -1,25 +1,31 @@
-import React, { useContext } from 'react';
-import { Content, StyledLayout } from './styled';
-import TopBar from 'components/topbar';
-import SideBar from 'components/sidebar';
-import Grid from '@mui/material/Grid';
-import { Outlet } from 'react-router-dom';
+import React, { ReactNode, useContext } from 'react';
+import { ContentWrapper, MainWrapper, StyledLayout } from './styled';
+import { Outlet, useLocation } from 'react-router-dom';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
+import { SideMenu } from '../sidebar';
+import TopBar from '../topbar';
+import { menuItems } from '../sidebar/sideMenuItems';
+
+const Content = ({ children }: { children: ReactNode }) => {
+  return <ContentWrapper>{children}</ContentWrapper>;
+};
+
+const Main = ({ children }: { children: ReactNode }) => {
+  return <MainWrapper>{children}</MainWrapper>;
+};
 
 export default function Layout() {
-  const { isSidebarOpened } = useContext(InteractiveComponentsContext);
+  const { isCollapsed } = useContext(InteractiveComponentsContext);
+  const { pathname } = useLocation();
+
   return (
     <StyledLayout>
-      <TopBar />
+      <SideMenu items={menuItems} currentPath={pathname} isCollapsed={isCollapsed} />
       <Content>
-        <Grid container spacing={isSidebarOpened ? 50 : 0}>
-          <Grid item xs={isSidebarOpened ? 1.5 : 1}>
-            <SideBar />
-          </Grid>
-          <Grid item xs={isSidebarOpened ? 10.5 : 11} sx={{ paddingRight: '30px' }}>
-            <Outlet />
-          </Grid>
-        </Grid>
+        <TopBar />
+        <Main>
+          <Outlet />
+        </Main>
       </Content>
     </StyledLayout>
   );

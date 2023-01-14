@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
 export const StyledLayout = styled.div`
-  width: 100%;
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+`;
+export const MainWrapper = styled.main`
+  height: calc(100vh - 40px);
+  padding: 0 24px;
+  overflow-y: scroll;
 `;
 
-export const Content = styled.div`
-  && {
-    width: calc(100% - 20px);
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
+export const ContentWrapper = styled.div`
+  width: 100%;
+  height: inherit;
+  overflow: hidden;
 `;
