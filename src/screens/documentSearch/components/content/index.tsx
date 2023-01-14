@@ -2,6 +2,7 @@ import { Box } from '@mui/system';
 import { DocumentsTable } from 'components/documentTable';
 import React, {useContext} from 'react';
 import { DocumentSearchContext } from '../../context';
+import { SearchForm } from '../searchForm';
 
 export default function DocumentsSearchContent() {
   const {
@@ -18,8 +19,8 @@ export default function DocumentsSearchContent() {
 
   return (
     <>
-      <Box>
-        search
+      <Box sx={{ mb: 10 }}>
+        <SearchForm />
       </Box>
       <Box>
         <DocumentsTable
