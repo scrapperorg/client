@@ -12,6 +12,7 @@ export interface MonitorProviderState {
   error?: string;
   sourcesOfInterest: string[];
   fetch: (page: number, pageSize: number, sourceOfInterest?: string[]) => void;
+  onPageSizeChange: (pageSize: number) => void;
   onPageChange: (page: number) => void;
   updateSourcesOfInterest: (sources: string[]) => void;
 }
@@ -23,6 +24,7 @@ const defaultState: MonitorProviderState = {
   pageSize: 2,
   sourcesOfInterest: [],
   fetch: () => { console.log('method not implemented') },
+  onPageSizeChange: () => { console.log('method not implemented') },
   onPageChange: (page: number) => { console.log(`method not implemented. page: ${page}`) },
   updateSourcesOfInterest: (sources: string[]) => { console.log(`method not implemented. sources: ${sources}`) }
 };
@@ -33,7 +35,7 @@ const MonitorDataProvider = ({ children }: any) => {
 
   const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters()
 
-  const { page, pageSize, data, fetch, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
+  const { page, pageSize, data, fetch, onPageSizeChange, error, onPageChange } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments, sourcesOfInterest);
 
   const state: MonitorProviderState = {
     documents: data?.results ?? defaultState.documents,
@@ -43,6 +45,7 @@ const MonitorDataProvider = ({ children }: any) => {
     fetch,
     pageSize: pageSize ||  defaultState.pageSize,
     sourcesOfInterest,
+    onPageSizeChange,
     onPageChange: onPageChange || defaultState.onPageChange,
     updateSourcesOfInterest: updateSourcesOfInterest || defaultState.updateSourcesOfInterest
   };

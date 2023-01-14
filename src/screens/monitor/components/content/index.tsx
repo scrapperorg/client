@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import React, {useContext} from 'react';
 import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
-import { DocumentsTable } from '../documentTable';
+import { DocumentsTable } from 'components/documentTable';
 import { SourcesSelector } from '../sourcesSelector';
 import {useLongPolling} from "../../hooks/useLongPolling";
 
@@ -15,7 +15,8 @@ export default function MonitorContent() {
     pageSize,
     sourcesOfInterest,
     updateSourcesOfInterest,
-    fetch
+    fetch,
+    onPageSizeChange,
   } = useContext(MonitorContext);
 
   useLongPolling({ fetch, pageSize, page, sourcesOfInterest });
@@ -37,6 +38,7 @@ export default function MonitorContent() {
           page={page}
           pageSize={pageSize}
           onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
         />
       </Box>
     </>

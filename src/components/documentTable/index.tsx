@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { Status } from 'services/api/dtos/document';
 import { FormattedDate } from 'components/formatedDate';
-import { Translations } from "../../../../constants/translations";
+import { Translations } from "../../constants/translations";
 import { DocumentMarks } from 'components/documentsTableDocumentMarks';
 import { ActionButtons } from 'components/documentsTableActionButtons';
 
@@ -18,6 +18,7 @@ interface DocumentsTableProps {
   page: number;
   pageSize: number;
   onPageChange: (page: number) => void | undefined;
+  onPageSizeChange: (pageSize: number) => void | undefined;
 }
 
 const columns = [
@@ -33,7 +34,7 @@ const columns = [
 ];
 
 export const DocumentsTable = (props: DocumentsTableProps) => {
-  const { documents, totalNumberOfDocuments, page, onPageChange, pageSize } = props;
+  const { documents, totalNumberOfDocuments, page, onPageChange, pageSize, onPageSizeChange } = props;
 
   const theme = useTheme();
 
@@ -64,6 +65,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
       page={page}
       onPageChange={onPageChange}
       rowsPerPage={pageSize}
+      onPageSizeChange={onPageSizeChange}
     ></GenericTable>
   );
 };
