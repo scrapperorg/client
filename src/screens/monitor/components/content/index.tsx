@@ -48,5 +48,5 @@ export default function MonitorContent() {
 const SelectBox = styled(Box)`
   display: flex;
   justify-content: end;
-  padding: 15px 0;
+  padding-bottom: 15px;
 `;
