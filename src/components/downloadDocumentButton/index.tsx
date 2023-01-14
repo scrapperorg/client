@@ -20,6 +20,7 @@ const DownloadDocumentButton: React.FC<DownloadDocumentButtonProps> = ({ fileUrl
 export const StyledAnchor = styled.a`
   text-decoration: none;
   color: inherit;
+  font-size: 0;
 `;
 
 export default DownloadDocumentButton;
