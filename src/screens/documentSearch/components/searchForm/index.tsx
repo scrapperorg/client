@@ -134,7 +134,6 @@ export const SearchForm = () => {
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel
-              sx={{ ml: 0 }}
               control={<Checkbox checked />}
               label="Document ce contravine normelor in vigoare"
               onChange={() => {/** */}}
@@ -142,7 +141,6 @@ export const SearchForm = () => {
           </Grid>
           <Grid item md={6} sx={{ pl: 4 }}>
             <FormControlLabel
-              sx={{ ml: 0 }}
               control={<Checkbox checked={false}/>}
               label="Proiect legislativ cu impact"
               onChange={() => {/** */}}
