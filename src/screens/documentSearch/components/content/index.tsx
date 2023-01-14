@@ -11,7 +11,7 @@ export default function DocumentsSearchContent() {
     page,
     onPageChange,
     pageSize,
-    fetch,
+    // fetch,
     onPageSizeChange,
   } = useContext(DocumentSearchContext);
 
