@@ -9,7 +9,6 @@ export interface SideMenuProps {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({ items, currentPath, isCollapsed }) => {
-  console.log(isCollapsed);
   return (
     <SideMenuWrapper isCollapsed={isCollapsed}>
       {items.map((subMenu: SubMenuProps) => (

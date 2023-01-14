@@ -10,6 +10,7 @@ interface GenericTableProps {
   rowsPerPage?: number;
   page?: number;
   onPageChange?: (page: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
 }
 
 export const GenericTable = (props: GenericTableProps) => {
@@ -19,7 +20,8 @@ export const GenericTable = (props: GenericTableProps) => {
     count,
     rowsPerPage,
     page,
-    onPageChange
+    onPageChange,
+    onPageSizeChange,
   } = props;
 
   const theme = useTheme();
@@ -35,6 +37,10 @@ export const GenericTable = (props: GenericTableProps) => {
     if(onPageChange) onPageChange(page);
   }
 
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(onPageSizeChange) onPageSizeChange(parseInt(event.target.value, 10));
+    if(onPageChange) onPageChange(0);
+  };
   
   return (
     <Paper>
@@ -61,8 +67,10 @@ export const GenericTable = (props: GenericTableProps) => {
           count={count}
           rowsPerPage={rowsPerPage}
           page={page}
-          rowsPerPageOptions={[]}
+          rowsPerPageOptions={[5, 10, 15]}
           onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+          labelRowsPerPage={"Numar de intrari pe pagina:"}
         />
         )}
     </Paper>

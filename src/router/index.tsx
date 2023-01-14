@@ -4,6 +4,7 @@ import PATHS from 'constants/paths';
 import PublicRoute from 'router/components/publicRoute';
 import PrivateRoute from 'router/components/privateRoute';
 import Layout from '../components/layout';
+import DocumentsSearchScreen from 'screens/documentSearch';
 
 const LoginScreen = React.lazy(() => import('screens/login'));
 const MonitorScreen = React.lazy(() => import('screens/monitor'));
@@ -29,6 +30,7 @@ export default function CustomRouter() {
             <Route path={PATHS.MONITOR} element={<MonitorScreen />}></Route>
             <Route path={PATHS.DOCUMENT_DETAILS} element={<DocumentDetailsScreen />}></Route>
             <Route path={PATHS.PROJECT_DETAILS} element={<ProjectDetailsScreen />}></Route>
+            <Route path={PATHS.DOCUMENTS_SEARCH} element={<DocumentsSearchScreen />}></Route>
           </Route>
         </Route>
       </Routes>
