@@ -8,7 +8,7 @@ export const StyledLayout = styled.div`
 `;
 export const MainWrapper = styled.main`
   height: calc(100vh - 40px);
-  padding: 24px 24px 0 24px;
+  padding: 24px 24px 48px;
   overflow-y: scroll;
 `;
 
