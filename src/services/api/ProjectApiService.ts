@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
-import { DocumentDto, OperationStatus, ProjectDto, QueryAll } from './dtos';
+import { OperationStatus, ProjectDto, QueryAll } from './dtos';
 
 class ProjectApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
