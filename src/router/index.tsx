@@ -1,17 +1,18 @@
 import React from 'react';
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PATHS from 'constants/paths';
 import PublicRoute from 'router/components/publicRoute';
 import PrivateRoute from 'router/components/privateRoute';
 import Layout from '../components/layout';
 import DocumentsSearchScreen from 'screens/documentSearch';
+import ProjectsSearchScreen from '../screens/projectsSearch';
 
 const LoginScreen = React.lazy(() => import('screens/login'));
 const MonitorScreen = React.lazy(() => import('screens/monitor'));
-const RecoverPasswordScreen = React.lazy(() => import('screens/recoverPassword'))
-const ResetPasswordScreen = React.lazy(() => import('screens/resetPassword'))
-const DocumentDetailsScreen = React.lazy(() => import('screens/documentDetails'))
-const ProjectDetailsScreen = React.lazy(() => import('screens/projectDetails'))
+const RecoverPasswordScreen = React.lazy(() => import('screens/recoverPassword'));
+const ResetPasswordScreen = React.lazy(() => import('screens/resetPassword'));
+const DocumentDetailsScreen = React.lazy(() => import('screens/documentDetails'));
+const ProjectDetailsScreen = React.lazy(() => import('screens/projectDetails'));
 
 export default function CustomRouter() {
   return (
@@ -31,6 +32,7 @@ export default function CustomRouter() {
             <Route path={PATHS.DOCUMENT_DETAILS} element={<DocumentDetailsScreen />}></Route>
             <Route path={PATHS.PROJECT_DETAILS} element={<ProjectDetailsScreen />}></Route>
             <Route path={PATHS.DOCUMENTS_SEARCH} element={<DocumentsSearchScreen />}></Route>
+            <Route path={PATHS.PROJECTS_SEARCH} element={<ProjectsSearchScreen />}></Route>
           </Route>
         </Route>
       </Routes>

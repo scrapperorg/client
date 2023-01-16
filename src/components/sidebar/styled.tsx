@@ -6,7 +6,6 @@ export const SideMenuWrapper = styled.div<{ isCollapsed: boolean }>`
   min-width: 280px;
   padding: 96px 16px 24px;
   background-color: #111827;
-  overflow-y: scroll;
 
   ${(props) =>
     props.isCollapsed &&
