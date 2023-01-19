@@ -42,7 +42,7 @@ export interface UseAuthHookReturnType {
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
@@ -62,11 +62,20 @@ const useAuth: () => UseAuthHookReturnType = () => {
   useEffect(() => {
     if (token) {
       // fetch /refresh token
-      authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
-        _setUser(data.payload?.user);
-        localStorage.setItem('token', token);
-        setIsLoading(false);
-      });
+      const refreshToken = async () => {
+        setIsLoading(true);
+        try {
+          authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
+            _setUser(data.payload?.user);
+            localStorage.setItem('token', token);
+          });
+          setIsLoading(false);
+        } catch (e) {
+          setIsLoading(false);
+          console.error(e);
+        }
+      };
+      refreshToken();
     }
   }, []);
 
