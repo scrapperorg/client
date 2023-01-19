@@ -62,20 +62,15 @@ const useAuth: () => UseAuthHookReturnType = () => {
   useEffect(() => {
     if (token) {
       // fetch /refresh token
-      const refreshToken = async () => {
-        setIsLoading(true);
-        try {
-          authApiService.refreshToken(token).then((data: OperationStatus<LoginDto>) => {
-            _setUser(data.payload?.user);
-            localStorage.setItem('token', token);
-          });
+      setIsLoading(true);
+      authApiService
+        .refreshToken(token)
+        .then((data: OperationStatus<LoginDto>) => {
+          _setUser(data.payload?.user);
+          localStorage.setItem('token', token);
           setIsLoading(false);
-        } catch (e) {
-          setIsLoading(false);
-          console.error(e);
-        }
-      };
-      refreshToken();
+        })
+        .catch(() => setIsLoading(false));
     }
   }, []);
 
