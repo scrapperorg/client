@@ -58,6 +58,32 @@ class DocumentApiService {
     }
   }
 
+  async assignResponsible(documentId: string, userId: string): Promise<OperationStatus<void>> {
+    const token = localStorage.getItem('token')
+
+    try {
+      await this.httpClient.post(
+        '/document/assign-responsible',
+        {
+          documentId,
+          userId
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText
+      };
+    }
+  }
+
 }
 
 export const documentApiService = new DocumentApiService(axios);
