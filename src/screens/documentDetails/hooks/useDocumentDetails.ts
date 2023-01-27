@@ -15,10 +15,18 @@ export function useDocumentDetails() {
     setDocument(payload);
   }
 
+  const setDeadline = async (date: string | undefined) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.setDeadline(document.id, date ?? '');
+    if (!payload) return;
+    setDocument(payload);
+  }
+
   useEffect(() => setDocument(contextDocument), [contextDocument])
 
   return {
     document,
     assignResponsible,
+    setDeadline
   }
 }

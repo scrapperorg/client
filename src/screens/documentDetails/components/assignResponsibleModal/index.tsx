@@ -17,12 +17,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { UserDto } from "services/api/dtos";
+import { Dayjs } from "dayjs";
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
   responsible: UserDto | undefined;
+  deadline: Date | undefined;
   assignResponsible: (userId: string) => void;
+  setDeadline: (date: string | undefined) => void;
 }
+
+const isInThePast = (date: Dayjs) => date.toDate() < new Date();
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const {
@@ -34,11 +39,17 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const {
     assignableResponsibles,
     responsible,
-    assignResponsible
+    deadline,
+    assignResponsible,
+    setDeadline
   } = props;
 
   const onReponsibleChange = (event: SelectChangeEvent) => {
     assignResponsible(event.target.value as string)
+  }
+
+  const onDeadlineChange = (newDate: Dayjs | null) => {
+    setDeadline(newDate?.toString())
   }
 
   return (
@@ -82,8 +93,9 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Termen:"
-                value={null}
-                onChange={() => { /** */ }}
+                shouldDisableDate={isInThePast}
+                value={deadline ?? null}
+                onChange={onDeadlineChange}
                 renderInput={(params) => <TextField { ...params} fullWidth/>}
               />
             </LocalizationProvider>

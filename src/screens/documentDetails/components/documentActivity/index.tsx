@@ -10,6 +10,7 @@ interface DocumentActivityProps {
   isModalOpened: boolean;
   assignableResponsibles: UserDto[];
   assignResponsible: (userId: string) => void;
+  setDeadline: (date: string | undefined) => void;
   openModal: () => void; 
 }
 
@@ -20,6 +21,7 @@ function DocumentActivity(props: DocumentActivityProps) {
     openModal,
     assignableResponsibles,
     assignResponsible,
+    setDeadline
   } = props;
 
   const assignedUser = document.assignedUser
@@ -52,7 +54,9 @@ function DocumentActivity(props: DocumentActivityProps) {
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {assignedUser}
                   </Typography>
-                  {document.deadline && <FormattedDate date={document.deadline} />}
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    {document.deadline && <FormattedDate date={document.deadline} />}
+                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>
@@ -73,6 +77,8 @@ function DocumentActivity(props: DocumentActivityProps) {
         assignableResponsibles={assignableResponsibles}
         assignResponsible={assignResponsible}
         responsible={document.assignedUser}
+        deadline={document.deadline}
+        setDeadline={setDeadline}
       />
     </>
   );

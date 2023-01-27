@@ -20,7 +20,7 @@ export default function DocumentDetailsContent() {
     openAssignResponsibleModal: openModal,
   } = useContext(InteractiveComponentsContext);
 
-  const { document, assignResponsible } = useDocumentDetails();
+  const { document, assignResponsible, setDeadline } = useDocumentDetails();
 
   if (!document) return null;
 
@@ -55,6 +55,7 @@ export default function DocumentDetailsContent() {
           openModal={openModal}
           assignableResponsibles={assignableResponsibles}
           assignResponsible={assignResponsible}
+          setDeadline={setDeadline}
         />
       </Box>
 
