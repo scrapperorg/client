@@ -9,7 +9,7 @@ interface DocumentActivityProps {
   document: DocumentDto;
   isModalOpened: boolean;
   assignableResponsibles: UserDto[];
-  loadingAssignableRoles: boolean;
+  assignResponsible: (userId: string) => void;
   openModal: () => void; 
 }
 
@@ -19,7 +19,7 @@ function DocumentActivity(props: DocumentActivityProps) {
     document,
     openModal,
     assignableResponsibles,
-    loadingAssignableRoles
+    assignResponsible,
   } = props;
 
   const assignedUser = document.assignedUser
@@ -71,8 +71,8 @@ function DocumentActivity(props: DocumentActivityProps) {
       </Grid>
       <AssignResponsibleModal
         assignableResponsibles={assignableResponsibles}
-        loadingAssignableRoles={loadingAssignableRoles}
-        assignedReponsible={document.assignedUser}
+        assignResponsible={assignResponsible}
+        responsible={document.assignedUser}
       />
     </>
   );

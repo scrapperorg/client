@@ -8,10 +8,10 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   styled,
   TextField,
   Typography,
-  useTheme 
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
@@ -19,14 +19,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { UserDto } from "services/api/dtos";
 
 interface AssignResponsibleModalProps {
-  assignedReponsible: UserDto | undefined;
   assignableResponsibles: UserDto[];
-  loadingAssignableRoles: boolean;
+  responsible: UserDto | undefined;
+  assignResponsible: (userId: string) => void;
 }
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
-  const theme = useTheme();
-
   const {
     isAssignResponsibleModalOpened: isModalOpened,
     closeAssignResponsibleModal: closeModal,
@@ -34,10 +32,14 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
 
 
   const {
-    assignedReponsible,
     assignableResponsibles,
-    loadingAssignableRoles
+    responsible,
+    assignResponsible
   } = props;
+
+  const onReponsibleChange = (event: SelectChangeEvent) => {
+    assignResponsible(event.target.value as string)
+  }
 
   return (
     <Modal
@@ -64,9 +66,9 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             <Select
               labelId="responsabil"
               id="responsabil"
-              value={''}
+              value={responsible?.id}
               label="Responsabil"
-              onChange={() => { /** */ }}
+              onChange={onReponsibleChange}
             >
               { assignableResponsibles.map((user: UserDto) => <MenuItem key={user.id} value={user.id}>{`${user.surname} ${user.name}` }</MenuItem>) }
             </Select>

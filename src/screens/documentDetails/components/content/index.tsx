@@ -8,18 +8,19 @@ import DocumentActivity from '../documentActivity';
 import DocumentProcessedData from '../documentProcessedData';
 import DocumentAttachments from '../documentAttachments';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
+import { useDocumentDetails } from 'screens/documentDetails/hooks/useDocumentDetails';
 
 export default function DocumentDetailsContent() {
   const {
-    document,
     assignableResponsibles,
-    loadingAssignableRoles,
   } = useContext(DocumentDetailsContext);
 
   const {
     isAssignResponsibleModalOpened: isModalOpened,
     openAssignResponsibleModal: openModal,
   } = useContext(InteractiveComponentsContext);
+
+  const { document, assignResponsible } = useDocumentDetails();
 
   if (!document) return null;
 
@@ -53,7 +54,7 @@ export default function DocumentDetailsContent() {
           isModalOpened={isModalOpened}
           openModal={openModal}
           assignableResponsibles={assignableResponsibles}
-          loadingAssignableRoles={loadingAssignableRoles}
+          assignResponsible={assignResponsible}
         />
       </Box>
 

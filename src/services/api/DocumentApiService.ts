@@ -58,11 +58,11 @@ class DocumentApiService {
     }
   }
 
-  async assignResponsible(documentId: string, userId: string): Promise<OperationStatus<void>> {
+  async assignResponsible(documentId: string, userId: string): Promise<OperationStatus<DocumentDto>> {
     const token = localStorage.getItem('token')
 
     try {
-      await this.httpClient.post(
+      const response = await this.httpClient.post(
         '/document/assign-responsible',
         {
           documentId,
@@ -74,6 +74,7 @@ class DocumentApiService {
       );
       return {
         success: true,
+        payload: response.data,
       };
     } catch (err: any) {
       const error: AxiosError = err;
