@@ -1,6 +1,6 @@
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { axios } from 'config/http';
-import { OperationStatus } from './dtos';
+import { OperationStatus, UserDto } from './dtos';
 
 class UserApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
@@ -25,6 +25,35 @@ class UserApiService {
     } catch (err) {
       return {
         success: false,
+      };
+    }
+  }
+
+  async getUsersWithRoles(roles: string[]): Promise<OperationStatus<UserDto[]>> {
+    const token = localStorage.getItem('token');
+
+    const rolesQueryParams = roles.map((role, i) => {
+      let param = `roles=${role}`;
+      if (i>0) param = '&' + param;
+      return param;
+    }).join('')
+
+    try {
+      const response = await this.httpClient.get<UserDto[]>(
+        `user?${rolesQueryParams}`,
+        {
+          headers: { authorization: token },
+        }
+      );
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
       };
     }
   }
