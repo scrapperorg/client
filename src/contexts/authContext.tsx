@@ -67,6 +67,8 @@ const useAuth: () => UseAuthHookReturnType = () => {
         localStorage.setItem('token', token);
         setIsLoading(false);
       });
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
