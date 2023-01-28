@@ -1,6 +1,8 @@
 import Grid from '@mui/material/Grid';
-import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Chip, Stack } from '@mui/material';
 import React, { useState, ChangeEvent, createRef } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SendIcon from '@mui/icons-material/Send';
 
 function DocumentAttachments() {
   const [document, setDocument] = useState<File | null>(null);
@@ -42,9 +44,9 @@ function DocumentAttachments() {
         <Card>
           <CardContent>
             <Chip label='Atasamente' color='primary' size='medium' sx={{ mb: 3 }} />
-            <Typography variant='h5' sx={{ mb: 3 }}>
-              {document && document.name}
-            </Typography>
+            <Stack direction='row' spacing={1}>
+              {document && <Chip label={document.name} variant='outlined' />}
+            </Stack>
           </CardContent>
         </Card>
       </Grid>
@@ -57,14 +59,15 @@ function DocumentAttachments() {
             style={{ display: 'none' }}
             ref={documentInput}
           />
-          <Button
-            variant='contained'
-            type='button'
+          <LoadingButton
             onClick={() => documentInput.current?.click()}
-            disabled={uploading}
+            endIcon={<SendIcon />}
+            loading={uploading}
+            loadingPosition='end'
+            variant='contained'
           >
-            Ataseaza
-          </Button>
+            <span>Ataseaza</span>
+          </LoadingButton>
         </Stack>
       </Grid>
     </Grid>
