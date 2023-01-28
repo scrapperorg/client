@@ -25,7 +25,7 @@ const DocumentDetailsDataProvider = ({ children }: any) => {
 
   const { data, loading } = useApiService<DocumentDto>(documentApiService, documentApiService.getDocumentById, id);
   
-  const { data: assignableResponsibles, loading: loadingAssignableRoles } = useApiService<UserDto[]>(userApiService, userApiService.getAssignableResponsibles);
+  const { data: assignableResponsibles, loading: loadingAssignableRoles } = useApiService<UserDto[]>(userApiService, userApiService.getUsersWithRoles, ['LSE', 'LSS']);
 
   if (loading) {
     return <Loading />;

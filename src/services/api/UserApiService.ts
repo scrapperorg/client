@@ -29,12 +29,18 @@ class UserApiService {
     }
   }
 
-  async getAssignableResponsibles(): Promise<OperationStatus<UserDto[]>> {
-    const token = localStorage.getItem('token')
+  async getUsersWithRoles(roles: string[]): Promise<OperationStatus<UserDto[]>> {
+    const token = localStorage.getItem('token');
+
+    const rolesQueryParams = roles.map((role, i) => {
+      let param = `roles=${role}`;
+      if (i>0) param = '&' + param;
+      return param;
+    }).join('')
 
     try {
       const response = await this.httpClient.get<UserDto[]>(
-        'user?roles=LSE&roles=LSS',
+        `user?${rolesQueryParams}`,
         {
           headers: { authorization: token },
         }
