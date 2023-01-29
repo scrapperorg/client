@@ -11,16 +11,12 @@ import { InteractiveComponentsContext } from 'contexts/interactiveComponentsCont
 import { useDocumentDetails } from 'screens/documentDetails/hooks/useDocumentDetails';
 
 export default function DocumentDetailsContent() {
-  const {
-    assignableResponsibles,
-  } = useContext(DocumentDetailsContext);
+  const { assignableResponsibles } = useContext(DocumentDetailsContext);
 
-  const {
-    isAssignResponsibleModalOpened: isModalOpened,
-    openAssignResponsibleModal: openModal,
-  } = useContext(InteractiveComponentsContext);
+  const { isAssignResponsibleModalOpened: isModalOpened, openAssignResponsibleModal: openModal } =
+    useContext(InteractiveComponentsContext);
 
-  const { document, assignResponsible, setDeadline } = useDocumentDetails();
+  const { document, assignResponsible, setDeadline, uploadAttachment } = useDocumentDetails();
 
   if (!document) return null;
 
@@ -64,7 +60,7 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentAttachments />
+        <DocumentAttachments document={document} onUploadAttachment={uploadAttachment} />
       </Box>
     </>
   );

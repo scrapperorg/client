@@ -3,49 +3,39 @@ import { Card, CardContent, Chip, Stack } from '@mui/material';
 import React, { useState, ChangeEvent, createRef } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
+import { DocumentDto } from '../../../../services/api/dtos';
 
-function DocumentAttachments() {
-  const [document, setDocument] = useState<File | null>(null);
-  const [uploading, setUploading] = useState<boolean>(false);
+export interface DocumentAttachmentsProps {
+  document: DocumentDto;
+  onUploadAttachment: (file: File) => void;
+}
+
+function DocumentAttachments({ onUploadAttachment, document }: DocumentAttachmentsProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const documentInput = createRef<HTMLInputElement>();
 
-  const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (documentInput.current) {
-      const inputFile = documentInput.current;
-      if (inputFile.files?.[0]) setDocument(inputFile.files?.[0]);
-      if (e.target.files?.[0]) {
-        setUploading(true);
-        const formData = new FormData();
-        formData.append('file', document as File);
-        try {
-          // TODO: replace dummy endpoint with real one
-          const response = await fetch('https://httpbin.org/post', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          console.log('Document atasat!');
-        } catch (error) {
-          console.error('Eroare in atasarea documentului: ', error);
-        }
-
-        setUploading(false);
-      }
+  const handleAddDocument = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      setLoading(true);
+      await onUploadAttachment(e.target.files?.[0]);
+      setLoading(false);
     }
   };
+
+  const handleOnClick = () => {
+    documentInput.current?.click();
+  };
+
   return (
     <Grid container spacing={4}>
       <Grid item md={10}>
         <Card>
           <CardContent>
             <Chip label='Atasamente' color='primary' size='medium' sx={{ mb: 3 }} />
-            <Stack direction='row' spacing={1}>
-              {document && <Chip label={document.name} variant='outlined' />}
+            <Stack direction='row' spacing={2}>
+              {document.attachments?.map((attachment) => {
+                return <Chip key={attachment.id} label={attachment.name} variant='outlined' />;
+              })}
             </Stack>
           </CardContent>
         </Card>
@@ -55,14 +45,14 @@ function DocumentAttachments() {
         <Stack gap={4}>
           <input
             type='file'
-            onChange={handleFileSelect}
+            onChange={handleAddDocument}
             style={{ display: 'none' }}
             ref={documentInput}
           />
           <LoadingButton
-            onClick={() => documentInput.current?.click()}
+            onClick={handleOnClick}
             endIcon={<SendIcon />}
-            loading={uploading}
+            loading={loading}
             loadingPosition='end'
             variant='contained'
           >
