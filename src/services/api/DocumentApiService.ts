@@ -30,7 +30,6 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
-      console.log(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -61,7 +60,6 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
-      console.log(error);
       return {
         success: false,
         error: error.response?.statusText,

@@ -32,7 +32,6 @@ class ProjectApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
-      console.log(error);
       return {
         success: false,
         error: error.response?.statusText,
