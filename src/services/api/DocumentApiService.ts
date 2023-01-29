@@ -58,6 +58,60 @@ class DocumentApiService {
     }
   }
 
+  async assignResponsible(documentId: string, userId: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token')
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/assign-responsible',
+        {
+          documentId,
+          userId
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText
+      };
+    }
+  }
+
+  async setDeadline(documentId: string, date: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token')
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/set-deadline',
+        {
+          documentId,
+          date
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText
+      };
+    }
+  }
+
 }
 
 export const documentApiService = new DocumentApiService(axios);

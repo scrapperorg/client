@@ -9,6 +9,10 @@ export interface InteractiveComponentsState {
   isModalOpened: boolean;
   closeModal: () => void;
   openModal: () => void;
+  // assignResponsibleModal
+  isAssignResponsibleModalOpened: boolean,
+  openAssignResponsibleModal: () => void,
+  closeAssignResponsibleModal: () => void,
 }
 
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
@@ -19,6 +23,10 @@ const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   isModalOpened: false,
   closeModal: () => null,
   openModal: () => null,
+  // assignResponsibleModal
+  isAssignResponsibleModalOpened: false,
+  openAssignResponsibleModal: () => { console.log('method not implemented') },
+  closeAssignResponsibleModal: () => { console.log('method not implemented') }
 };
 
 export const InteractiveComponentsContext = createContext(InteractiveComponentsDefaultState);
@@ -30,6 +38,7 @@ export interface UseModalHook {
   isModalOpened: boolean;
   closeModal: () => void;
   openModal: () => void;
+  toggleModal: () => void;
 }
 
 export interface UseSidebarHook {
@@ -46,8 +55,9 @@ const useModal: () => UseModalHook = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const closeModal = () => setIsModalOpened(false);
   const openModal = () => setIsModalOpened(true);
+  const toggleModal = () => setIsModalOpened(!isModalOpened);
 
-  return { isModalOpened, closeModal, openModal };
+  return { isModalOpened, closeModal, openModal, toggleModal };
 };
 
 const useSidebar: () => UseSidebarHook = () => {
@@ -72,6 +82,11 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
   const { selectedIndex, selectIndex } = useIndex();
   const { isCollapsed, toggleSidebar } = useSidebar();
   const { isModalOpened, closeModal, openModal } = useModal();
+  const {
+    isModalOpened: isAssignResponsibleModalOpened,
+    openModal: openAssignResponsibleModal,
+    closeModal: closeAssignResponsibleModal
+  } = useModal();
 
   const state: InteractiveComponentsState = {
     isCollapsed,
@@ -81,6 +96,11 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
     isModalOpened,
     closeModal,
     openModal,
+
+    // assignResponsibleModal
+    isAssignResponsibleModalOpened,
+    openAssignResponsibleModal,
+    closeAssignResponsibleModal,
   };
 
   return (
