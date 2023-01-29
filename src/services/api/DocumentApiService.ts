@@ -6,28 +6,60 @@ import { OperationStatus, DocumentDto } from './dtos';
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
+  async uploadDocument(
+    documentId: string,
+    attachment: File,
+  ): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    const formData = new FormData();
+    formData.append('attachment', attachment);
+
+    try {
+      const response = await this.httpClient.post<DocumentDto>(
+        `/document/upload/${documentId}`,
+        formData,
+        {
+          headers: { authorization: token, 'Content-Type': 'multipart/form-data' },
+        },
+      );
+
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
   async getDocuments(
     page: number,
     pageSize: number,
-    sourcesOfInterest: string[] = []
+    sourcesOfInterest: string[] = [],
   ): Promise<OperationStatus<QueryAll<DocumentDto>>> {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
 
     try {
-      const sourcesQueryParams = sourcesOfInterest && sourcesOfInterest.map(source => `&sourcesOfInterest=${source}`).join('');
+      const sourcesQueryParams =
+        sourcesOfInterest &&
+        sourcesOfInterest.map((source) => `&sourcesOfInterest=${source}`).join('');
       const response = await this.httpClient.get<QueryAll<DocumentDto>>(
         `/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`,
         {
           headers: { authorization: token },
-        }
+        },
       );
       return {
         success: true,
         payload: response.data,
-      }
+      };
     } catch (err: any) {
       const error: AxiosError = err;
-      console.log(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -36,19 +68,16 @@ class DocumentApiService {
   }
 
   async getDocumentById(id: string): Promise<OperationStatus<DocumentDto>> {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
 
     try {
-      const response = await this.httpClient.get<DocumentDto>(
-        `/document/${id}`,
-        {
-          headers: { authorization: token },
-        }
-      );
+      const response = await this.httpClient.get<DocumentDto>(`/document/${id}`, {
+        headers: { authorization: token },
+      });
       return {
         success: true,
         payload: response.data,
-      }
+      };
     } catch (err: any) {
       const error: AxiosError = err;
       return {
@@ -58,15 +87,18 @@ class DocumentApiService {
     }
   }
 
-  async assignResponsible(documentId: string, userId: string): Promise<OperationStatus<DocumentDto>> {
-    const token = localStorage.getItem('token')
+  async assignResponsible(
+    documentId: string,
+    userId: string,
+  ): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
 
     try {
       const response = await this.httpClient.post(
         '/document/assign-responsible',
         {
           documentId,
-          userId
+          userId,
         },
         {
           headers: { authorization: token },
@@ -80,20 +112,20 @@ class DocumentApiService {
       const error: AxiosError = err;
       return {
         success: false,
-        error: error.response?.statusText
+        error: error.response?.statusText,
       };
     }
   }
 
   async setDeadline(documentId: string, date: string): Promise<OperationStatus<DocumentDto>> {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
 
     try {
       const response = await this.httpClient.post(
         '/document/set-deadline',
         {
           documentId,
-          date
+          date,
         },
         {
           headers: { authorization: token },
@@ -107,11 +139,10 @@ class DocumentApiService {
       const error: AxiosError = err;
       return {
         success: false,
-        error: error.response?.statusText
+        error: error.response?.statusText,
       };
     }
   }
-
 }
 
 export const documentApiService = new DocumentApiService(axios);

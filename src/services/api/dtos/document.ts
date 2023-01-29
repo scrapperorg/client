@@ -1,5 +1,6 @@
-import { ProjectDto } from "./project";
-import {UserDto} from "./auth";
+import { ProjectDto } from './project';
+import { UserDto } from './auth';
+import { Attachment } from './attachment';
 
 export enum Status {
   NOU = 'nou',
@@ -25,5 +26,5 @@ export interface DocumentDto {
   textInterpretationPrecision?: number;
   numberOfIdentifiedArticles?: number;
   numberOfIdentifiedTerms?: number;
-  attachments?: string[];
+  attachments?: Attachment[];
 }
