@@ -14,13 +14,13 @@ export interface User {
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;
-  user: User | undefined;
+  user: Partial<User> | undefined;
   setUser: (user: User | undefined) => void;
   logoutUser: () => void;
 }
 
 const defaultState: AuthProviderState = {
-  user: undefined,
+  user: {} as User,
   isAuthenticated: false,
   // eslint-disable-next-line
   setUser: () => {},
@@ -35,20 +35,27 @@ export interface AuthProviderProps {
 
 export interface UseAuthHookReturnType {
   isLoading: boolean;
-  user: User | undefined;
+  user: Partial<User> | undefined;
   token: string | null;
-  setUser: (user: User | undefined) => void;
+  setUser: (user: Partial<User> | undefined) => void;
   logoutUser: () => void;
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [user, _setUser] = useState<User | undefined>();
+  const storedUser: string | null = localStorage.getItem('user');
+  let initialUser: Partial<User>;
+  if (storedUser && storedUser !== undefined) {
+    initialUser = JSON.parse(storedUser);
+  } else {
+    initialUser = {};
+  }
+  const [user, _setUser] = useState<Partial<User>>(initialUser);
   const token = localStorage.getItem('token');
 
   const setUser = useCallback(
-    (user: User | undefined) => {
-      _setUser(user);
+    (user: Partial<User> | undefined) => {
+      if (user) _setUser(user);
     },
     [_setUser],
   );
@@ -57,6 +64,7 @@ const useAuth: () => UseAuthHookReturnType = () => {
     setUser(undefined);
     authApiService.logout();
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
   useEffect(() => {
@@ -66,8 +74,9 @@ const useAuth: () => UseAuthHookReturnType = () => {
       authApiService
         .refreshToken(token)
         .then((data: OperationStatus<LoginDto>) => {
-          _setUser(data.payload?.user);
+          if (data.payload?.user) _setUser(data.payload?.user);
           localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
           setIsLoading(false);
         })
         .catch(() => setIsLoading(false));

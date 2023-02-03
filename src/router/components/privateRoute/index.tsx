@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from 'contexts/authContext';
-import {Navigate, Outlet} from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import PATHS from 'constants/paths';
 
 export default function PrivateRoute() {
@@ -9,6 +9,7 @@ export default function PrivateRoute() {
   if (!isAuthenticated) {
     return <Navigate to={PATHS.LOGIN} />;
   }
+  console.log(isAuthenticated);
 
   return <Outlet />;
 }
