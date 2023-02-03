@@ -14,13 +14,13 @@ export interface User {
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;
-  user: Partial<User> | undefined;
+  user: User | undefined;
   setUser: (user: User | undefined) => void;
   logoutUser: () => void;
 }
 
 const defaultState: AuthProviderState = {
-  user: {} as User,
+  user: undefined,
   isAuthenticated: false,
   // eslint-disable-next-line
   setUser: () => {},
@@ -35,27 +35,20 @@ export interface AuthProviderProps {
 
 export interface UseAuthHookReturnType {
   isLoading: boolean;
-  user: Partial<User> | undefined;
+  user: User | undefined;
   token: string | null;
-  setUser: (user: Partial<User> | undefined) => void;
+  setUser: (user: User | undefined) => void;
   logoutUser: () => void;
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const storedUser: string | null = localStorage.getItem('user');
-  let initialUser: Partial<User>;
-  if (storedUser && storedUser !== undefined) {
-    initialUser = JSON.parse(storedUser);
-  } else {
-    initialUser = {};
-  }
-  const [user, _setUser] = useState<Partial<User>>(initialUser);
+  const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
   const setUser = useCallback(
-    (user: Partial<User> | undefined) => {
-      if (user) _setUser(user);
+    (user: User | undefined) => {
+      _setUser(user);
     },
     [_setUser],
   );
@@ -64,7 +57,6 @@ const useAuth: () => UseAuthHookReturnType = () => {
     setUser(undefined);
     authApiService.logout();
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
   };
 
   useEffect(() => {
@@ -74,9 +66,8 @@ const useAuth: () => UseAuthHookReturnType = () => {
       authApiService
         .refreshToken(token)
         .then((data: OperationStatus<LoginDto>) => {
-          if (data.payload?.user) _setUser(data.payload?.user);
+          _setUser(data.payload?.user);
           localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
           setIsLoading(false);
         })
         .catch(() => setIsLoading(false));
@@ -87,7 +78,7 @@ const useAuth: () => UseAuthHookReturnType = () => {
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { isLoading, user, setUser, logoutUser } = useAuth();
+  const { isLoading, user, setUser, logoutUser, token } = useAuth();
 
   if (isLoading) {
     return <Loading />;
@@ -95,7 +86,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const state: AuthProviderState = {
     user,
-    isAuthenticated: Boolean(user),
+    isAuthenticated: Boolean(token),
     setUser: (user: User | undefined) => {
       setUser(user);
     },

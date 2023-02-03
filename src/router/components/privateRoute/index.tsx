@@ -9,7 +9,6 @@ export default function PrivateRoute() {
   if (!isAuthenticated) {
     return <Navigate to={PATHS.LOGIN} />;
   }
-  console.log(isAuthenticated);
 
   return <Outlet />;
 }

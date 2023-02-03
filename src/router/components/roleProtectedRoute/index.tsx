@@ -12,20 +12,14 @@ interface PrivateRouteProps {
 export default function RoleProtectedRoute({ exactRoles, atLeastRole }: PrivateRouteProps) {
   const { user } = useContext(AuthContext);
 
-  if (!user || !user.role) {
-    return <Navigate to={PATHS.MONITOR} />;
-  }
-
-  const role = user.role;
-
   if (exactRoles && exactRoles.length) {
-    if (!exactRoles.includes(role)) {
+    if (!exactRoles.includes(user!.role)) {
       return <Navigate to={PATHS.MONITOR} />;
     }
   }
 
   if (atLeastRole) {
-    if (ROLES_PRIORITY[role] < ROLES_PRIORITY[atLeastRole]) {
+    if (ROLES_PRIORITY[user!.role] < ROLES_PRIORITY[atLeastRole]) {
       return <Navigate to={PATHS.MONITOR} />;
     }
   }
