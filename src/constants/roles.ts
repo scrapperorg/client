@@ -1,13 +1,20 @@
 export enum Role {
-    ITA = 'ITA', // IT Administrator
-    LSE = 'LSE', // Legislation Screening Expert
-    LSS = 'LSS', // Legislation Screening Supervisor
-    GU = 'GU', // Generic User
+  ITA = 'ITA', // IT Administrator
+  LSE = 'LSE', // Legislation Screening Expert
+  LSS = 'LSS', // Legislation Screening Supervisor
+  GU = 'GU', // Generic User
+}
+
+export enum RoleDescription {
+  ITA = 'IT Administrator',
+  LSE = 'Legislation Screening Expert',
+  LSS = 'Legislation Screening Supervisor',
+  GU = 'Generic User',
 }
 
 export const ROLES_PRIORITY = {
-    [Role.GU]: 0,
-    [Role.LSS]: 1,
-    [Role.LSE]: 2,
-    [Role.ITA]: 3,
+  [Role.GU]: 0,
+  [Role.LSS]: 1,
+  [Role.LSE]: 2,
+  [Role.ITA]: 3,
 };
