@@ -7,11 +7,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { Modal } from 'components/modal';
 import { AuthContext } from 'contexts/authContext';
+import { capitalizeString } from 'helpers/formatters';
+import { RoleDescription } from 'constants/roles';
 
 export const ProfileModal = () => {
   const { isModalOpened, closeModal } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
-  const { logoutUser } = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
 
   const logout = () => {
     closeModal();
@@ -47,7 +49,7 @@ export const ProfileModal = () => {
         <CloseIcon />
       </IconButton>
       <Avatar
-        alt='John Doe'
+        alt={`${capitalizeString(user?.name)} ${capitalizeString(user?.surname)}`}
         src={avatar}
         sx={{ width: 100, height: 100, border: `3px solid ${theme.palette.primary.main}` }}
       />
@@ -58,10 +60,10 @@ export const ProfileModal = () => {
         sx={{ mt: 5, mb: 0, width: '350px' }}
         align='center'
       >
-        John Doe
+        {`${capitalizeString(user?.name)} ${capitalizeString(user?.surname)}`}
       </Typography>
       <Typography id='transition-modal-description' variant='h5' sx={{ mb: 5 }}>
-        Analist
+        {user?.role ? RoleDescription[user?.role] : 'Lipsa rol'}
       </Typography>
       <LoadingButton
         fullWidth
