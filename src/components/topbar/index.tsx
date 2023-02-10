@@ -44,7 +44,9 @@ export default function TopBar() {
                     aria-label='account of current user'
                     aria-haspopup='true'
                     color='inherit'
-                    onClick={openModal}
+                    onClick={() => {
+                      openModal('profile-modal');
+                    }}
                   >
                     <PersonIcon />
                   </IconButton>

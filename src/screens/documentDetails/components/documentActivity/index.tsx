@@ -11,18 +11,11 @@ interface DocumentActivityProps {
   assignableResponsibles: UserDto[];
   assignResponsible: (userId: string) => void;
   setDeadline: (date: string | undefined) => void;
-  openModal: () => void; 
+  openModal: (modalName: string) => void;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
-
-  const {
-    document,
-    openModal,
-    assignableResponsibles,
-    assignResponsible,
-    setDeadline
-  } = props;
+  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline } = props;
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
@@ -66,7 +59,9 @@ function DocumentActivity(props: DocumentActivityProps) {
           <Stack gap={4}>
             <Button
               variant='contained'
-              onClick={openModal}
+              onClick={() => {
+                openModal('assign-responsible-modal');
+              }}
             >
               Actualizeaza responsabil/termen
             </Button>

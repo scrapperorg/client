@@ -11,7 +11,7 @@ import { capitalizeString } from 'helpers/formatters';
 import { RoleDescription } from 'constants/roles';
 
 export const ProfileModal = () => {
-  const { isModalOpened, closeModal } = useContext(InteractiveComponentsContext);
+  const { isModalOpened, closeModal, modalName } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
   const { logoutUser, user } = useContext(AuthContext);
 
@@ -26,7 +26,7 @@ export const ProfileModal = () => {
   };
 
   return (
-    <Modal isModalOpened={isModalOpened} closeModal={closeModal}>
+    <Modal isModalOpened={isModalOpened && modalName === 'profile-modal'} closeModal={closeModal}>
       <Box
         sx={{
           position: 'absolute',
