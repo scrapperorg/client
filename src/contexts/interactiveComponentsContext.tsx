@@ -6,7 +6,6 @@ export interface InteractiveComponentsState {
   toggleSidebar: () => void;
   selectedIndex: string;
   selectIndex: (index: string) => void;
-  isModalOpened: boolean;
   closeModal: () => void;
   openModal: (modalName: string) => void;
   modalName: string;
@@ -17,7 +16,6 @@ const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   toggleSidebar: () => null,
   selectedIndex: '',
   selectIndex: () => null,
-  isModalOpened: false,
   closeModal: () => null,
   openModal: () => null,
   modalName: '',
@@ -29,11 +27,9 @@ export interface InteractiveComponentsProviderProps {
   children: JSX.Element;
 }
 export interface UseModalHook {
-  isModalOpened: boolean;
   closeModal: () => void;
   openModal: (name: string) => void;
   modalName: string;
-  toggleModal: () => void;
 }
 
 export interface UseSidebarHook {
@@ -47,19 +43,14 @@ export interface UseIndexHook {
 }
 
 const useModal: () => UseModalHook = () => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
   const [modalName, setModalName] = useState('');
   const closeModal = () => {
     setModalName('');
-    setIsModalOpened(false);
   };
   const openModal = (name: string) => {
     setModalName(name);
-    setIsModalOpened(true);
   };
-  const toggleModal = () => setIsModalOpened(!isModalOpened);
-
-  return { isModalOpened, closeModal, openModal, toggleModal, modalName };
+  return { closeModal, openModal, modalName };
 };
 
 const useSidebar: () => UseSidebarHook = () => {
@@ -83,14 +74,13 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
 }) => {
   const { selectedIndex, selectIndex } = useIndex();
   const { isCollapsed, toggleSidebar } = useSidebar();
-  const { isModalOpened, closeModal, openModal, modalName } = useModal();
+  const { closeModal, openModal, modalName } = useModal();
 
   const state: InteractiveComponentsState = {
     isCollapsed,
     toggleSidebar,
     selectedIndex,
     selectIndex,
-    isModalOpened,
     closeModal,
     openModal,
     modalName,

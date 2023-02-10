@@ -30,7 +30,7 @@ interface AssignResponsibleModalProps {
 const isInThePast = (date: Dayjs) => date.toDate() < new Date();
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
-  const { isModalOpened, modalName, closeModal } = useContext(InteractiveComponentsContext);
+  const { modalName, closeModal } = useContext(InteractiveComponentsContext);
 
   const {
     assignableResponsibles,
@@ -50,7 +50,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
 
   return (
     <Modal
-      isModalOpened={isModalOpened && modalName === 'assign-responsible-modal'}
+      isModalOpened={modalName === 'assign-responsible-modal'}
       closeModal={closeModal}
     >
       <StyledModalCloseButton
