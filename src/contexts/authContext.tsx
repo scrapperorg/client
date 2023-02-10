@@ -78,7 +78,7 @@ const useAuth: () => UseAuthHookReturnType = () => {
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { isLoading, user, setUser, logoutUser } = useAuth();
+  const { isLoading, user, setUser, logoutUser, token } = useAuth();
 
   if (isLoading) {
     return <Loading />;
@@ -86,7 +86,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const state: AuthProviderState = {
     user,
-    isAuthenticated: Boolean(user),
+    isAuthenticated: Boolean(token),
     setUser: (user: User | undefined) => {
       setUser(user);
     },
