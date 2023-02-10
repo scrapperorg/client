@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import { ProfileModal } from 'components/modal/profile';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
+import { ModalNames } from 'constants/modals';
 
 export default function TopBar() {
   const { openModal, toggleSidebar, isCollapsed } = useContext(InteractiveComponentsContext);
@@ -45,7 +46,7 @@ export default function TopBar() {
                     aria-haspopup='true'
                     color='inherit'
                     onClick={() => {
-                      openModal('profile-modal');
+                      openModal(ModalNames.PROFILE);
                     }}
                   >
                     <PersonIcon />

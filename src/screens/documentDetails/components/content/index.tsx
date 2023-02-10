@@ -9,6 +9,7 @@ import DocumentProcessedData from '../documentProcessedData';
 import DocumentAttachments from '../documentAttachments';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { useDocumentDetails } from 'screens/documentDetails/hooks/useDocumentDetails';
+import { ModalNames } from 'constants/modals';
 
 export default function DocumentDetailsContent() {
   const { assignableResponsibles } = useContext(DocumentDetailsContext);
@@ -46,9 +47,9 @@ export default function DocumentDetailsContent() {
       <Box sx={{ mb: 4 }}>
         <DocumentActivity
           document={document}
-          isModalOpened={modalName === 'assign-responsible-modal'}
+          isModalOpened={modalName === ModalNames.ASSIGN_RESP}
           openModal={() => {
-            openModal('assign-responsible-modal');
+            openModal(ModalNames.ASSIGN_RESP);
           }}
           assignableResponsibles={assignableResponsibles}
           assignResponsible={assignResponsible}

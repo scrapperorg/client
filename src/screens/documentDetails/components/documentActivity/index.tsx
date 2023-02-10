@@ -4,6 +4,7 @@ import { FormattedDate } from '../../../../components/formatedDate';
 import React from 'react';
 import { DocumentDto, UserDto } from '../../../../services/api/dtos';
 import { AssignResponsibleModal } from '../assignResponsibleModal';
+import { ModalNames } from 'constants/modals';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -60,7 +61,7 @@ function DocumentActivity(props: DocumentActivityProps) {
             <Button
               variant='contained'
               onClick={() => {
-                openModal('assign-responsible-modal');
+                openModal(ModalNames.ASSIGN_RESP);
               }}
             >
               Actualizeaza responsabil/termen

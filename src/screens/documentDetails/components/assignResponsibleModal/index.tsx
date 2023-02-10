@@ -18,6 +18,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { UserDto } from "services/api/dtos";
 import { Dayjs } from "dayjs";
+import { ModalNames } from 'constants/modals';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
@@ -50,7 +51,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
 
   return (
     <Modal
-      isModalOpened={modalName === 'assign-responsible-modal'}
+      isModalOpened={modalName === ModalNames.ASSIGN_RESP}
       closeModal={closeModal}
     >
       <StyledModalCloseButton

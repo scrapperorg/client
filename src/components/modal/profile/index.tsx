@@ -9,6 +9,7 @@ import { Modal } from 'components/modal';
 import { AuthContext } from 'contexts/authContext';
 import { capitalizeString } from 'helpers/formatters';
 import { RoleDescription } from 'constants/roles';
+import { ModalNames } from 'constants/modals';
 
 export const ProfileModal = () => {
   const { closeModal, modalName } = useContext(InteractiveComponentsContext);
@@ -26,7 +27,7 @@ export const ProfileModal = () => {
   };
 
   return (
-    <Modal isModalOpened={modalName === 'profile-modal'} closeModal={closeModal}>
+    <Modal isModalOpened={modalName === ModalNames.PROFILE} closeModal={closeModal}>
       <Box
         sx={{
           position: 'absolute',
