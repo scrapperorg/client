@@ -6,13 +6,9 @@ export interface InteractiveComponentsState {
   toggleSidebar: () => void;
   selectedIndex: string;
   selectIndex: (index: string) => void;
-  isModalOpened: boolean;
   closeModal: () => void;
-  openModal: () => void;
-  // assignResponsibleModal
-  isAssignResponsibleModalOpened: boolean,
-  openAssignResponsibleModal: () => void,
-  closeAssignResponsibleModal: () => void,
+  openModal: (modalName: string) => void;
+  modalName: string;
 }
 
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
@@ -20,13 +16,9 @@ const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   toggleSidebar: () => null,
   selectedIndex: '',
   selectIndex: () => null,
-  isModalOpened: false,
   closeModal: () => null,
   openModal: () => null,
-  // assignResponsibleModal
-  isAssignResponsibleModalOpened: false,
-  openAssignResponsibleModal: () => { console.log('method not implemented') },
-  closeAssignResponsibleModal: () => { console.log('method not implemented') }
+  modalName: '',
 };
 
 export const InteractiveComponentsContext = createContext(InteractiveComponentsDefaultState);
@@ -35,10 +27,9 @@ export interface InteractiveComponentsProviderProps {
   children: JSX.Element;
 }
 export interface UseModalHook {
-  isModalOpened: boolean;
   closeModal: () => void;
-  openModal: () => void;
-  toggleModal: () => void;
+  openModal: (name: string) => void;
+  modalName: string;
 }
 
 export interface UseSidebarHook {
@@ -52,12 +43,14 @@ export interface UseIndexHook {
 }
 
 const useModal: () => UseModalHook = () => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const closeModal = () => setIsModalOpened(false);
-  const openModal = () => setIsModalOpened(true);
-  const toggleModal = () => setIsModalOpened(!isModalOpened);
-
-  return { isModalOpened, closeModal, openModal, toggleModal };
+  const [modalName, setModalName] = useState('');
+  const closeModal = () => {
+    setModalName('');
+  };
+  const openModal = (name: string) => {
+    setModalName(name);
+  };
+  return { closeModal, openModal, modalName };
 };
 
 const useSidebar: () => UseSidebarHook = () => {
@@ -81,26 +74,16 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
 }) => {
   const { selectedIndex, selectIndex } = useIndex();
   const { isCollapsed, toggleSidebar } = useSidebar();
-  const { isModalOpened, closeModal, openModal } = useModal();
-  const {
-    isModalOpened: isAssignResponsibleModalOpened,
-    openModal: openAssignResponsibleModal,
-    closeModal: closeAssignResponsibleModal
-  } = useModal();
+  const { closeModal, openModal, modalName } = useModal();
 
   const state: InteractiveComponentsState = {
     isCollapsed,
     toggleSidebar,
     selectedIndex,
     selectIndex,
-    isModalOpened,
     closeModal,
     openModal,
-
-    // assignResponsibleModal
-    isAssignResponsibleModalOpened,
-    openAssignResponsibleModal,
-    closeAssignResponsibleModal,
+    modalName,
   };
 
   return (

@@ -9,12 +9,12 @@ import DocumentProcessedData from '../documentProcessedData';
 import DocumentAttachments from '../documentAttachments';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { useDocumentDetails } from 'screens/documentDetails/hooks/useDocumentDetails';
+import { ModalNames } from 'constants/modals';
 
 export default function DocumentDetailsContent() {
   const { assignableResponsibles } = useContext(DocumentDetailsContext);
 
-  const { isAssignResponsibleModalOpened: isModalOpened, openAssignResponsibleModal: openModal } =
-    useContext(InteractiveComponentsContext);
+  const { openModal, modalName } = useContext(InteractiveComponentsContext);
 
   const { document, assignResponsible, setDeadline, uploadAttachment } = useDocumentDetails();
 
@@ -47,8 +47,10 @@ export default function DocumentDetailsContent() {
       <Box sx={{ mb: 4 }}>
         <DocumentActivity
           document={document}
-          isModalOpened={isModalOpened}
-          openModal={openModal}
+          isModalOpened={modalName === ModalNames.ASSIGN_RESP}
+          openModal={() => {
+            openModal(ModalNames.ASSIGN_RESP);
+          }}
           assignableResponsibles={assignableResponsibles}
           assignResponsible={assignResponsible}
           setDeadline={setDeadline}

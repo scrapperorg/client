@@ -18,6 +18,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { UserDto } from "services/api/dtos";
 import { Dayjs } from "dayjs";
+import { ModalNames } from 'constants/modals';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
@@ -30,11 +31,7 @@ interface AssignResponsibleModalProps {
 const isInThePast = (date: Dayjs) => date.toDate() < new Date();
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
-  const {
-    isAssignResponsibleModalOpened: isModalOpened,
-    closeAssignResponsibleModal: closeModal,
-  } = useContext(InteractiveComponentsContext);
-
+  const { modalName, closeModal } = useContext(InteractiveComponentsContext);
 
   const {
     assignableResponsibles,
@@ -54,7 +51,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
 
   return (
     <Modal
-      isModalOpened={isModalOpened}
+      isModalOpened={modalName === ModalNames.ASSIGN_RESP}
       closeModal={closeModal}
     >
       <StyledModalCloseButton
