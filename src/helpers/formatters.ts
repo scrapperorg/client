@@ -3,8 +3,8 @@ export const capitalizeString = (str: string | undefined) => {
 };
 
 export const isDateOverdue = (due: Date | undefined) => {
-  const dueDate = due ? new Date(due) : undefined;
+  if(due === undefined) return false;
+  const dueDate = new Date(due);
   const currentDate = new Date();
-
-  return dueDate ? dueDate < currentDate : false;
+  return dueDate < currentDate;
 };
