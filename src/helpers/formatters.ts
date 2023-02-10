@@ -6,5 +6,5 @@ export const isDateOverdue = (due: Date | undefined) => {
   const dueDate = due ? new Date(due) : undefined;
   const currentDate = new Date();
 
-  return dueDate ? dueDate < currentDate : undefined;
+  return dueDate ? dueDate < currentDate : false;
 };
