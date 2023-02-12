@@ -28,7 +28,11 @@ interface AssignResponsibleModalProps {
   setDeadline: (date: string | undefined) => void;
 }
 
-const isInThePast = (date: Dayjs) => date.toDate() < new Date();
+const isOutOfRange = (date: Dayjs) => {
+  const futureDate = new Date();
+  futureDate.setFullYear(futureDate.getFullYear() + 1);
+  return date.toDate() < new Date() || date.toDate() > futureDate;
+}
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
@@ -48,6 +52,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const onDeadlineChange = (newDate: Dayjs | null) => {
     setDeadline(newDate?.toString())
   }
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <Modal
@@ -90,10 +98,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Termen:"
-                shouldDisableDate={isInThePast}
+                shouldDisableDate={isOutOfRange}
                 value={deadline ?? null}
                 onChange={onDeadlineChange}
-                renderInput={(params) => <TextField { ...params} fullWidth/>}
+                renderInput={(params) => <TextField onKeyDown={onKeyDown} { ...params} fullWidth/>}
               />
             </LocalizationProvider>
           </FormControl>
