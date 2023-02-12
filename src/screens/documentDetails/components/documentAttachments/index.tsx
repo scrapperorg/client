@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import { Card, CardContent, Chip, Stack } from '@mui/material';
-import React, { useState, ChangeEvent, createRef } from 'react';
+import React, { useState, ChangeEvent, createRef, useCallback } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import { DocumentDto } from '../../../../services/api/dtos';
@@ -8,9 +8,16 @@ import { DocumentDto } from '../../../../services/api/dtos';
 export interface DocumentAttachmentsProps {
   document: DocumentDto;
   onUploadAttachment: (file: File) => void;
+  onDeleteAttachment: (attachmentId: string) => void;
+  onDownloadAttachment: (attachmentId: string) => void;
 }
 
-function DocumentAttachments({ onUploadAttachment, document }: DocumentAttachmentsProps) {
+function DocumentAttachments({
+  onUploadAttachment,
+  onDeleteAttachment,
+  onDownloadAttachment,
+  document,
+}: DocumentAttachmentsProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const documentInput = createRef<HTMLInputElement>();
 
@@ -22,9 +29,9 @@ function DocumentAttachments({ onUploadAttachment, document }: DocumentAttachmen
     }
   };
 
-  const handleOnClick = () => {
+  const handleOnClick = useCallback(() => {
     documentInput.current?.click();
-  };
+  }, [documentInput]);
 
   return (
     <Grid container spacing={4}>
@@ -34,7 +41,15 @@ function DocumentAttachments({ onUploadAttachment, document }: DocumentAttachmen
             <Chip label='Atasamente' color='primary' size='medium' sx={{ mb: 3 }} />
             <Stack direction='row' spacing={2}>
               {document.attachments?.map((attachment) => {
-                return <Chip key={attachment.id} label={attachment.name} variant='outlined' />;
+                return (
+                  <Chip
+                    key={attachment.id}
+                    label={attachment.name}
+                    variant='outlined'
+                    onClick={() => onDownloadAttachment(attachment.id)}
+                    onDelete={() => onDeleteAttachment(attachment.id)}
+                  />
+                );
               })}
             </Stack>
           </CardContent>

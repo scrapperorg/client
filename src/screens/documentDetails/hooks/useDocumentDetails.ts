@@ -2,6 +2,8 @@ import { documentApiService } from 'services/api/DocumentApiService';
 import { useContext, useEffect, useState } from 'react';
 import { DocumentDto } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
+import { attachmentApiService } from 'services/api/AttachmentApiService';
+import { downloadBlob } from 'helpers/downloadBlob';
 
 export function useDocumentDetails() {
   const { document: contextDocument } = useContext(DocumentDetailsContext);
@@ -24,10 +26,26 @@ export function useDocumentDetails() {
 
   const uploadAttachment = async (attachment: File) => {
     if (!document?.id) return false;
-    const { payload } = await documentApiService.uploadDocument(document.id, attachment);
+    const { payload } = await documentApiService.uploadAttachment(document.id, attachment);
 
     if (!payload) return;
     setDocument(payload);
+  };
+
+  const deleteAttachment = async (attachmentId: string) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.deleteAttachment(document.id, attachmentId);
+    if (!payload) return;
+    setDocument(payload);
+  };
+
+  const downloadAttachment = async (attachmentId: string) => {
+    const data = await attachmentApiService.downloadAttachment(attachmentId);
+
+    if (data.payload) {
+      const { blob, fileName } = data.payload;
+      downloadBlob(blob, fileName);
+    }
   };
 
   useEffect(() => setDocument(contextDocument), [contextDocument]);
@@ -37,5 +55,7 @@ export function useDocumentDetails() {
     assignResponsible,
     setDeadline,
     uploadAttachment,
+    deleteAttachment,
+    downloadAttachment,
   };
 }
