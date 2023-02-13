@@ -16,7 +16,14 @@ export default function DocumentDetailsContent() {
 
   const { openModal, modalName } = useContext(InteractiveComponentsContext);
 
-  const { document, assignResponsible, setDeadline, uploadAttachment } = useDocumentDetails();
+  const {
+    document,
+    assignResponsible,
+    setDeadline,
+    uploadAttachment,
+    deleteAttachment,
+    downloadAttachment,
+  } = useDocumentDetails();
 
   if (!document) return null;
 
@@ -62,7 +69,12 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentAttachments document={document} onUploadAttachment={uploadAttachment} />
+        <DocumentAttachments
+          document={document}
+          onUploadAttachment={uploadAttachment}
+          onDeleteAttachment={deleteAttachment}
+          onDownloadAttachment={downloadAttachment}
+        />
       </Box>
     </>
   );

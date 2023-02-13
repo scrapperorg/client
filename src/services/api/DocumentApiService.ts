@@ -6,7 +6,34 @@ import { OperationStatus, DocumentDto } from './dtos';
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
-  async uploadDocument(
+  async deleteAttachment(
+    documentId: string,
+    attachmentId: string,
+  ): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.delete<DocumentDto>(
+        `/document/${documentId}/attachment/${attachmentId}`,
+        {
+          headers: { authorization: token },
+        },
+      );
+
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async uploadAttachment(
     documentId: string,
     attachment: File,
   ): Promise<OperationStatus<DocumentDto>> {
