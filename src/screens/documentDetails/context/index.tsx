@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import Loading from 'components/loading';
+import { FullScreenLoading as Loading } from 'components/loading';
 import { DocumentDto, UserDto } from 'services/api/dtos';
 import { documentApiService } from 'services/api/DocumentApiService';
 import { useApiService } from 'hooks/useApiService';

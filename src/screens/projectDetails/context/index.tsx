@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import Loading from 'components/loading';
+import { FullScreenLoading as Loading } from 'components/loading';
 import { ProjectDto } from 'services/api/dtos';
 import { useApiService } from 'hooks/useApiService';
 import { useParams } from 'react-router-dom';
