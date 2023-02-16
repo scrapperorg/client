@@ -3,6 +3,11 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 
+interface SearchProps {
+  title: string,
+  postOcrContent: string,
+}
+
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
@@ -170,6 +175,32 @@ class DocumentApiService {
       };
     }
   }
+
+  async search(props: SearchProps): Promise<OperationStatus<DocumentDto[]>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/search',
+        props,
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+
+  }
+  
 }
 
 export const documentApiService = new DocumentApiService(axios);

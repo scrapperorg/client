@@ -4,14 +4,25 @@ import { Box, CircularProgress } from '@mui/material';
 
 const StyledLoading = styled(Box)`
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 `;
 
-export default function Loading() {
+const FullLoading = styled(StyledLoading)`
+  height: 100vh;
+`;
+
+export function FullScreenLoading() {
+  return (
+    <FullLoading>
+      <CircularProgress />
+    </FullLoading>
+  );
+}
+
+export function Loading() {
   return (
     <StyledLoading>
       <CircularProgress />

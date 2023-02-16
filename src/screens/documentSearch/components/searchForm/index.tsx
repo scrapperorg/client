@@ -1,8 +1,10 @@
 import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, styled, TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DocumentSearchFormValues } from '../../hooks/useDocumentSearchForm';
 
 
 const Status: Record<string, string> = {
@@ -16,10 +18,16 @@ const Sursa: Record<string, string> = {
   SENAT: 'senat',
   GUVERN: 'guvern',
 }
+interface SearchFormProps {
+  form: UseFormReturn<DocumentSearchFormValues, any>,
+  handleSubmit: (props: DocumentSearchFormValues) => Promise<void>
+}
 
-export const SearchForm = () => {
+export const SearchForm = (props: SearchFormProps) => {
+  const {form, handleSubmit} = props;
+
   return (
-    <form onSubmit={() => { /** */ }}>
+    <form onSubmit={form.handleSubmit(handleSubmit)}>
       <Box>
         <Grid container>
           <Grid item md={3}>
@@ -29,7 +37,7 @@ export const SearchForm = () => {
               variant='outlined'
               error={false}
               helperText={''}
-              // {...form.register('')}
+              // {...form.register('identificator')}
             />
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
@@ -39,7 +47,7 @@ export const SearchForm = () => {
               variant='outlined'
               error={false}
               helperText={''}
-              // {...form.register('')}
+              {...form.register('title')}
             />
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
@@ -126,7 +134,7 @@ export const SearchForm = () => {
           variant='outlined'
           error={false}
           helperText={''}
-          // {...form.register('')}
+          {...form.register('postOcrContent')}
         />
       </Box>
 
@@ -150,7 +158,7 @@ export const SearchForm = () => {
       </Box>
 
       <ButtonBox>
-        <Button variant='contained'>Cauta</Button>
+        <Button type='submit' variant='contained'>Cauta</Button>
       </ButtonBox>
     </form>
   )
