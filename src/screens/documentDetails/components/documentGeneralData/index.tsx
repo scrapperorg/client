@@ -5,6 +5,7 @@ import { FormattedDate } from '../../../../components/formatedDate';
 import React, { useCallback, useState } from 'react';
 import { DocumentDto } from '../../../../services/api/dtos';
 import { PdfViewer } from 'components/pdfViewer';
+import { SourceDescription } from 'constants/sources';
 
 interface DocumentGeneralDataProps {
   document: DocumentDto;
@@ -15,6 +16,9 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 
   const handleClosePdf = useCallback(() => setIsPdfVisible(false), [setIsPdfVisible]);
   const handleOpenPdf = useCallback(() => setIsPdfVisible(true), [setIsPdfVisible]);
+  
+  const source = document.source as keyof typeof SourceDescription;
+  const documentSourceDescription = SourceDescription[source];
 
   return (
     <Grid container spacing={4}>
@@ -57,7 +61,7 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
                   <FormattedDate date={document.publicationDate} />
                 </Typography>
                 <Typography variant='h5' fontWeight='bold' sx={{ mb: 3 }}>
-                  {document.source}
+                  {documentSourceDescription}
                 </Typography>
               </Grid>
             </Grid>
