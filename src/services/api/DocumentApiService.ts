@@ -8,6 +8,10 @@ interface SearchProps {
   postOcrContent: string,
 }
 
+enum ErrorCodes {
+  UNAUTH = 401
+}
+
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
@@ -92,6 +96,10 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      if(error?.response?.status === ErrorCodes.UNAUTH) {
+        window.location.href = "/login";
+        localStorage.removeItem('token');
+    }
       return {
         success: false,
         error: error.response?.statusText,
