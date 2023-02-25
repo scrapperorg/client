@@ -4,8 +4,16 @@ import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 
 interface SearchProps {
+  identificator: string,
   title: string,
-  postOcrContent: string,
+  source: string,
+  status: string,
+  assignedUserId: string,
+  projectId: string,
+  publishedAfter: string,
+  publishedBefore: string,
+  postOcrContent: string;
+  isRulesBreaker: boolean;
 }
 
 class DocumentApiService {

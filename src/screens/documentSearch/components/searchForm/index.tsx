@@ -1,10 +1,24 @@
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import { Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, styled, TextField } from "@mui/material";
+import React, { useContext } from 'react';
+import { Controller, UseFormReturn } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  styled,
+  TextField
+} from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DocumentSearchFormValues } from '../../hooks/useDocumentSearchForm';
+import { DocumentSearchContext } from 'screens/documentSearch/context';
+import { Dayjs } from 'dayjs';
 
 
 const Status: Record<string, string> = {
@@ -14,17 +28,27 @@ const Status: Record<string, string> = {
 }
 
 const Sursa: Record<string, string> = {
-  CAMERA_DEPUTATILOR: 'camera_deputatilor',
-  SENAT: 'senat',
-  GUVERN: 'guvern',
+  CAMERA_DEPUTATILOR: 'Camera Deputatilor',
+  SENAT: 'Senat',
+  GUVERN: 'Guvern',
 }
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
   handleSubmit: (props: DocumentSearchFormValues) => Promise<void>
 }
 
+const isInTheFuture = (date: Dayjs) => {
+  return date.toDate() > new Date()
+}
+
+const onKeyDown = (e: React.KeyboardEvent) => {
+  e.preventDefault();
+};
+
 export const SearchForm = (props: SearchFormProps) => {
   const {form, handleSubmit} = props;
+
+  const { assignableResponsibles } = useContext(DocumentSearchContext);
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -37,7 +61,7 @@ export const SearchForm = (props: SearchFormProps) => {
               variant='outlined'
               error={false}
               helperText={''}
-              // {...form.register('identificator')}
+              {...form.register('identificator')}
             />
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
@@ -56,27 +80,27 @@ export const SearchForm = (props: SearchFormProps) => {
               <Select
                 labelId="sursa-document"
                 id="sursa"
-                value={''}
                 label="Sursa"
-                onChange={() => { /** */ }}
+                defaultValue=""
+                {...form.register('source')}
               >
                 { Object.keys(Sursa).map((key: string) => <MenuItem key={`sursa-document-${key}`} value={key}>{Sursa[key]}</MenuItem>) }
               </Select>
             </FormControl>
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
-          <FormControl fullWidth>
-            <InputLabel id="stare-document-label">Stare</InputLabel>
-            <Select
-              labelId="stare-document"
-              id="stare"
-              value={''}
-              label="Stare"
-              onChange={() => { /** */ }}
-            >
-              { Object.keys(Status).map((key: string) => <MenuItem key={`stare-document-${key}`} value={key}>{Status[key]}</MenuItem>) }
-            </Select>
-          </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="stare-document-label">Stare</InputLabel>
+              <Select
+                labelId="stare-document"
+                id="stare"
+                defaultValue=""
+                label="Stare"
+                {...form.register('status')}
+              >
+                { Object.keys(Status).map((key: string) => <MenuItem key={`stare-document-${key}`} value={key}>{Status[key]}</MenuItem>) }
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
       </Box>
@@ -84,15 +108,18 @@ export const SearchForm = (props: SearchFormProps) => {
       <Box>
         <Grid container>
           <Grid item md={3}>
-            <TextField
-              // make this select
-              fullWidth
-              label='Responsabil'
-              variant='outlined'
-              error={false}
-              helperText={''}
-              // {...form.register('')}
-            />
+            <FormControl fullWidth>
+              <InputLabel id="responsabil-label">Responsabil</InputLabel>
+              <Select
+                labelId="responsabil"
+                id="responsabil"
+                label="Responsabil"
+                defaultValue=""
+                {...form.register('assignedUserId')}
+              >
+                {assignableResponsibles.map(responsible => <MenuItem key={`reponsabil-${responsible.id}`} value={responsible.id}>{`${responsible.name} ${responsible.surname}`}</MenuItem>)}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
             <TextField
@@ -101,28 +128,45 @@ export const SearchForm = (props: SearchFormProps) => {
               variant='outlined'
               error={false}
               helperText={''}
-              // {...form.register('')}
+              disabled
+              {...form.register('projectId')}
             />
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Publicat de la:"
-                value={null}
-                onChange={() => { /** */ }}
-                renderInput={(params) => <TextField { ...params} fullWidth/>}
+            <Controller
+              name="publishedAfter"
+              control={form.control}
+              render={({ field }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    {...field}
+                    label="Publicat de la:"
+                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    value={field.value || null}
+                    shouldDisableDate={isInTheFuture}
+                    onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                  />
+                </LocalizationProvider>
+              )}
               />
-            </LocalizationProvider>
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Publicat pana la:"
-                value={null}
-                onChange={() => { /** */ }}
-                renderInput={(params) => <TextField {...params} fullWidth/>}
+            <Controller
+              name="publishedBefore"
+              control={form.control}
+              render={({ field }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    {...field}
+                    label="Publicat pana la:"
+                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    value={field.value || null}
+                    shouldDisableDate={isInTheFuture}
+                    onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                  />
+                </LocalizationProvider>
+              )}
               />
-            </LocalizationProvider>  
           </Grid>
         </Grid>
       </Box>
@@ -142,16 +186,16 @@ export const SearchForm = (props: SearchFormProps) => {
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel
-              control={<Checkbox checked />}
+              control={<Checkbox />}
               label="Document ce contravine normelor in vigoare"
-              onChange={() => {/** */}}
+              {...form.register('isRulesBreaker')}
             />
           </Grid>
           <Grid item md={6} sx={{ pl: 4 }}>
             <FormControlLabel
               control={<Checkbox checked={false}/>}
               label="Proiect legislativ cu impact"
-              onChange={() => {/** */}}
+              disabled
             />
           </Grid>
         </Grid>

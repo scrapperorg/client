@@ -44,6 +44,7 @@ export const SearchForm = () => {
               variant='outlined'
               error={false}
               helperText={''}
+              disabled
               // {...form.register('')}
             />
           </Grid>
@@ -54,6 +55,7 @@ export const SearchForm = () => {
               variant='outlined'
               error={false}
               helperText={''}
+              disabled
               // {...form.register('')}
             />
           </Grid>
@@ -65,6 +67,7 @@ export const SearchForm = () => {
                 id='forum'
                 value={''}
                 label='Forum legislativ'
+                disabled
                 onChange={() => {
                   /** */
                 }}
@@ -90,6 +93,7 @@ export const SearchForm = () => {
                 id='initiator'
                 value={''}
                 label='Initiator'
+                disabled
                 onChange={() => {
                   /** */
                 }}
@@ -107,6 +111,7 @@ export const SearchForm = () => {
               <DatePicker
                 label='Inregistrat de la:'
                 value={null}
+                disabled
                 onChange={() => {
                   /** */
                 }}
@@ -119,6 +124,7 @@ export const SearchForm = () => {
               <DatePicker
                 label='Inregistrat pana la:'
                 value={null}
+                disabled
                 onChange={() => {
                   /** */
                 }}
@@ -135,6 +141,7 @@ export const SearchForm = () => {
           label='Proiectul contine textul...'
           variant='outlined'
           error={false}
+          disabled
           helperText={''}
           // {...form.register('')}
         />
@@ -146,6 +153,7 @@ export const SearchForm = () => {
             <FormControlLabel
               control={<Checkbox checked />}
               label='Proiect legislativ de interes/cu impact'
+              disabled
               onChange={() => {
                 /** */
               }}

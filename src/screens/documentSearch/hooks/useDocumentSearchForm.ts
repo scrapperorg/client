@@ -6,8 +6,16 @@ import { documentApiService } from "services/api/DocumentApiService";
 import { documentSearchSchema } from "../formSchemas/documentSearchSchema";
 
 export interface DocumentSearchFormValues {
+  identificator: string,
   title: string,
+  source: string,
+  status: string,
+  assignedUserId: string,
+  projectId: string, // autocomplete this with search in existing projects after project search is implemented
+  publishedAfter: string,
+  publishedBefore: string,
   postOcrContent: string;
+  isRulesBreaker: boolean;
 }
 
 export function useDocumentSearchForm() {
@@ -18,19 +26,14 @@ export function useDocumentSearchForm() {
 
   const documentSearchForm = useForm<DocumentSearchFormValues>({
     mode: 'onSubmit',
-    defaultValues: {
-      title: '',
-      postOcrContent: '',
-    },
+    defaultValues: { isRulesBreaker: false },
     resolver: joiResolver(documentSearchSchema),
   })
 
-  const handleSubmit = async ({ title, postOcrContent  }: DocumentSearchFormValues) => {
+  const handleSubmit = async (searchParams: DocumentSearchFormValues) => {
     setShowLoading(true)
 
-    const response = await documentApiService.search({
-      title, postOcrContent
-    })
+    const response = await documentApiService.search(searchParams)
 
     if (!response.success || !response.payload) {
       setShowLoading(false);
