@@ -2,14 +2,11 @@ import { QueryAll } from './dtos/generic';
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
+import { handleUnauthorized } from 'helpers/errorHandlers';
 
 interface SearchProps {
   title: string,
   postOcrContent: string,
-}
-
-enum ErrorCodes {
-  UNAUTH = 401
 }
 
 class DocumentApiService {
@@ -35,6 +32,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -66,6 +64,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -96,10 +95,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
-      if(error?.response?.status === ErrorCodes.UNAUTH) {
-        window.location.href = "/login";
-        localStorage.removeItem('token');
-    }
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -120,6 +116,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -150,6 +147,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
