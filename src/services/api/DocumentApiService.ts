@@ -2,6 +2,7 @@ import { QueryAll } from './dtos/generic';
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
+import { handleUnauthorized } from 'helpers/errorHandlers';
 
 interface SearchProps {
   identificator: string,
@@ -39,6 +40,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -70,6 +72,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -100,6 +103,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -120,6 +124,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -150,6 +155,7 @@ class DocumentApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,

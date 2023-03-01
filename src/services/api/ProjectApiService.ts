@@ -1,6 +1,7 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, ProjectDto, QueryAll } from './dtos';
+import { handleUnauthorized } from 'helpers/errorHandlers';
 
 class ProjectApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
@@ -32,6 +33,7 @@ class ProjectApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,
@@ -52,6 +54,7 @@ class ProjectApiService {
       };
     } catch (err: any) {
       const error: AxiosError = err;
+      handleUnauthorized(error);
       return {
         success: false,
         error: error.response?.statusText,

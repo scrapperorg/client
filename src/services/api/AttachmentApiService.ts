@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus } from './dtos';
+import { handleUnauthorized } from 'helpers/errorHandlers';
 
 class AttachmentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
@@ -24,6 +25,7 @@ class AttachmentApiService {
         },
       };
     } catch (err) {
+      handleUnauthorized(err);
       return {
         success: false,
       };
