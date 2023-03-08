@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  screening-server:
+    build: .
+    ports:
+      - 3001:3000
+    env_file:
+      - .env
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4096M
+
+networks:
+  backend:
+    name: api_default
+
