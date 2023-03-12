@@ -1,10 +1,9 @@
 import { Box } from '@mui/system';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
 import { DocumentsTable } from 'components/documentTable';
 import { SourcesSelector } from '../sourcesSelector';
-import {useLongPolling} from "../../hooks/useLongPolling";
 
 export default function MonitorContent() {
   const {
@@ -15,13 +14,12 @@ export default function MonitorContent() {
     pageSize,
     sourcesOfInterest,
     updateSourcesOfInterest,
-    fetch,
     onPageSizeChange,
+    stopPolling,
+    startPolling,
   } = useContext(MonitorContext);
 
-  useLongPolling({ fetch, pageSize, page, sourcesOfInterest });
-
-  if (!documents) return null
+  if (!documents) return null;
 
   return (
     <>
@@ -29,6 +27,8 @@ export default function MonitorContent() {
         <SourcesSelector
           value={sourcesOfInterest}
           onSelect={updateSourcesOfInterest}
+          onMenuOpen={stopPolling}
+          onMenuClose={startPolling}
         />
       </SelectBox>
       <Box>
