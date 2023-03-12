@@ -39,10 +39,10 @@ const defaultState: MonitorProviderState = {
     console.log(`method not implemented. sources: ${sources}`);
   },
   startPolling: () => {
-    console.log(`start`);
+    console.log(`method not implemented`);
   },
   stopPolling: () => {
-    console.log('stop');
+    console.log('method not implemented');
   },
 };
 
@@ -50,18 +50,9 @@ export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
   const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters();
-  // const fetchDocuments = async () => {
-  //   await fetch(page, pageSize, sourcesOfInterest);
-  // };
-
-  // const { start: startPolling, stop: stopPolling } = useInterval(
-  //   () => console.log('executing interval'),
-  //   2000,
-  // );
 
   const { start: startPolling, stop: stopPolling } = useInterval(
     async () => {
-      console.log('interval running');
       await fetch(page, pageSize, sourcesOfInterest);
     },
     5000,
