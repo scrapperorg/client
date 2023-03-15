@@ -1,29 +1,36 @@
 import React from 'react';
-import { Checkbox, Chip, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, SelectChangeEvent } from "@mui/material";
+import {
+  Checkbox,
+  Chip,
+  FormControl,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
 
-const sources_of_interest_list = [
-  'senat',
-  'guvern',
-  'camera_deputatilor'
-]
+const sources_of_interest_list = ['senat', 'guvern', 'camera_deputatilor'];
 
 interface SelectorProps {
   value: string[];
   onSelect: (value: string[]) => void;
-};
+  onMenuOpen: () => void;
+  onMenuClose: () => void;
+}
 
 export const SourcesSelector = (props: SelectorProps) => {
+  const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;
 
-  const { value: selectedOptions, onSelect } = props;
-
-  const sources = sources_of_interest_list.map(source => (
+  const sources = sources_of_interest_list.map((source) => (
     <StyledMenuItem key={source} value={source}>
-      <Checkbox checked={selectedOptions.indexOf(source) > -1}/>
-      <ListItemText primary={source.replace('_', ' ')}/>
+      <Checkbox checked={selectedOptions.indexOf(source) > -1} />
+      <ListItemText primary={source.replace('_', ' ')} />
     </StyledMenuItem>
-  ))
+  ));
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     const value = event.target.value as string | string[];
@@ -41,7 +48,7 @@ export const SourcesSelector = (props: SelectorProps) => {
         id='sources_of_interest'
         value={selectedOptions}
         multiple
-        input={<OutlinedInput label="Surse" />}
+        input={<OutlinedInput label='Surse' />}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {(selected as string[]).map((value: string) => (
@@ -50,10 +57,14 @@ export const SourcesSelector = (props: SelectorProps) => {
           </Box>
         )}
         onChange={handleChange}
-      >{sources}</StyledSelect>
+        onOpen={onMenuOpen}
+        onClose={onMenuClose}
+      >
+        {sources}
+      </StyledSelect>
     </FormControl>
-  )
-}
+  );
+};
 
 const StyledSelect = styled(Select)`
   width: 250px;
