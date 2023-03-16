@@ -27,4 +27,5 @@ export interface DocumentDto {
   numberOfIdentifiedArticles?: number;
   numberOfIdentifiedTerms?: number;
   attachments?: Attachment[];
+  link: string;
 }

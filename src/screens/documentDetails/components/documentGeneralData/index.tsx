@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { DocumentDto } from '../../../../services/api/dtos';
 import { PdfViewer } from 'components/pdfViewer';
 import { SourceDescription } from 'constants/sources';
+import styled from 'styled-components';
 
 interface DocumentGeneralDataProps {
   document: DocumentDto;
@@ -16,7 +17,7 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 
   const handleClosePdf = useCallback(() => setIsPdfVisible(false), [setIsPdfVisible]);
   const handleOpenPdf = useCallback(() => setIsPdfVisible(true), [setIsPdfVisible]);
-  
+
   const source = document.source as keyof typeof SourceDescription;
   const documentSourceDescription = SourceDescription[source];
 
@@ -71,7 +72,11 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 
       <Grid item md={2}>
         <Stack gap={4}>
-          <Button variant='contained'>Vizualizare document original</Button>
+          <Button variant='contained'>
+            <LinKNoStyle target='_blank' href={document.link} rel='noreferrer'>
+              Vizualizare document original
+            </LinKNoStyle>
+          </Button>
           <Button variant='contained' onClick={handleOpenPdf}>
             Vizualizare document procesat
           </Button>
@@ -86,3 +91,8 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 }
 
 export default React.memo(DocumentGeneralData);
+
+const LinKNoStyle = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
