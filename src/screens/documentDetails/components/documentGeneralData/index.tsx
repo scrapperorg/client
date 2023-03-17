@@ -92,7 +92,7 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 
 export default React.memo(DocumentGeneralData);
 
-const LinKNoStyle = styled.a`
+const LinkNoStyle = styled.a`
   text-decoration: none;
   color: inherit;
 `;
