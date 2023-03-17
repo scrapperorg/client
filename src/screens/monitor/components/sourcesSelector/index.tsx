@@ -12,8 +12,7 @@ import {
 } from '@mui/material';
 import styled from 'styled-components';
 import { Box } from '@mui/system';
-
-const sources_of_interest_list = ['senat', 'guvern', 'camera_deputatilor'];
+import {Translations} from "../../../../constants/translations";
 
 interface SelectorProps {
   value: string[];
@@ -22,13 +21,15 @@ interface SelectorProps {
   onMenuClose: () => void;
 }
 
+export const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport'];
+
 export const SourcesSelector = (props: SelectorProps) => {
   const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;
 
   const sources = sources_of_interest_list.map((source) => (
     <StyledMenuItem key={source} value={source}>
       <Checkbox checked={selectedOptions.indexOf(source) > -1} />
-      <ListItemText primary={source.replace('_', ' ')} />
+      <ListItemText primary={Translations[source]} />
     </StyledMenuItem>
   ));
 
