@@ -73,9 +73,9 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
       <Grid item md={2}>
         <Stack gap={4}>
           <Button variant='contained'>
-            <LinKNoStyle target='_blank' href={document.link} rel='noreferrer'>
+            <LinkNoStyle target='_blank' href={document.link} rel='noreferrer'>
               Vizualizare document original
-            </LinKNoStyle>
+            </LinkNoStyle>
           </Button>
           <Button variant='contained' onClick={handleOpenPdf}>
             Vizualizare document procesat
