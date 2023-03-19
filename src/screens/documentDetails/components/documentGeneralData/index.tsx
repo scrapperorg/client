@@ -7,6 +7,7 @@ import { DocumentDto } from '../../../../services/api/dtos';
 import { PdfViewer } from 'components/pdfViewer';
 import { SourceDescription } from 'constants/sources';
 import styled from 'styled-components';
+import config from '../../../../config/index';
 
 interface DocumentGeneralDataProps {
   document: DocumentDto;
@@ -20,6 +21,7 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
 
   const source = document.source as keyof typeof SourceDescription;
   const documentSourceDescription = SourceDescription[source];
+  const pdfViewerUrl = `${config.BASE_URL}/document/download-highlight-pdf/${document.id}`;
 
   return (
     <Grid container spacing={4}>
@@ -77,15 +79,22 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
               Vizualizare document original
             </LinKNoStyle>
           </Button>
-          <Button variant='contained' onClick={handleOpenPdf}>
+          <Button variant='contained' onClick={handleOpenPdf} disabled={!document.highlightFile}>
             Vizualizare document procesat
           </Button>
-          <Button variant='contained'>Descarca original</Button>
-          <Button variant='contained'>Descarca document procesat</Button>
+          {/*<Button variant='contained'>Descarca original</Button>*/}
+          {/*<Button variant='contained'>Descarca document procesat</Button>*/}
         </Stack>
       </Grid>
 
-      <PdfViewer isOpen={isPdfVisible} onClose={handleClosePdf} />
+      {document.highlightFile && (
+        <PdfViewer
+          pdf={pdfViewerUrl}
+          highlightCoords={document.highlightMetadata}
+          isOpen={isPdfVisible}
+          onClose={handleClosePdf}
+        />
+      )}
     </Grid>
   );
 }

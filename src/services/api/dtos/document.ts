@@ -28,4 +28,6 @@ export interface DocumentDto {
   numberOfIdentifiedTerms?: number;
   attachments?: Attachment[];
   link: string;
+  highlightFile?: string;
+  highlightMetadata?: any;
 }
