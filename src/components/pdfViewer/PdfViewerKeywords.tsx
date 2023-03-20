@@ -11,7 +11,7 @@ interface Occurrence {
   page: number;
 }
 
-interface Keyword {
+export interface Keyword {
   keyword: string;
   occs: Occurrence[];
   total_occs: number;
@@ -23,7 +23,7 @@ interface OccurrenceWithKeyword {
   page: number;
 }
 
-function orderOccurrencesByPage(keywords: Keyword[]): OccurrenceWithKeyword[] {
+function orderOccurrencesByPageAndCoordinates(keywords: Keyword[]): OccurrenceWithKeyword[] {
   const occurrences: OccurrenceWithKeyword[] = [];
 
   keywords.forEach(({ keyword, occs }) => {
@@ -32,7 +32,18 @@ function orderOccurrencesByPage(keywords: Keyword[]): OccurrenceWithKeyword[] {
     });
   });
 
-  return occurrences.sort((a, b) => a.page - b.page);
+  return occurrences.sort((a, b) => {
+    if (a.page !== b.page) {
+      return a.page - b.page;
+    }
+    if (a.location.y1 !== b.location.y1) {
+      return a.location.y1 - b.location.y1;
+    }
+    if (a.location.x1 !== b.location.x1) {
+      return a.location.x1 - b.location.x1;
+    }
+    return 0;
+  });
 }
 
 interface PdfViewerKeywords {
@@ -40,14 +51,13 @@ interface PdfViewerKeywords {
   onSkip: (page: number) => void;
 }
 export function PdfViewerKeywords({ data, onSkip }: PdfViewerKeywords) {
-  const orderedKeywords = orderOccurrencesByPage(data);
-  console.log(orderedKeywords);
+  const orderedKeywords = orderOccurrencesByPageAndCoordinates(data);
   return (
     <Fragment>
       <Box sx={{ padding: 3 }}>Cuvinte cheie</Box>
       {orderedKeywords.map((item) => (
         <Box
-          key={item.location.x1}
+          key={item.location.x1 + item.location.x2}
           sx={{
             padding: 3,
             paddingLeft: 5,
@@ -59,7 +69,7 @@ export function PdfViewerKeywords({ data, onSkip }: PdfViewerKeywords) {
           onClick={() => onSkip(item.page)}
         >
           <Box>{item.keyword}</Box>
-          <Box sx={{ fontSize: '12px' }}>pagina {item.page}</Box>
+          <Box sx={{ fontSize: '12px' }}>pagina {++item.page}</Box>
         </Box>
       ))}
     </Fragment>
