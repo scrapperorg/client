@@ -43,7 +43,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
         <span key={project.id}>
           {project.numarInregistrareGuvern || project.numarInregistrareSenat}
         </span>,
-        <StyledLink to={`/document/${project.id}`} key={project.id} theme={theme}>
+        <StyledLink to={`/project/${project.id}`} key={project.id} theme={theme}>
           {project.title}
         </StyledLink>,
         <StyledLink to={`/project/${project.id}`} key={project.id} theme={theme}>
