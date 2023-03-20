@@ -19,19 +19,18 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DocumentSearchFormValues } from '../../hooks/useDocumentSearchForm';
 import { DocumentSearchContext } from 'screens/documentSearch/context';
 import { Dayjs } from 'dayjs';
+import { Translations } from 'constants/translations';
 
 
 const Status: Record<string, string> = {
-  NOU: 'nou',
-  IN_ANALIZA: 'in analiza',
-  REVIZUIT: 'revizuit',
+  NOU: 'Nou',
+  IN_ANALIZA: 'In analiza',
+  REVIZUIT: 'Revizuit',
 }
 
-const Sursa: Record<string, string> = {
-  CAMERA_DEPUTATILOR: 'Camera Deputatilor',
-  SENAT: 'Senat',
-  GUVERN: 'Guvern',
-}
+const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport'];
+const sources = sources_of_interest_list.map((source: string) => <MenuItem key={`sursa-document-${source}`} value={source}>{Translations[source]}</MenuItem>)
+
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
   handleSubmit: (props: DocumentSearchFormValues) => Promise<void>
@@ -84,7 +83,7 @@ export const SearchForm = (props: SearchFormProps) => {
                 defaultValue=""
                 {...form.register('source')}
               >
-                { Object.keys(Sursa).map((key: string) => <MenuItem key={`sursa-document-${key}`} value={key}>{Sursa[key]}</MenuItem>) }
+                { sources }
               </Select>
             </FormControl>
           </Grid>
