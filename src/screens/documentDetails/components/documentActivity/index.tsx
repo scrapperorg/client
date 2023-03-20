@@ -5,6 +5,7 @@ import React from 'react';
 import { DocumentDto, UserDto } from '../../../../services/api/dtos';
 import { AssignResponsibleModal } from '../assignResponsibleModal';
 import { ModalNames } from 'constants/modals';
+import { capitalizeString } from 'helpers/formatters';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -43,7 +44,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 </Grid>
                 <Grid item md={8}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {document.status}
+                    {capitalizeString(document.status)}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {assignedUser}
@@ -64,7 +65,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 openModal(ModalNames.ASSIGN_RESP);
               }}
             >
-              Actualizeaza responsabil/termen
+              Actualizeaza responsabil / termen
             </Button>
           </Stack>
         </Grid>
