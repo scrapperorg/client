@@ -9,11 +9,11 @@ const StyledBox = styled(Box)`
   display: flex;
 `;
 
-export const ActionButtons = () => {
+export const ActionButtons = ({ document }: any) => {
   return (
     <StyledBox>
-      <DownloadDocumentButton fileUrl='dummy.pdf' />
-      <ViewDocumentButton fileUrl='https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' />
+      <DownloadDocumentButton fileUrl={document.link} />
+      <ViewDocumentButton fileUrl={document.link} />
       <IconButton>
         <SearchIcon fontSize='small' />
       </IconButton>
