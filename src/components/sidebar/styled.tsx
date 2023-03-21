@@ -4,7 +4,7 @@ export const SideMenuWrapper = styled.div<{ isCollapsed: boolean }>`
   height: inherit;
   max-width: 280px;
   min-width: 280px;
-  padding: 96px 16px 24px;
+  padding: 20px 16px 24px;
   background-color: #111827;
 
   ${(props) =>
