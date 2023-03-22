@@ -61,7 +61,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
         Translations[document.source],
         document.status,
         document.numberOfIdentifiedTerms || 0,
-        <ActionButtons key={`action-for-${document.id}`} />,
+        <ActionButtons fileUrl={document.link} key={`action-for-${document.id}`} />,
       ]}
     />
   ));

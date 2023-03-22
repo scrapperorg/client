@@ -9,11 +9,15 @@ const StyledBox = styled(Box)`
   display: flex;
 `;
 
-export const ActionButtons = () => {
+interface ActionButtonsProps {
+  fileUrl?: string
+}
+
+export const ActionButtons = ({ fileUrl }: ActionButtonsProps) => {
   return (
     <StyledBox>
       <DownloadDocumentButton fileUrl='dummy.pdf' />
-      <ViewDocumentButton fileUrl='https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' />
+      <ViewDocumentButton fileUrl={fileUrl ?? ''} />
       <IconButton>
         <SearchIcon fontSize='small' />
       </IconButton>
