@@ -9,11 +9,11 @@ interface DownloadDocumentButtonProps {
 }
 
 const DownloadDocumentButton: React.FC<DownloadDocumentButtonProps> = ({ fileUrl }) => {
-  const pdfViewerUrl = `${config.BASE_URL}document/download-highlight-pdf/${fileUrl}`;
+  const rawPdfDownloaderUrl = `${config.BASE_URL}document/download-pdf/${fileUrl}`;
 
   return (
     <IconButton>
-      <StyledAnchor href={pdfViewerUrl} download>
+      <StyledAnchor href={rawPdfDownloaderUrl} download>
         <DownloadIcon fontSize='small' />
       </StyledAnchor>
     </IconButton>
