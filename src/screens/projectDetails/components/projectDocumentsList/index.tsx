@@ -2,7 +2,7 @@ import React from 'react';
 import { ProjectDto } from "services/api/dtos";
 import { Box, Grid, useTheme } from "@mui/material";
 import { Translations } from "../../../../constants/translations";
-import { GenericTable, GenericTableRow, DocumentMarks, ActionButtons, FormattedDate } from 'components';
+import { GenericTable, GenericTableRow, DocumentMarks, FormattedDate } from 'components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,6 @@ const columns = [
   'Sursa',
   'Stare',
   'Termeni identificati',
-  'Actiuni',
 ];
 
 
@@ -40,7 +39,6 @@ export function ProjectDocumentsList({ project }: ProjectDocumentsListProps) {
         Translations[document.source],
         document.status,
         document.numberOfIdentifiedTerms || 0,
-        <ActionButtons key={`action-for-${document.id}`}/>
         ]
       }/>
 ))
