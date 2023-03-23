@@ -9,7 +9,7 @@ interface DownloadDocumentButtonProps {
 }
 
 const DownloadDocumentButton: React.FC<DownloadDocumentButtonProps> = ({ fileUrl }) => {
-  const rawPdfDownloaderUrl = `${config.BASE_URL}document/download-pdf/${fileUrl}`;
+  const rawPdfDownloaderUrl = `${config.BASE_URL}/document/download-pdf/${fileUrl}`;
 
   const handleDownload = () => {
     fetch(rawPdfDownloaderUrl)
