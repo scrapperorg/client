@@ -12,7 +12,7 @@ const StyledBox = styled(Box)`
 export const ActionButtons = ({ document }: any) => {
   return (
     <StyledBox>
-      <DownloadDocumentButton fileUrl={document.id} />
+      <DownloadDocumentButton fileUrl={document.link} />
       <ViewDocumentButton fileUrl={document.link} />
       <IconButton>
         <SearchIcon fontSize='small' />

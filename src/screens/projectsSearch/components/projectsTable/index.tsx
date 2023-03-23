@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
-import { ActionButtons } from 'components/documentsTableActionButtons';
 import { ProjectMarks } from '../projectsTableDocumentMarks';
 
 interface ProjectsTableProps {
@@ -26,7 +25,6 @@ const columns = [
   'Forum legislativ',
   'Initiator',
   'Data inregistrarii',
-  'Actiuni',
 ];
 
 export const ProjectsTable = (props: ProjectsTableProps) => {
@@ -53,7 +51,6 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
           {project.initiator}
         </StyledLink>,
         <FormattedDate key={`date-for-${project.id}`} date={project.createdAt} />,
-        <ActionButtons key={`action-for-${project.id}`} />,
       ]}
     />
   ));
