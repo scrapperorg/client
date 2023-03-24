@@ -15,11 +15,11 @@ import { capitalizeString } from 'helpers/formatters';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
-  totalNumberOfDocuments: number;
-  page: number;
-  pageSize: number;
-  onPageChange: (page: number) => void | undefined;
-  onPageSizeChange: (pageSize: number) => void | undefined;
+  totalNumberOfDocuments?: number;
+  page?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void | undefined;
+  onPageSizeChange?: (pageSize: number) => void | undefined;
 }
 
 const columns = [
