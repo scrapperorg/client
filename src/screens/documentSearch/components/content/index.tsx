@@ -30,11 +30,6 @@ export default function DocumentsSearchContent() {
     <Box>
       <DocumentsTable
         documents={results}
-        totalNumberOfDocuments={results.length}
-        page={0}
-        pageSize={10}
-        onPageChange={() => { console.log('not implemented') } }
-        onPageSizeChange={() => { console.log('not implemented') } }
       />
     </Box>
   )
