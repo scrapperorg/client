@@ -5,6 +5,11 @@ import {usePaginatedApiService} from "hooks/usePaginatedApiService";
 export const useDocuments = () => {
     const { page, pageSize, data, loading, error, onPageChange, fetch } = usePaginatedApiService<QueryAll<DocumentDto>>(documentApiService, documentApiService.getDocuments);
 
+    const downloadRawPdf = async(url: string) => {
+        console.log('hooks')
+        documentApiService.downloadRawPdf(url);
+    }
+
     return {
         documents: data?.results ?? [],
         totalNumberOfDocuments: data?.totalNumberOfResults ?? 0,
@@ -14,6 +19,7 @@ export const useDocuments = () => {
         isLoading: loading,
         onPageChange: onPageChange,
         fetch,
+        downloadRawPdf
     };
 
 }

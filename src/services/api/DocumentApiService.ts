@@ -3,6 +3,7 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
+import { downloadBlob } from 'helpers/downloadBlob';
 
 interface SearchProps {
   identificator: string,
@@ -214,6 +215,70 @@ class DocumentApiService {
     }
 
   }
+
+  // async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
+  //   return fetch(url)
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
+  //       }
+  //       const contentType = response.headers.get('content-type');
+  //       if (!contentType || !contentType.startsWith('application/pdf')) {
+  //         throw new Error('Invalid file format. Only PDF files are supported.');
+  //       }
+  //       return response.blob().then(blob => {
+  //         const fileName = response.headers.get('content-disposition')?.split('filename=')[1] || 'Atasament Descarcat';
+  //         downloadBlob(blob, fileName)
+  //         console.log('a intrat si n servicii')
+  //         console.log(response.headers.get('content-disposition')?.split('filename=')[1] || 'Atasament Descarcat')
+  //         return { 
+  //           success: true,
+  //           payload: { 
+  //             blob: blob,
+  //             fileName: fileName
+  //           } 
+  //         };
+  //       });
+  //     }).catch(error => {
+  //       console.error(error);
+  //       return { 
+  //         success: false,
+  //         error: error 
+  //       };
+  //     });
+  // }
+  async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
+      }
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.startsWith('application/pdf')) {
+        throw new Error('Invalid file format. Only PDF files are supported.');
+      }
+      const blob = await response.blob();
+      const fileName = response.headers.get('content-disposition')?.split('filename=')[1] || 'Atasament Descarcat';
+      downloadBlob(blob, fileName)
+      console.log('servicii')
+      console.log(response.headers.get('content-disposition')?.split('filename=')[1] || 'Atasament Descarcat')
+      return { 
+        success: true,
+        payload: { 
+          blob: blob,
+          fileName: fileName
+        } 
+      };
+    } catch (error) {
+      console.error(error);
+      return { 
+        success: false,
+      };
+    }
+  }
+  
+  
+  
   
 }
 
