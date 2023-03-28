@@ -23,9 +23,9 @@ import { Translations } from 'constants/translations';
 
 
 const Status: Record<string, string> = {
-  NOU: 'Nou',
-  IN_ANALIZA: 'In analiza',
-  REVIZUIT: 'Revizuit',
+  nou: 'Nou',
+  in_analiza: 'In analiza',
+  revizuit: 'Revizuit',
 }
 
 const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport'];
