@@ -218,22 +218,15 @@ class DocumentApiService {
 
   async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
-      }
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.startsWith('application/pdf')) {
-        throw new Error('Invalid file format. Only PDF files are supported.');
-      }
-      const blob = await response.blob();
-      const fileName = response.headers.get('content-disposition')?.split('filename=')[1] || 'Document Descarcat';
+      const response = await this.httpClient.get(url, { responseType: 'blob' })
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const fileName = response.headers['content-disposition']?.split('filename=')[1] || 'Document Descarcat';
       downloadBlob(blob, fileName);
       return { 
         success: true,
         payload: { 
-          blob: blob,
-          fileName: fileName
+          blob,
+          fileName
         } 
       };
     } catch (error) {
