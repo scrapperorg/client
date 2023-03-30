@@ -3,6 +3,7 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
+import { downloadBlob } from 'helpers/downloadBlob';
 
 interface SearchProps {
   identificator: string,
@@ -214,7 +215,27 @@ class DocumentApiService {
     }
 
   }
-  
+
+  async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
+    try {
+      const response = await this.httpClient.get(url, { responseType: 'blob' })
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const fileName = response.headers['content-disposition']?.split('filename=')[1] || 'Document Descarcat';
+      downloadBlob(blob, fileName);
+      return { 
+        success: true,
+        payload: { 
+          blob,
+          fileName
+        } 
+      };
+    } catch (error) {
+      console.error(error);
+      return { 
+        success: false,
+      };
+    }
+  }
 }
 
 export const documentApiService = new DocumentApiService(axios);
