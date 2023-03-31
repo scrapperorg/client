@@ -14,6 +14,7 @@ export default function DocumentsSearchContent() {
   const {
     handleSubmit,
     setShowError,
+    setValue,
     showError,
     showLoading,
     results,
@@ -42,6 +43,7 @@ export default function DocumentsSearchContent() {
         <SearchForm
           form={documentSearchForm}
           handleSubmit={handleSubmit}
+          setValue={setValue}
         />
       </Box>
 

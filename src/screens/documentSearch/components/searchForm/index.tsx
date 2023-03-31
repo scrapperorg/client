@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import {
   Box,
@@ -7,12 +7,14 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   styled,
   TextField
 } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -33,7 +35,8 @@ const sources = sources_of_interest_list.map((source: string) => <MenuItem key={
 
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
-  handleSubmit: (props: DocumentSearchFormValues) => Promise<void>
+  handleSubmit: (props: DocumentSearchFormValues) => Promise<void>,
+  setValue: UseFormReturn<DocumentSearchFormValues, any>['setValue']
 }
 
 const isInTheFuture = (date: Dayjs) => {
@@ -45,9 +48,15 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 };
 
 export const SearchForm = (props: SearchFormProps) => {
-  const {form, handleSubmit} = props;
+  const {form, handleSubmit, setValue} = props;
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
+
+  const [selectedSource, setSelectedSource] = useState('');
+  const handleClearSource = () => {
+    setSelectedSource('');
+    setValue('source', '');
+  };
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -80,10 +89,24 @@ export const SearchForm = (props: SearchFormProps) => {
                 labelId="sursa-document"
                 id="sursa"
                 label="Sursa"
-                defaultValue=""
-                {...form.register('source')}
+                value={selectedSource}
+                onChange={(event) => setSelectedSource(event.target.value)}
+                inputProps={{
+                  ...form.register('source')
+                }}
+                endAdornment={
+                  selectedSource && (
+                    <IconButton
+                      onClick={handleClearSource}
+                      size="small"
+                      sx={{marginRight: 5}}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  )
+                }
               >
-                { sources }
+                {sources}
               </Select>
             </FormControl>
           </Grid>

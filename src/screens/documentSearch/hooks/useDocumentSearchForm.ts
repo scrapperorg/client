@@ -45,12 +45,15 @@ export function useDocumentSearchForm() {
     setResults(response.payload);
   }
 
+  const setValue = documentSearchForm.setValue;
+
   return {
     showLoading,
     showError,
     results,
     handleSubmit,
     setShowError,
+    setValue,
     documentSearchForm
   }
 }
