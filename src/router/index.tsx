@@ -13,6 +13,7 @@ const RecoverPasswordScreen = React.lazy(() => import('screens/recoverPassword')
 const ResetPasswordScreen = React.lazy(() => import('screens/resetPassword'));
 const DocumentDetailsScreen = React.lazy(() => import('screens/documentDetails'));
 const ProjectDetailsScreen = React.lazy(() => import('screens/projectDetails'));
+const ProfileDetailsScreen = React.lazy(() => import('screens/profileDetails'));
 
 export default function CustomRouter() {
   return (
@@ -33,6 +34,7 @@ export default function CustomRouter() {
             <Route path={PATHS.PROJECT_DETAILS} element={<ProjectDetailsScreen />}></Route>
             <Route path={PATHS.DOCUMENTS_SEARCH} element={<DocumentsSearchScreen />}></Route>
             <Route path={PATHS.PROJECTS_SEARCH} element={<ProjectsSearchScreen />}></Route>
+            <Route path={PATHS.PROFILE_DETAILS} element={<ProfileDetailsScreen />}></Route>
           </Route>
         </Route>
       </Routes>

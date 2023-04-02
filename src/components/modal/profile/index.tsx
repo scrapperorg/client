@@ -10,11 +10,14 @@ import { AuthContext } from 'contexts/authContext';
 import { capitalizeString } from 'helpers/formatters';
 import { RoleDescription } from 'constants/roles';
 import { ModalNames } from 'constants/modals';
+import { useNavigate } from "react-router-dom";
+import PATHS from 'constants/paths';
 
 export const ProfileModal = () => {
   const { closeModal, modalName } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
   const { logoutUser, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const logout = () => {
     closeModal();
@@ -23,7 +26,7 @@ export const ProfileModal = () => {
 
   const goToProfilePage = () => {
     closeModal();
-    //TODO: route to profile page
+    navigate(PATHS.PROFILE_DETAILS);
   };
 
   return (
