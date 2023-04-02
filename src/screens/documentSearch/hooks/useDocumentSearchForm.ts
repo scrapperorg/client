@@ -26,7 +26,10 @@ export function useDocumentSearchForm() {
 
   const documentSearchForm = useForm<DocumentSearchFormValues>({
     mode: 'onSubmit',
-    defaultValues: { isRulesBreaker: false },
+    defaultValues: { 
+      isRulesBreaker: false,
+      source: ''
+    },
     resolver: joiResolver(documentSearchSchema),
   })
 

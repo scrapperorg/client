@@ -7,12 +7,14 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   styled,
   TextField
 } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -20,7 +22,6 @@ import { DocumentSearchFormValues } from '../../hooks/useDocumentSearchForm';
 import { DocumentSearchContext } from 'screens/documentSearch/context';
 import { Dayjs } from 'dayjs';
 import { Translations } from 'constants/translations';
-
 
 const Status: Record<string, string> = {
   nou: 'Nou',
@@ -33,7 +34,7 @@ const sources = sources_of_interest_list.map((source: string) => <MenuItem key={
 
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
-  handleSubmit: (props: DocumentSearchFormValues) => Promise<void>
+  handleSubmit: (props: DocumentSearchFormValues) => Promise<void>,
 }
 
 const isInTheFuture = (date: Dayjs) => {
@@ -45,7 +46,7 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 };
 
 export const SearchForm = (props: SearchFormProps) => {
-  const {form, handleSubmit} = props;
+  const { form, handleSubmit } = props;
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
 
@@ -81,9 +82,21 @@ export const SearchForm = (props: SearchFormProps) => {
                 id="sursa"
                 label="Sursa"
                 defaultValue=""
+                value={form.watch('source') || ''}
                 {...form.register('source')}
+                endAdornment={
+                    form.getValues('source') && <IconButton
+                      onClick={() => {
+                        form.resetField('source');
+                      }}
+                      size="small"
+                      sx={{marginRight: 5}}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                }
               >
-                { sources }
+                {sources}
               </Select>
             </FormControl>
           </Grid>
