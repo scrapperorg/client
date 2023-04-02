@@ -11,6 +11,7 @@ export interface User {
   email: string;
   role: Role;
   sourcesOfInterest: string[];
+  createdAt: string;
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;

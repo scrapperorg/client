@@ -9,6 +9,7 @@ const PATHS = {
   PROJECT_DETAILS: '/project/:id',
   PROJECTS_SEARCH: '/projects-search',
   DOCUMENTS_SEARCH: '/documents-search',
+  PROFILE_DETAILS: '/profile-details'
 };
 
 export default PATHS;

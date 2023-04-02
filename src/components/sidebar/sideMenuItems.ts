@@ -40,12 +40,12 @@ export const menuItems: SubMenuProps[] = [
       {
         icon: BuildIcon,
         text: 'Optiuni',
-        href: "#options",
+        href: '#options',
       },
       {
         icon: PersonIcon,
         text: 'Profilul Meu',
-        href: "#profile",
+        href: Paths.PROFILE_DETAILS,
       },
     ],
   },

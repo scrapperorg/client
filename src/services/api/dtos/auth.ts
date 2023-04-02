@@ -7,6 +7,7 @@ export interface UserDto {
   role: Role;
   email: string;
   sourcesOfInterest: string[];
+  createdAt: string;
 }
 
 export interface LoginDto {
