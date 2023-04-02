@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import {
   Box,
@@ -23,7 +23,6 @@ import { DocumentSearchContext } from 'screens/documentSearch/context';
 import { Dayjs } from 'dayjs';
 import { Translations } from 'constants/translations';
 
-
 const Status: Record<string, string> = {
   nou: 'Nou',
   in_analiza: 'In analiza',
@@ -36,7 +35,6 @@ const sources = sources_of_interest_list.map((source: string) => <MenuItem key={
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
   handleSubmit: (props: DocumentSearchFormValues) => Promise<void>,
-  setValue: UseFormReturn<DocumentSearchFormValues, any>['setValue']
 }
 
 const isInTheFuture = (date: Dayjs) => {
@@ -48,15 +46,9 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 };
 
 export const SearchForm = (props: SearchFormProps) => {
-  const {form, handleSubmit, setValue} = props;
+  const { form, handleSubmit } = props;
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
-
-  const [selectedSource, setSelectedSource] = useState('');
-  const handleClearSource = () => {
-    setSelectedSource('');
-    setValue('source', '');
-  };
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -89,21 +81,19 @@ export const SearchForm = (props: SearchFormProps) => {
                 labelId="sursa-document"
                 id="sursa"
                 label="Sursa"
-                value={selectedSource}
-                onChange={(event) => setSelectedSource(event.target.value)}
-                inputProps={{
-                  ...form.register('source')
-                }}
+                defaultValue=""
+                value={form.watch('source') || ''}
+                {...form.register('source')}
                 endAdornment={
-                  selectedSource && (
-                    <IconButton
-                      onClick={handleClearSource}
+                    form.getValues('source') && <IconButton
+                      onClick={() => {
+                        form.resetField('source');
+                      }}
                       size="small"
                       sx={{marginRight: 5}}
                     >
                       <ClearIcon />
                     </IconButton>
-                  )
                 }
               >
                 {sources}

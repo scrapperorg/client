@@ -26,7 +26,10 @@ export function useDocumentSearchForm() {
 
   const documentSearchForm = useForm<DocumentSearchFormValues>({
     mode: 'onSubmit',
-    defaultValues: { isRulesBreaker: false },
+    defaultValues: { 
+      isRulesBreaker: false,
+      source: ''
+    },
     resolver: joiResolver(documentSearchSchema),
   })
 
@@ -45,15 +48,12 @@ export function useDocumentSearchForm() {
     setResults(response.payload);
   }
 
-  const setValue = documentSearchForm.setValue;
-
   return {
     showLoading,
     showError,
     results,
     handleSubmit,
     setShowError,
-    setValue,
     documentSearchForm
   }
 }
