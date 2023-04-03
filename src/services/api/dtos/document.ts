@@ -4,7 +4,7 @@ import { Attachment } from './attachment';
 
 export enum Status {
   NOU = 'nou',
-  IN_ANALIZA = 'in analiza',
+  IN_ANALIZA = 'in_analiza',
   REVIZUIT = 'revizuit',
 }
 

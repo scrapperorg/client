@@ -7,6 +7,7 @@ import Layout from '../components/layout';
 import DocumentsSearchScreen from 'screens/documentSearch';
 import ProjectsSearchScreen from '../screens/projectsSearch';
 import RobotsStatusScreen from '../screens/robotsStatus';
+import OptionsScreen from 'screens/options';
 
 const LoginScreen = React.lazy(() => import('screens/login'));
 const MonitorScreen = React.lazy(() => import('screens/monitor'));
@@ -37,6 +38,7 @@ export default function CustomRouter() {
             <Route path={PATHS.PROJECTS_SEARCH} element={<ProjectsSearchScreen />}></Route>
             <Route path={PATHS.PROFILE_DETAILS} element={<ProfileDetailsScreen />}></Route>
             <Route path={PATHS.ROBOTS_STATUS} element={<RobotsStatusScreen />}></Route>
+            <Route path={PATHS.OPTIONS} element={<OptionsScreen />}></Route>
           </Route>
         </Route>
       </Routes>
