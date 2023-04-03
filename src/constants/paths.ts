@@ -11,6 +11,7 @@ const PATHS = {
   DOCUMENTS_SEARCH: '/documents-search',
   PROFILE_DETAILS: '/profile-details',
   ROBOTS_STATUS: '/robots-status',
+  OPTIONS: '/options'
 };
 
 export default PATHS;
