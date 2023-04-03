@@ -3,7 +3,8 @@ import {
   Person as PersonIcon,
   Plagiarism as PlagiarismIcon,
   ScreenSearchDesktop as ScreenSearchDesktopIcon,
-  Build as BuildIcon
+  Build as BuildIcon,
+  SmartToy as SmartToyIcon,
 } from '@mui/icons-material';
 import Paths from '../../constants/paths';
 import { SubMenuProps } from './components/SubMenu';
@@ -46,6 +47,11 @@ export const menuItems: SubMenuProps[] = [
         icon: PersonIcon,
         text: 'Profilul Meu',
         href: Paths.PROFILE_DETAILS,
+      },
+      {
+        icon: SmartToyIcon,
+        text: 'Status Roboți',
+        href: Paths.ROBOTS_STATUS,
       },
     ],
   },

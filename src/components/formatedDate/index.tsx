@@ -1,11 +1,12 @@
-import React from "react";
-import { parseISO, format } from "date-fns";
+import React from 'react';
+import { parseISO, format } from 'date-fns';
 
 interface FormattedDateProps {
   date: Date;
-};
+  formatType?: string;
+}
 
 export const FormattedDate = (props: FormattedDateProps): JSX.Element => {
-  const { date } = props;
-  return (<>{format(parseISO(date.toString()), 'iii, d LLL yyyy')}</>)
+  const { date, formatType } = props;
+  return <>{format(parseISO(date.toString()), formatType || 'iii, d LLL yyyy')}</>;
 };
