@@ -109,6 +109,18 @@ export const SearchForm = (props: SearchFormProps) => {
                 defaultValue=""
                 label="Stare"
                 {...form.register('status')}
+                value={form.watch('status') || ''}
+                endAdornment={
+                  form.getValues('status') && <IconButton
+                    onClick={() => {
+                      form.resetField('status');
+                    }}
+                    size="small"
+                    sx={{marginRight: 5}}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+              }
               >
                 { Object.keys(Status).map((key: string) => <MenuItem key={`stare-document-${key}`} value={key}>{Status[key]}</MenuItem>) }
               </Select>
@@ -127,7 +139,19 @@ export const SearchForm = (props: SearchFormProps) => {
                 id="responsabil"
                 label="Responsabil"
                 defaultValue=""
+                value={form.watch('assignedUserId') || ''}
                 {...form.register('assignedUserId')}
+                endAdornment={
+                  form.getValues('assignedUserId') && <IconButton
+                    onClick={() => {
+                      form.resetField('assignedUserId');
+                    }}
+                    size="small"
+                    sx={{marginRight: 5}}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+              }
               >
                 {assignableResponsibles.map(responsible => <MenuItem key={`reponsabil-${responsible.id}`} value={responsible.id}>{`${responsible.name} ${responsible.surname}`}</MenuItem>)}
               </Select>
@@ -157,6 +181,11 @@ export const SearchForm = (props: SearchFormProps) => {
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                    componentsProps={{
+                      actionBar: {
+                        actions: ['clear'],
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               )}
@@ -175,6 +204,11 @@ export const SearchForm = (props: SearchFormProps) => {
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                    componentsProps={{
+                      actionBar: {
+                        actions: ['clear'],
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               )}
