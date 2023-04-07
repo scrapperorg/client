@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableContainer, Table, TableHead, Paper, TableCell, TableBody, TableRow, TablePagination, useTheme } from '@mui/material';
+import { TableContainer, Table, TableHead, Paper, TableCell, TableBody, TableRow, useTheme } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import styled from 'styled-components';
 
