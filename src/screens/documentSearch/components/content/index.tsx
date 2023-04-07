@@ -52,10 +52,10 @@ export default function DocumentsSearchContent() {
         autoHideDuration={6000}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-      <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-        Ceva nu a mers bine, te rugam sa incerci din nou
-      </Alert>
-    </Snackbar>
+        <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
+          Ceva nu a mers bine, te rugam sa incerci din nou
+        </Alert>
+      </Snackbar>
     </>
 
   );

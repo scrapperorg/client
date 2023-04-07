@@ -15,6 +15,9 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Controller, UseFormReturn } from 'react-hook-form';
+import { ProjectSearchFormValues } from 'screens/projectsSearch/hooks/useProjectSearchForm';
+import { Dayjs } from 'dayjs';
 
 const initiator: Record<string, string> = {
   TO_CHANGE_1: 'TO_CHANGE_1',
@@ -28,13 +31,24 @@ const forumLegislativ: Record<string, string> = {
   TO_CHANGE_6: 'TO_CHANGE_6',
 };
 
-export const SearchForm = () => {
+interface SearchFormProps {
+  form: UseFormReturn<ProjectSearchFormValues, any>,
+  handleSubmit: (props: ProjectSearchFormValues) => Promise<void>,
+}
+
+const isInTheFuture = (date: Dayjs) => {
+  return date.toDate() > new Date()
+}
+
+const onKeyDown = (e: React.KeyboardEvent) => {
+  e.preventDefault();
+};
+
+export const SearchForm = (props: SearchFormProps) => {
+  const { form, handleSubmit } = props;
+
   return (
-    <form
-      onSubmit={() => {
-        /** */
-      }}
-    >
+    <form onSubmit={form.handleSubmit(handleSubmit)}>
       <Box>
         <Grid container>
           <Grid item md={4}>
@@ -44,8 +58,7 @@ export const SearchForm = () => {
               variant='outlined'
               error={false}
               helperText={''}
-              disabled
-              // {...form.register('')}
+              {...form.register('title')}
             />
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
@@ -107,30 +120,50 @@ export const SearchForm = () => {
             </FormControl>
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label='Inregistrat de la:'
-                value={null}
-                disabled
-                onChange={() => {
-                  /** */
-                }}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+            <Controller
+              name="createdBefore"
+              control={form.control}
+              render={({ field }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    {...field}
+                    label="Inregistrat de la:"
+                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    value={field.value || null}
+                    shouldDisableDate={isInTheFuture}
+                    onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                    componentsProps={{
+                      actionBar: {
+                        actions: ['clear'],
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
               />
-            </LocalizationProvider>
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label='Inregistrat pana la:'
-                value={null}
-                disabled
-                onChange={() => {
-                  /** */
-                }}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+            <Controller
+              name="createdAfter"
+              control={form.control}
+              render={({ field }) => (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    {...field}
+                    label="Inregistrat pana la:"
+                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    value={field.value || null}
+                    shouldDisableDate={isInTheFuture}
+                    onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
+                    componentsProps={{
+                      actionBar: {
+                        actions: ['clear'],
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
               />
-            </LocalizationProvider>
           </Grid>
         </Grid>
       </Box>
@@ -151,19 +184,16 @@ export const SearchForm = () => {
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel
-              control={<Checkbox checked />}
+              control={<Checkbox />}
               label='Proiect legislativ de interes/cu impact'
-              disabled
-              onChange={() => {
-                /** */
-              }}
+              {...form.register('presentsInterest')}
             />
           </Grid>
         </Grid>
       </Box>
 
       <ButtonBox>
-        <Button variant='contained'>Cauta</Button>
+        <Button type='submit' variant='contained'>Cauta</Button>
       </ButtonBox>
     </form>
   );

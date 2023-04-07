@@ -81,7 +81,6 @@ export const SearchForm = (props: SearchFormProps) => {
                 labelId="sursa-document"
                 id="sursa"
                 label="Sursa"
-                defaultValue=""
                 value={form.watch('source') || ''}
                 {...form.register('source')}
                 endAdornment={
@@ -106,7 +105,6 @@ export const SearchForm = (props: SearchFormProps) => {
               <Select
                 labelId="stare-document"
                 id="stare"
-                defaultValue=""
                 label="Stare"
                 {...form.register('status')}
                 value={form.watch('status') || ''}
@@ -138,7 +136,6 @@ export const SearchForm = (props: SearchFormProps) => {
                 labelId="responsabil"
                 id="responsabil"
                 label="Responsabil"
-                defaultValue=""
                 value={form.watch('assignedUserId') || ''}
                 {...form.register('assignedUserId')}
                 endAdornment={

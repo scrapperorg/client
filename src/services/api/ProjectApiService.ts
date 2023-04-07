@@ -3,6 +3,14 @@ import { axios } from 'config/http';
 import { OperationStatus, ProjectDto, QueryAll } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
 
+interface SearchProps {
+  title: string,
+  createdAfter: string,
+  createdBefore: string,
+  presentsInterest: boolean,
+  postOcrContent: string
+}
+
 class ProjectApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
@@ -60,6 +68,31 @@ class ProjectApiService {
         error: error.response?.statusText,
       };
     }
+  }
+
+  async search(props: SearchProps): Promise<OperationStatus<ProjectDto[]>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/project/search',
+        props,
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+
   }
 }
 
