@@ -11,11 +11,11 @@ import { ProjectMarks } from '../projectsTableDocumentMarks';
 
 interface ProjectsTableProps {
   projects: ProjectDto[];
-  totalNumberOfProjects: number;
-  page: number;
-  pageSize: number;
-  onPageChange: (page: number) => void | undefined;
-  onPageSizeChange: (pageSize: number) => void | undefined;
+  totalNumberOfProjects?: number;
+  page?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void | undefined;
+  onPageSizeChange?: (pageSize: number) => void | undefined;
 }
 
 const columns = [
@@ -32,7 +32,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
 
   const theme = useTheme();
 
-  const documentRows = projects.map((project) => (
+  const projectRows = projects.map((project) => (
     <GenericTableRow
       id={project.id}
       key={project.id}
@@ -58,7 +58,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
   return (
     <GenericTable
       columns={columns}
-      tableRows={documentRows}
+      tableRows={projectRows}
       count={totalNumberOfProjects}
       page={page}
       onPageChange={onPageChange}
