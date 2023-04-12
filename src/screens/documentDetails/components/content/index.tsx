@@ -24,6 +24,7 @@ export default function DocumentDetailsContent() {
     deleteAttachment,
     downloadAttachment,
     downloadOcrPdf,
+    setStatus
   } = useDocumentDetails();
 
   if (!document) return null;
@@ -62,6 +63,7 @@ export default function DocumentDetailsContent() {
           assignableResponsibles={assignableResponsibles}
           assignResponsible={assignResponsible}
           setDeadline={setDeadline}
+          setStatus={setStatus}
         />
       </Box>
 

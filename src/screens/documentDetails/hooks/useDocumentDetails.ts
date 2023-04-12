@@ -57,6 +57,7 @@ export function useDocumentDetails() {
       downloadBlob(blob, fileName);
     }
   };
+  const setStatus = () => console.log('Service not implemented yet');
 
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
@@ -68,5 +69,6 @@ export function useDocumentDetails() {
     deleteAttachment,
     downloadAttachment,
     downloadOcrPdf,
+    setStatus,
   };
 }

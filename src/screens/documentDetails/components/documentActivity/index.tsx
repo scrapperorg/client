@@ -14,10 +14,11 @@ interface DocumentActivityProps {
   assignResponsible: (userId: string) => void;
   setDeadline: (date: string | undefined) => void;
   openModal: (modalName: string) => void;
+  setStatus: (status: string) => void;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
-  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline } = props;
+  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus } = props;
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
@@ -75,7 +76,9 @@ function DocumentActivity(props: DocumentActivityProps) {
         assignResponsible={assignResponsible}
         responsible={document.assignedUser}
         deadline={document.deadline}
+        documentStatus={document.status}
         setDeadline={setDeadline}
+        setStatus={setStatus}
       />
     </>
   );
