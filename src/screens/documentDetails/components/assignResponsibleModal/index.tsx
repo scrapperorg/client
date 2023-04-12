@@ -209,7 +209,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             setErrorMessage('');
           }}
         >
-          Anulare
+          Anuleaza
         </Button>
         </Grid>
       </Grid>

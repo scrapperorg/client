@@ -30,7 +30,7 @@ function DocumentActivity(props: DocumentActivityProps) {
         <Grid item md={10}>
           <Card>
             <CardContent>
-              <Chip label='Activitate' color='primary' size='medium' sx={{ mb: 3 }} />
+              <Chip label='Analiza Legislativa' color='primary' size='medium' sx={{ mb: 3 }} />
               <Grid container spacing={4}>
                 <Grid item md={4}>
                   <Typography variant='h4' sx={{ mb: 3 }}>
@@ -66,7 +66,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 openModal(ModalNames.ASSIGN_RESP);
               }}
             >
-              Actualizeaza responsabil / termen
+              Actualizeaza datele analizei
             </Button>
           </Stack>
         </Grid>
