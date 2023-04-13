@@ -57,7 +57,12 @@ export function useDocumentDetails() {
       downloadBlob(blob, fileName);
     }
   };
-  const setStatus = () => console.log('Service not implemented yet');
+  const setStatus = async (status: string | undefined) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.setStatus(document.id, status ?? '');
+    if (!payload) return;
+    setDocument(payload);
+  };
 
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 

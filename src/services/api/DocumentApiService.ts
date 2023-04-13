@@ -191,6 +191,33 @@ class DocumentApiService {
     }
   }
 
+  async setStatus(documentId: string, status: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/set-status',
+        {
+          documentId,
+          status,
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
   async search(props: Partial<SearchProps>): Promise<OperationStatus<DocumentDto[]>> {
     const token = localStorage.getItem('token');
 
