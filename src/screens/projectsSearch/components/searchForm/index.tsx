@@ -169,18 +169,6 @@ export const SearchForm = (props: SearchFormProps) => {
       </Box>
 
       <Box>
-        <TextField
-          fullWidth
-          label='Proiectul contine textul...'
-          variant='outlined'
-          error={false}
-          disabled
-          helperText={''}
-          // {...form.register('')}
-        />
-      </Box>
-
-      <Box>
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel

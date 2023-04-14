@@ -8,3 +8,7 @@ export const isDateOverdue = (due: Date | undefined) => {
   const currentDate = new Date();
   return dueDate < currentDate;
 };
+
+export const removeNullishEntries = (obj: any) => {
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => !!v));
+}

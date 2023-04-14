@@ -60,21 +60,6 @@ const useAuth: () => UseAuthHookReturnType = () => {
     localStorage.removeItem('token');
   };
 
-  useEffect(() => {
-    if (token) {
-      // fetch /refresh token
-      setIsLoading(true);
-      authApiService
-        .refreshToken(token)
-        .then((data: OperationStatus<LoginDto>) => {
-          _setUser(data.payload?.user);
-          localStorage.setItem('token', token);
-          setIsLoading(false);
-        })
-        .catch(() => setIsLoading(false));
-    }
-  }, []);
-
   return { isLoading, user, token, setUser, logoutUser };
 };
 

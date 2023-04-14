@@ -70,7 +70,7 @@ class ProjectApiService {
     }
   }
 
-  async search(props: SearchProps): Promise<OperationStatus<ProjectDto[]>> {
+  async search(props: Partial<SearchProps>): Promise<OperationStatus<ProjectDto[]>> {
     const token = localStorage.getItem('token');
 
     try {
