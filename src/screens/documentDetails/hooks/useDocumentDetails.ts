@@ -64,6 +64,13 @@ export function useDocumentDetails() {
     setDocument(payload);
   };
 
+  const setDecision = async (status: string | undefined) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.setDecision(document.id, status ?? '');
+    if (!payload) return;
+    setDocument(payload);
+  };
+
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
   return {
@@ -75,5 +82,6 @@ export function useDocumentDetails() {
     downloadAttachment,
     downloadOcrPdf,
     setStatus,
+    setDecision,
   };
 }

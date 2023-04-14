@@ -23,16 +23,18 @@ import { UserDto } from 'services/api/dtos';
 import { Dayjs } from 'dayjs';
 import { ModalNames } from 'constants/modals';
 import FormHelperText from '@mui/material/FormHelperText';
-import { Status } from 'services/api/dtos/document';
+import { Decision, Status } from 'services/api/dtos/document';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
   responsible: UserDto | undefined;
   deadline: Date | undefined;
   documentStatus: string | undefined;
+  documentDecision: string | undefined;
   assignResponsible: (userId: string) => void;
   setDeadline: (date: string | undefined) => void;
   setStatus: (status: string) => void;
+  setDecision: (status: string) => void;
 }
 
 const isOutOfRange = (date: Dayjs) => {
@@ -43,10 +45,11 @@ const isOutOfRange = (date: Dayjs) => {
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
-  const { assignableResponsibles, responsible, deadline, documentStatus, assignResponsible, setDeadline, setStatus } = props;
+  const { assignableResponsibles, responsible, deadline, documentStatus, documentDecision, assignResponsible, setDeadline, setStatus, setDecision } = props;
   const [responsibleId, setResponsibleId] = useState(responsible?.id ?? '');
   const [duedate, setDuedate] = useState<string | undefined>(deadline?.toString() ?? undefined);
   const [docStatus, setDocStatus] = useState(documentStatus ?? '');
+  const [docDecision, setDocDecision] = useState(documentDecision ?? '');
   const [errorMessage, setErrorMessage] = useState('');
 
   const onReponsibleChange = (event: SelectChangeEvent) => {
@@ -59,6 +62,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
 
   const onStatusChange = (event: SelectChangeEvent) => {
     setDocStatus(event.target.value as string);
+  }
+
+  const onDecisionChange = (event: SelectChangeEvent) => {
+    setDocDecision(event.target.value as string);
   }
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -75,6 +82,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
       assignResponsible(responsibleId as string);
       setDeadline(duedate);
       setStatus(docStatus);
+      setDecision(docDecision);
     }
   }
 
@@ -130,7 +138,30 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             </Select>
             <FormHelperText error={!!errorMessage}>{errorMessage}</FormHelperText>
           </FormControl>
-          
+
+          <Typography variant="h3" sx={{ mt: 3 }}>
+            Concluzia analizei legislative:
+          </Typography>
+
+          <FormControl fullWidth sx={{ mt: 4 }}>
+            <InputLabel id="status-document-label">
+              Concluzie
+            </InputLabel>
+            <Select
+              labelId='concluzie'
+              id='concluzie'
+              value={docDecision}
+              label='Concluzie'
+              onChange={onDecisionChange}
+            >
+               {Object.values(Decision).map((decisionValue) => (
+                <MenuItem key={decisionValue} value={decisionValue}>
+                  {decisionValue}
+                </MenuItem>
+                ))}
+            </Select>
+            {/* <FormHelperText error={!!errorMessage}>{errorMessage}</FormHelperText> */}
+          </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
             Actualizeaza status:

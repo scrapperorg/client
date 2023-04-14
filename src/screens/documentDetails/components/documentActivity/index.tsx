@@ -15,10 +15,11 @@ interface DocumentActivityProps {
   setDeadline: (date: string | undefined) => void;
   openModal: (modalName: string) => void;
   setStatus: (status: string) => void;
+  setDecision: (status: string) => void;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
-  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus } = props;
+  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus, setDecision } = props;
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
@@ -42,6 +43,9 @@ function DocumentActivity(props: DocumentActivityProps) {
                   <Typography variant='h4' sx={{ mb: 3 }}>
                     Termen Predare:
                   </Typography>
+                  <Typography variant='h4' sx={{ mb: 3 }}>
+                    Concluzia analizei legislative:
+                  </Typography>
                 </Grid>
                 <Grid item md={8}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
@@ -52,6 +56,9 @@ function DocumentActivity(props: DocumentActivityProps) {
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {document.deadline && <FormattedDate date={document.deadline} />}
+                  </Typography>
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    {document.decision}
                   </Typography>
                 </Grid>
               </Grid>
@@ -77,8 +84,10 @@ function DocumentActivity(props: DocumentActivityProps) {
         responsible={document.assignedUser}
         deadline={document.deadline}
         documentStatus={document.status}
+        documentDecision={document.decision}
         setDeadline={setDeadline}
         setStatus={setStatus}
+        setDecision={setDecision}
       />
     </>
   );
