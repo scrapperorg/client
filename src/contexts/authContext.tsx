@@ -1,7 +1,6 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import { FullScreenLoading as Loading } from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
-import { LoginDto, OperationStatus } from 'services/api/dtos';
 import { Role } from 'constants/roles';
 
 export interface User {
@@ -43,7 +42,7 @@ export interface UseAuthHookReturnType {
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
