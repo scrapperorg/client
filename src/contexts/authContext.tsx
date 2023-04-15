@@ -1,7 +1,8 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { FullScreenLoading as Loading } from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
 import { Role } from 'constants/roles';
+import { LoginDto, OperationStatus } from 'services/api/dtos';
 
 export interface User {
   id: string;
@@ -58,6 +59,18 @@ const useAuth: () => UseAuthHookReturnType = () => {
     localStorage.removeItem('token');
     _setUser(undefined);
   };
+
+  useEffect(() => {
+    if (token) {
+      authApiService
+        .refreshToken(token)
+        .then((data: OperationStatus<LoginDto>) => {
+          setUser(data.payload?.user);
+          localStorage.setItem('token', token);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   return { isLoading, user, token, setUser, logoutUser };
 };

@@ -121,7 +121,7 @@ export const SearchForm = (props: SearchFormProps) => {
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
             <Controller
-              name="createdBefore"
+              name="createdAfter"
               control={form.control}
               render={({ field }) => (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -144,7 +144,7 @@ export const SearchForm = (props: SearchFormProps) => {
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
             <Controller
-              name="createdAfter"
+              name="createdBefore"
               control={form.control}
               render={({ field }) => (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
