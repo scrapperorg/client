@@ -1,9 +1,11 @@
 import { DocumentDto } from 'services/api/dtos';
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { documentApiService } from "services/api/DocumentApiService";
 import { documentSearchSchema } from "../formSchemas/documentSearchSchema";
+import { removeNullishEntries } from 'helpers/formatters';
+import { useSessionStorage } from 'hooks/useSessionStorage';
 
 export interface DocumentSearchFormValues {
   identificator: string,
@@ -23,18 +25,41 @@ export function useDocumentSearchForm() {
   const [showError, setShowError] = useState(false);
   const [results, setResults] = useState<DocumentDto[]>([])
 
+  const { setItem, getItem } = useSessionStorage()
 
   const documentSearchForm = useForm<DocumentSearchFormValues>({
     mode: 'onSubmit',
     defaultValues: { 
       isRulesBreaker: false,
-      source: ''
     },
     resolver: joiResolver(documentSearchSchema),
   })
 
-  const handleSubmit = async (searchParams: DocumentSearchFormValues) => {
-    setShowLoading(true)
+
+  const shouldFetch = useRef(true);
+  useEffect(() => {
+    if(!shouldFetch.current) return;
+    shouldFetch.current = false;
+
+    const savedSearchParams = getItem('documentSearchParams');
+    let searchParams = {}
+    if (savedSearchParams?.length) {
+      searchParams = JSON.parse(savedSearchParams);
+    }
+
+    if (Object.entries(searchParams).length) {
+      documentSearchForm.reset(searchParams, { keepDefaultValues: true})
+      performSearch(searchParams);
+    }
+  }, [])
+
+  const persistSearchParams = (searchParams: Partial<DocumentSearchFormValues>) => {
+    const params = removeNullishEntries(searchParams)
+    setItem('documentSearchParams', JSON.stringify(params))
+  }
+
+  const performSearch = async (searchParams: Partial<DocumentSearchFormValues>) => {
+    setShowLoading(true);
 
     const response = await documentApiService.search(searchParams)
 
@@ -48,6 +73,11 @@ export function useDocumentSearchForm() {
     setResults(response.payload);
   }
 
+  const handleSubmit = async (searchParams: DocumentSearchFormValues) => {
+    performSearch(searchParams);
+    persistSearchParams(searchParams);
+  }
+
   return {
     showLoading,
     showError,
@@ -57,3 +87,7 @@ export function useDocumentSearchForm() {
     documentSearchForm
   }
 }
+
+
+
+/// TODO: autocomplete fields on document search form if there is data saved in session storage

@@ -191,7 +191,7 @@ class DocumentApiService {
     }
   }
 
-  async search(props: SearchProps): Promise<OperationStatus<DocumentDto[]>> {
+  async search(props: Partial<SearchProps>): Promise<OperationStatus<DocumentDto[]>> {
     const token = localStorage.getItem('token');
 
     try {
