@@ -5,7 +5,7 @@ import React from 'react';
 import { DocumentDto, UserDto } from '../../../../services/api/dtos';
 import { AssignResponsibleModal } from '../assignResponsibleModal';
 import { ModalNames } from 'constants/modals';
-import { capitalizeString } from 'helpers/formatters';
+import { Translations } from 'constants/translations';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -49,7 +49,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 </Grid>
                 <Grid item md={8}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {capitalizeString(document.status)}
+                    {Translations[document.status]}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {assignedUser}
@@ -58,7 +58,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                     {document.deadline && <FormattedDate date={document.deadline} />}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {document.decision}
+                    {Translations[document.decision]}
                   </Typography>
                 </Grid>
               </Grid>

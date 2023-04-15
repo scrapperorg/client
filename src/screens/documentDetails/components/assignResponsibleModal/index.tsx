@@ -16,7 +16,6 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ClearIcon from '@mui/icons-material/Clear';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { UserDto } from 'services/api/dtos';
@@ -24,6 +23,7 @@ import { Dayjs } from 'dayjs';
 import { ModalNames } from 'constants/modals';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Decision, Status } from 'services/api/dtos/document';
+import { Translations } from 'constants/translations';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
@@ -120,17 +120,6 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
               value={responsibleId}
               label='Responsabil'
               onChange={onReponsibleChange}
-            //   endAdornment={
-            //     (responsibleId && !responsible?.id) && <IconButton
-            //       onClick={() => {
-            //         setResponsibleId('');
-            //       }}
-            //       size="small"
-            //       sx={{marginRight: 5}}
-            //     >
-            //       <ClearIcon />
-            //     </IconButton>
-            // }
             >
               {assignableResponsibles.map((user: UserDto) => (
                 <MenuItem key={user.id} value={user.id}>{`${user.surname} ${user.name}`}</MenuItem>
@@ -156,11 +145,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             >
                {Object.values(Decision).map((decisionValue) => (
                 <MenuItem key={decisionValue} value={decisionValue}>
-                  {decisionValue}
+                  {Translations[decisionValue]}
                 </MenuItem>
                 ))}
             </Select>
-            {/* <FormHelperText error={!!errorMessage}>{errorMessage}</FormHelperText> */}
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
@@ -177,25 +165,13 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
               value={docStatus}
               label='Status'
               onChange={onStatusChange}
-            //   endAdornment={
-            //     (docStatus) && <IconButton
-            //       onClick={() => {
-            //         setDocStatus('');
-            //       }}
-            //       size="small"
-            //       sx={{marginRight: 5}}
-            //     >
-            //       <ClearIcon />
-            //     </IconButton>
-            // }
             >
                {Object.values(Status).map((statusValue) => (
                 <MenuItem key={statusValue} value={statusValue}>
-                  {statusValue}
+                  {Translations[statusValue]}
                 </MenuItem>
                 ))}
             </Select>
-            {/* <FormHelperText error={!!errorMessage}>{errorMessage}</FormHelperText> */}
           </FormControl>
 
           <Typography variant='h3' sx={{ mt: 8 }}>
