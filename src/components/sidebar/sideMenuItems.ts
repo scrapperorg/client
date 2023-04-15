@@ -5,9 +5,11 @@ import {
   ScreenSearchDesktop as ScreenSearchDesktopIcon,
   Build as BuildIcon,
   SmartToy as SmartToyIcon,
+  ManageAccounts as ManageAccountsIcon,
 } from '@mui/icons-material';
 import Paths from '../../constants/paths';
 import { SubMenuProps } from './components/SubMenu';
+import { Role } from 'constants/roles';
 
 export const menuItems: SubMenuProps[] = [
   {
@@ -53,6 +55,12 @@ export const menuItems: SubMenuProps[] = [
         text: 'Status Roboți',
         href: Paths.ROBOTS_STATUS,
       },
+      {
+        icon: ManageAccountsIcon,
+        text: 'Administrare Utilizatori',
+        href: Paths.USERS_MANAGEMENT,
+        exactRole: Role.ITA,
+      }
     ],
   },
 ];
