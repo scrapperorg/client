@@ -1,6 +1,5 @@
-import { AxiosError, AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import { axios } from 'config/http';
-import { OperationStatus, UserDto } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
 import {RobotDTO} from "./dtos/robot";
 
