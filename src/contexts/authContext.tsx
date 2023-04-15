@@ -54,9 +54,9 @@ const useAuth: () => UseAuthHookReturnType = () => {
   );
 
   const logoutUser = () => {
-    setUser(undefined);
     authApiService.logout();
     localStorage.removeItem('token');
+    _setUser(undefined);
   };
 
   return { isLoading, user, token, setUser, logoutUser };
