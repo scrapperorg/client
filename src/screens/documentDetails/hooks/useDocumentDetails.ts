@@ -48,6 +48,16 @@ export function useDocumentDetails() {
     }
   };
 
+  const downloadOcrPdf = async () => {
+    if (!document?.id) return false;
+    const data = await documentApiService.downloadOcrPdf(document?.id);
+
+    if (data.payload) {
+      const { blob, fileName } = data.payload;
+      downloadBlob(blob, fileName);
+    }
+  };
+
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
   return {
@@ -57,5 +67,6 @@ export function useDocumentDetails() {
     uploadAttachment,
     deleteAttachment,
     downloadAttachment,
+    downloadOcrPdf,
   };
 }

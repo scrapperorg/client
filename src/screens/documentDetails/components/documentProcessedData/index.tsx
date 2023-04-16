@@ -1,8 +1,13 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 
-function DocumentProcessedData() {
+interface DocumentProcessedDataProps {
+  onDownloadOcrPdf: () => void;
+}
+
+function DocumentProcessedData(props: DocumentProcessedDataProps) {
+  const { onDownloadOcrPdf } = props;
   return (
     <Grid container spacing={4}>
       <Grid item md={10}>
@@ -46,6 +51,9 @@ function DocumentProcessedData() {
 
       <Grid item md={2}>
         <Stack gap={4}>
+          <Button variant='contained' onClick={onDownloadOcrPdf}>
+            Descarca document analizat
+          </Button>
           {/*<Button variant='contained'>Analizeaza</Button>*/}
           {/*<Button variant='contained'>Actualizeaza stare</Button>*/}
           {/*<Button variant='contained'>Analizeaza rezultat analiza</Button>*/}

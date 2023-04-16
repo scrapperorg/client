@@ -23,6 +23,7 @@ export default function DocumentDetailsContent() {
     uploadAttachment,
     deleteAttachment,
     downloadAttachment,
+    downloadOcrPdf,
   } = useDocumentDetails();
 
   if (!document) return null;
@@ -65,7 +66,7 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentProcessedData />
+        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} />
       </Box>
 
       <Box sx={{ mb: 4 }}>
