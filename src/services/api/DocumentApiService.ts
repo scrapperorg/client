@@ -6,14 +6,14 @@ import { handleUnauthorized } from 'helpers/errorHandlers';
 import { downloadBlob } from 'helpers/downloadBlob';
 
 interface SearchProps {
-  identificator: string,
-  title: string,
-  source: string,
-  status: string,
-  assignedUserId: string,
-  projectId: string,
-  publishedAfter: string,
-  publishedBefore: string,
+  identificator: string;
+  title: string;
+  source: string;
+  status: string;
+  assignedUserId: string;
+  projectId: string;
+  publishedAfter: string;
+  publishedBefore: string;
   postOcrContent: string;
   isRulesBreaker: boolean;
 }
@@ -195,13 +195,9 @@ class DocumentApiService {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await this.httpClient.post(
-        '/document/search',
-        props,
-        {
-          headers: { authorization: token },
-        },
-      );
+      const response = await this.httpClient.post('/document/search', props, {
+        headers: { authorization: token },
+      });
       return {
         success: true,
         payload: response.data,
@@ -213,25 +209,53 @@ class DocumentApiService {
         error: error.response?.statusText,
       };
     }
+  }
 
+  async downloadOcrPdf(
+    documentId: string,
+  ): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await this.httpClient.get(`/document/download-ocr-pdf/${documentId}`, {
+        responseType: 'blob',
+        headers: { authorization: token },
+      });
+
+      const fileName =
+        response.headers['content-disposition']?.split('filename=')[1] || 'Document ocr';
+
+      return {
+        success: true,
+        payload: {
+          blob: new Blob([response.data], { type: response.headers['content-type'] }),
+          fileName,
+        },
+      };
+    } catch (err) {
+      handleUnauthorized(err);
+      return {
+        success: false,
+      };
+    }
   }
 
   async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
     try {
-      const response = await this.httpClient.get(url, { responseType: 'blob' })
+      const response = await this.httpClient.get(url, { responseType: 'blob' });
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
-      const fileName = response.headers['content-disposition']?.split('filename=')[1] || 'Document Descarcat';
+      const fileName =
+        response.headers['content-disposition']?.split('filename=')[1] || 'Document Descarcat';
       downloadBlob(blob, fileName);
-      return { 
+      return {
         success: true,
-        payload: { 
+        payload: {
           blob,
-          fileName
-        } 
+          fileName,
+        },
       };
     } catch (error) {
       console.error(error);
-      return { 
+      return {
         success: false,
       };
     }
