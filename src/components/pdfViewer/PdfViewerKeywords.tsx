@@ -1,5 +1,7 @@
-import { Box } from '@mui/material';
-import React, { Fragment } from 'react';
+import { Box, Collapse, IconButton, Typography } from '@mui/material';
+import React, { Fragment, useEffect, useState } from 'react';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
 interface Occurrence {
   location: {
@@ -46,32 +48,186 @@ function orderOccurrencesByPageAndCoordinates(keywords: Keyword[]): OccurrenceWi
   });
 }
 
-interface PdfViewerKeywords {
-  data: Keyword[];
+function groupOccurencesPerPage(
+  occurences: OccurrenceWithKeyword[],
+): Record<number, OccurrenceWithKeyword[]> {
+  const pages: Record<number, OccurrenceWithKeyword[]> = {};
+  occurences.forEach((occ) => {
+    if (Array.isArray(pages[occ.page])) {
+      pages[occ.page].push(occ);
+    } else {
+      pages[occ.page] = [occ];
+    }
+  });
+  return pages;
+}
+
+const handleRemoveVoodooHighlight = () => {
+  const elements = document.querySelectorAll('.voodoo_highlight');
+
+  if (elements.length === 0) {
+    return;
+  }
+
+  elements.forEach((element) => {
+    const elementParent = element.parentElement;
+
+    if (!elementParent) {
+      return;
+    }
+
+    elementParent.innerHTML = element.innerHTML;
+    element.remove();
+  });
+};
+
+const handleVoodooHighlight = (
+  targetX: number,
+  targetY: number,
+  filterText: string,
+): HTMLElement | null => {
+  let closestElement = null;
+  let closestDistance = Infinity;
+
+  const elements = document.querySelectorAll('.textLayer > span');
+
+  if (elements.length === 0) {
+    return null;
+  }
+
+  elements.forEach((element: any) => {
+    const elementX = element.offsetLeft;
+    const elementY = element.offsetTop;
+    const distance = Math.sqrt((targetX - elementX) ** 2 + (targetY - elementY) ** 2);
+    const text = (element.textContent || element.innerText).toLowerCase();
+
+    if (distance < closestDistance) {
+      if (text.includes(filterText.toLowerCase())) {
+        closestElement = element;
+        closestDistance = distance;
+      }
+    }
+  });
+  return closestElement;
+};
+
+interface PdfViewerPageGroupProps {
+  page: number;
+  currentPage: number;
+  data: OccurrenceWithKeyword[];
+  open: boolean;
   onSkip: (page: number) => void;
 }
-export function PdfViewerKeywords({ data, onSkip }: PdfViewerKeywords) {
-  const orderedKeywords = orderOccurrencesByPageAndCoordinates(data);
+
+export function PdfViewerPageGroup({
+  page,
+  currentPage,
+  data,
+  open,
+  onSkip,
+}: PdfViewerPageGroupProps) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    setIsOpen(open);
+  }, [setIsOpen, open]);
+
   return (
     <Fragment>
-      <Box sx={{ padding: 3 }}>Cuvinte cheie</Box>
-      {orderedKeywords.map((item) => (
-        <Box
-          key={item.location.x1 + item.location.x2}
-          sx={{
-            padding: 3,
-            paddingLeft: 5,
-            backgroundColor: '#F6F6F6',
-            borderRadius: '12px 0 0 12px',
-            marginBottom: 2,
-            cursor: 'pointer',
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Typography
+          variant={'h4'}
+          onClick={() => {
+            onSkip(page + 1);
           }}
-          onClick={() => onSkip(item.page)}
+          sx={{ cursor: 'pointer' }}
         >
-          <Box>{item.keyword}</Box>
-          <Box sx={{ fontSize: '12px' }}>pagina {++item.page}</Box>
-        </Box>
-      ))}
+          Pagina {page + 1}
+        </Typography>
+        <IconButton onClick={() => setIsOpen(!isOpen)}>
+          <KeyboardArrowDownIcon />
+        </IconButton>
+      </Box>
+      <Collapse in={isOpen}>
+        {data.map((item) => (
+          <Box
+            key={item.location.x1 + item.location.x2}
+            sx={{
+              padding: 3,
+              paddingLeft: 5,
+              backgroundColor: '#F6F6F6',
+              borderRadius: '12px 0 0 12px',
+              marginBottom: 2,
+            }}
+          >
+            <Box
+              onMouseEnter={() => {
+                if (currentPage !== item.page + 1) {
+                  return;
+                }
+
+                const element = handleVoodooHighlight(
+                  item.location.x1,
+                  item.location.y1,
+                  item.keyword,
+                );
+
+                if (!element) {
+                  return;
+                }
+
+                element.innerHTML = element.textContent!.replace(
+                  new RegExp(item.keyword, 'gi'),
+                  '<span class="voodoo_highlight" style="border-bottom: 3px solid red;">$&</span>',
+                );
+              }}
+              onMouseLeave={handleRemoveVoodooHighlight}
+            >
+              {item.keyword}
+            </Box>
+          </Box>
+        ))}
+      </Collapse>
+    </Fragment>
+  );
+}
+
+interface PdfViewerKeywords {
+  data: Keyword[];
+  currentPage: number;
+  onSkip: (page: number) => void;
+}
+export function PdfViewerKeywords({ data, onSkip, currentPage }: PdfViewerKeywords) {
+  const [isAllOpen, setIsAllOpen] = useState(false);
+  const orderedKeywords = orderOccurrencesByPageAndCoordinates(data);
+  const groupByPage = groupOccurencesPerPage(orderedKeywords);
+  return (
+    <Fragment>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingTop: 3,
+        }}
+      >
+        <Typography variant='h3'>Cuvinte cheie</Typography>
+        <IconButton onClick={() => setIsAllOpen(!isAllOpen)}>
+          <KeyboardDoubleArrowDownIcon />
+        </IconButton>
+      </Box>
+      {Object.entries(groupByPage).map(([key, value]) => {
+        return (
+          <PdfViewerPageGroup
+            key={key}
+            page={parseInt(key)}
+            currentPage={currentPage}
+            data={value}
+            open={isAllOpen}
+            onSkip={onSkip}
+          />
+        );
+      })}
     </Fragment>
   );
 }

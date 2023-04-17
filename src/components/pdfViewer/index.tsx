@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Box, Drawer, IconButton } from '@mui/material';
 
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -17,26 +17,17 @@ interface PdfViewerProps {
   highlightCoords: Array<Record<string, any>>;
 }
 
-// DO NOT REMOVE, MIGHT NEED THESE
-// function highlightPattern(text: string, words: string[]): string {
-//   const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'gi');
-//   return text.replace(
-//     regex,
-//     (value) => `<span style="background-color: yellow; color: black">${value}</span>`,
-//   );
-// }
-//
-// function extractKeywords(data: any): string[] {
-//   const keywords: string[] = [];
-//
-//   data.results.forEach((result: any) => {
-//     if (!keywords.includes(result.keyword)) {
-//       keywords.push(result.keyword);
-//     }
-//   });
-//
-//   return keywords;
-// }
+function extractKeywords(data: any): string[] {
+  const keywords: string[] = [];
+
+  data.results.forEach((result: any) => {
+    if (!keywords.includes(result.keyword)) {
+      keywords.push(result.keyword);
+    }
+  });
+
+  return keywords;
+}
 
 export function PdfViewer({
   isOpen,
@@ -49,6 +40,7 @@ export function PdfViewer({
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [docLoadError, setDocLoadError] = useState<Error | undefined>();
+  const pdfBoxRef = useRef(null);
 
   const handleDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy): void => {
     setNumPages(numPages);
@@ -91,6 +83,7 @@ export function PdfViewer({
               </Box>
             )}
             <Document
+              ref={pdfBoxRef}
               file={pdf}
               onLoadSuccess={handleDocumentLoadSuccess}
               onLoadError={handleDocumentLoadError}
@@ -98,16 +91,22 @@ export function PdfViewer({
               <Page
                 width={700}
                 pageNumber={pageNumber}
+                renderTextLayer={true}
                 // DO NOT DELETE, MIGHT NEED
                 // customTextRenderer={(layer) => {
-                //   return highlightPattern(layer.str, extractKeywords(highlightCoords));
+                //   console.log(layer);
+                //   return `<span class='test'>${layer.str}</span>`;
                 // }}
               />
             </Document>
           </Box>
           {!docLoadError && (
             <Box sx={{ width: '200px' }}>
-              <PdfViewerKeywords data={highlightCoords as Keyword[]} onSkip={handleSkip} />
+              <PdfViewerKeywords
+                data={highlightCoords as Keyword[]}
+                onSkip={handleSkip}
+                currentPage={pageNumber}
+              />
             </Box>
           )}
         </Box>
