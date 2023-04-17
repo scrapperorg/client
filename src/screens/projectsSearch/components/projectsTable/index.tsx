@@ -37,20 +37,20 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       id={project.id}
       key={project.id}
       values={[
-        <ProjectMarks project={project} key={`marks-for-${project.id}`} />,
-        <span key={project.id}>
+        <ProjectMarks project={project} key={`${project.id}-marks`} />,
+        <span key={`${project.id}-identificator`}>
           {project.numarInregistrareGuvern || project.numarInregistrareSenat}
         </span>,
-        <StyledLink to={`/project/${project.id}`} key={project.id} theme={theme}>
+        <StyledLink to={`/project/${project.id}`} key={`${project.id}-title`} theme={theme}>
           {project.title}
         </StyledLink>,
-        <StyledLink to={`/project/${project.id}`} key={project.id} theme={theme}>
+        <StyledLink to={`/project/${project.id}`} key={`${project.id}-decision`} theme={theme}>
           {project.cameraDecizionala}
         </StyledLink>,
-        <StyledLink to={`/project/${project.id}`} key={project.id} theme={theme}>
+        <StyledLink to={`/project/${project.id}`} key={`${project.id}-initiator`} theme={theme}>
           {project.initiator}
         </StyledLink>,
-        <FormattedDate key={`date-for-${project.id}`} date={project.createdAt} />,
+        <FormattedDate key={`${project.id}-date`} date={project.createdAt} />,
       ]}
     />
   ));

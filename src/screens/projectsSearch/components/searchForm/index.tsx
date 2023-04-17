@@ -172,9 +172,20 @@ export const SearchForm = (props: SearchFormProps) => {
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel
-              control={<Checkbox />}
+              control={
+                <Controller
+                  name="presentsInterest"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                    />
+                  )}
+                />
+              }
               label='Proiect legislativ de interes/cu impact'
-              {...form.register('presentsInterest')}
             />
           </Grid>
         </Grid>
