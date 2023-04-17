@@ -5,6 +5,7 @@ import { Chip } from '@mui/material';
 import { RobotStatusDto } from '../../context';
 import { Error as ErrorIcon, Done as DoneIcon } from '@mui/icons-material';
 import { FormattedDate } from '../../../../components';
+import {Translations} from "../../../../constants/translations";
 
 interface RobotsStatusTableProps {
   robots: RobotStatusDto[];
@@ -30,11 +31,11 @@ export const RobotsStatusTable = (props: RobotsStatusTableProps) => {
           color={robot.status === 'FUNCTIONAL' ? 'success' : 'error'}
           icon={robot.status === 'FUNCTIONAL' ? <DoneIcon /> : <ErrorIcon />}
         />,
-        robot.name,
+        Translations[robot.name],
         <FormattedDate
           key={`date-for-${robot.name}`}
           formatType={'HH:mm EEE d MMMM'}
-          date={robot.lastActivation}
+          date={robot.last_run}
         />,
         robot.info,
       ]}
