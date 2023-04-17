@@ -229,9 +229,20 @@ export const SearchForm = (props: SearchFormProps) => {
         <Grid container>
           <Grid item md={6}>
             <FormControlLabel
-              control={<Checkbox />}
+              control={
+                <Controller
+                  name="isRulesBreaker"
+                  control={form.control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                    />
+                  )}
+                />
+              }
               label="Document ce contravine normelor in vigoare"
-              {...form.register('isRulesBreaker')}
             />
           </Grid>
           <Grid item md={6} sx={{ pl: 4 }}>

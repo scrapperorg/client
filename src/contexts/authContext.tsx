@@ -1,8 +1,8 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { FullScreenLoading as Loading } from 'components/loading';
 import { authApiService } from 'services/api/AuthApiService';
-import { Role } from 'constants/roles';
 import { LoginDto, OperationStatus } from 'services/api/dtos';
+import { Role } from 'constants/roles';
 
 export interface User {
   id: string;
@@ -43,7 +43,7 @@ export interface UseAuthHookReturnType {
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
@@ -55,20 +55,22 @@ const useAuth: () => UseAuthHookReturnType = () => {
   );
 
   const logoutUser = () => {
+    setUser(undefined);
     authApiService.logout();
     localStorage.removeItem('token');
-    _setUser(undefined);
   };
 
   useEffect(() => {
     if (token) {
+      // fetch /refresh token
+      setIsLoading(true);
       authApiService
         .refreshToken(token)
         .then((data: OperationStatus<LoginDto>) => {
-          setUser(data.payload?.user);
+          _setUser(data.payload?.user);
           localStorage.setItem('token', token);
         })
-        .catch((err) => console.log(err));
+        .finally(() => setIsLoading(false));
     }
   }, []);
 
