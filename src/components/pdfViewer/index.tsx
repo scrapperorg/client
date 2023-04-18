@@ -17,18 +17,6 @@ interface PdfViewerProps {
   highlightCoords: Array<Record<string, any>>;
 }
 
-function extractKeywords(data: any): string[] {
-  const keywords: string[] = [];
-
-  data.results.forEach((result: any) => {
-    if (!keywords.includes(result.keyword)) {
-      keywords.push(result.keyword);
-    }
-  });
-
-  return keywords;
-}
-
 export function PdfViewer({
   isOpen,
   onClose: handleOnClose,
