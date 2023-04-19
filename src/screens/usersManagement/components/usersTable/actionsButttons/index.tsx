@@ -9,6 +9,7 @@ import { USER_STATUS } from 'services/api/dtos';
 interface ActionButtonsProps {
   id: string;
   status: string;
+  isCurrentUser: boolean;
   deleteUser: (id: string) => void;
   activateUser: (id: string) => void;
 }
@@ -24,7 +25,7 @@ const ChangePassword = () => (
 )
 
 export const ActionButtons = (props: ActionButtonsProps) => {
-  const { status, id, deleteUser, activateUser } = props;
+  const { status, id, isCurrentUser, deleteUser, activateUser } = props;
 
   const activeActions = (
     <StyledBox>
@@ -32,6 +33,12 @@ export const ActionButtons = (props: ActionButtonsProps) => {
         <DeleteIcon fontSize='small' />
       </IconButton>
 
+      <ChangePassword />
+    </StyledBox>
+  )
+
+  const currentUserActions = (
+    <StyledBox>
       <ChangePassword />
     </StyledBox>
   )
@@ -44,7 +51,13 @@ export const ActionButtons = (props: ActionButtonsProps) => {
     </StyledBox>
   )
 
-  const actions = status === USER_STATUS.DELETED ? deletedActions : activeActions;
+  if (isCurrentUser) {
+    return currentUserActions;
+  }
 
-  return actions;
+  if (status === USER_STATUS.DELETED) {
+    return deletedActions;
+  }
+
+  return activeActions;
 };

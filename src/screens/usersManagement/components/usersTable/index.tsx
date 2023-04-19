@@ -21,9 +21,10 @@ export const UsersTable = (props: UsersTableProps) => {
 
   
   const userRows = users.map((user) => {
-    const isDisabled = isLoading || currentUser?.id === user.id;
 
-    const disabledClassName = isDisabled ? 'disabled' : '';
+    const isCurrentUser = currentUser?.id === user.id;
+
+    const disabledClassName = isLoading ? 'disabled' : '';
 
     return (
       <GenericTableRow
@@ -39,6 +40,7 @@ export const UsersTable = (props: UsersTableProps) => {
             key={`${user.id}-actions`}
             id={user.id}
             status={user.status}
+            isCurrentUser={isCurrentUser}
             deleteUser={deleteUser}
             activateUser={activateUser}
           />
