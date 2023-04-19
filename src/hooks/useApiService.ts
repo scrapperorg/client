@@ -3,11 +3,13 @@ import { OperationStatus } from 'services/api/dtos';
 
 export type ApiMethod<ResponseType> = (...args: any[]) => Promise<OperationStatus<ResponseType>>
 
+export type FetchArgs = Parameters<ApiMethod<any>> & {page?: number, pageSize?: number};
+
 export interface APIServiceResponse<E>{
   data: E | undefined;
   loading: boolean;
   error: string | undefined;
-  fetch: (page: number, pageSize: number, ...args: Parameters<ApiMethod<any>>) => Promise<void>;
+  fetch: (...args: FetchArgs) => Promise<void>;
 }
 
 export const useApiService = <DataType>(

@@ -85,6 +85,55 @@ class UserApiService {
     }
   }
 
+  async deleteUser(id: string): Promise<OperationStatus<boolean>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.delete<boolean>(
+        `/user/${id}`,
+        {
+          headers: { authorization: token },
+        }
+      );
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async activateUser(id: string): Promise<OperationStatus<boolean>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.put<boolean>(
+        `/user/${id}/activate`,
+        {},
+        {
+          headers: { authorization: token },
+        }
+      );
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
 }
 
 export const userApiService = new UserApiService(axios);

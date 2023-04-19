@@ -1,5 +1,5 @@
-import { Box, IconButton } from '@mui/material';
 import React from 'react';
+import { Box, IconButton } from '@mui/material';
 import styled from 'styled-components';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PasswordIcon from '@mui/icons-material/Password';
@@ -7,18 +7,15 @@ import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import { USER_STATUS } from 'services/api/dtos';
 
 interface ActionButtonsProps {
+  id: string;
   status: string;
+  deleteUser: (id: string) => void;
+  activateUser: (id: string) => void;
 }
 
 const StyledBox = styled(Box)`
   display: flex;
 `;
-
-const Delete = () => (
-  <IconButton>
-    <DeleteIcon fontSize='small' />
-  </IconButton>
-);
 
 const ChangePassword = () => (
   <IconButton>
@@ -26,25 +23,24 @@ const ChangePassword = () => (
   </IconButton>
 )
 
-const Restore = () => (
-  <IconButton>
-    <RestoreFromTrashIcon fontSize='small' />
-  </IconButton>
-)
-
 export const ActionButtons = (props: ActionButtonsProps) => {
-  const { status } = props;
+  const { status, id, deleteUser, activateUser } = props;
 
   const activeActions = (
     <StyledBox>
-      <Delete />
+      <IconButton onClick={() => deleteUser(id)}>
+        <DeleteIcon fontSize='small' />
+      </IconButton>
+
       <ChangePassword />
     </StyledBox>
   )
 
   const deletedActions = (
     <StyledBox>
-      <Restore />
+      <IconButton onClick={() => activateUser(id)}>
+        <RestoreFromTrashIcon fontSize='small' />
+      </IconButton>
     </StyledBox>
   )
 
