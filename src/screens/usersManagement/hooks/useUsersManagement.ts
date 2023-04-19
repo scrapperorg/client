@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
-import { userApiService } from "services/api/UserApiService";
-import { UsersManagementContext } from "../context";
+import { useContext, useState } from 'react';
+import { userApiService } from 'services/api/UserApiService';
+import { UsersManagementContext } from '../context';
 
 export function useUsersManagement() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

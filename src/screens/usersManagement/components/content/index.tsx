@@ -5,11 +5,20 @@ import { Alert, Box, Button, Snackbar } from '@mui/material';
 import styled from 'styled-components';
 import { useUsersManagement } from 'screens/usersManagement/hooks/useUsersManagement';
 import { AuthContext } from 'contexts/authContext';
+import { ModalNames } from 'constants/modals';
+import { useModal } from 'screens/usersManagement/hooks/useModal';
+import { AddUserModal } from '../addUserModal';
+import { ChangePasswordModal } from '../changePasswordModal';
 
 export default function UsersManagementContent () {
 
   const { users } = useContext(UsersManagementContext);
+
   const { user: currentUser } = useContext(AuthContext);
+
+  const { openModal: openAddUserModal, isModalOpen: isAddUserModalOpen, closeModal  } = useModal(ModalNames.ADD_USER)
+
+  const { openModal: openChangePasswordModal, isModalOpen: isChangePasswordModalOpen  } = useModal(ModalNames.CHANGE_PASSWORD)
 
   const {
     isLoading,
@@ -23,7 +32,10 @@ export default function UsersManagementContent () {
   return (
     <>
     <ButtonBox>
-      <Button variant='contained'>
+      <Button
+        variant='contained'
+        onClick={openAddUserModal}
+      >
         Adauga utilizator
       </Button>
     </ButtonBox>
@@ -34,8 +46,19 @@ export default function UsersManagementContent () {
         activateUser={activateUser}
         isLoading={isLoading || isFetchingUsers}
         currentUser={currentUser}
+        openChangePasswordModal={openChangePasswordModal}
       />
     </Box>
+
+    <AddUserModal
+      isOpened={isAddUserModalOpen}
+      closeModal={closeModal}
+    />
+
+    <ChangePasswordModal
+      isOpened={isChangePasswordModalOpen}
+      closeModal={closeModal}
+    />
 
     <Snackbar
       open={showError}

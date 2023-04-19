@@ -12,20 +12,28 @@ interface ActionButtonsProps {
   isCurrentUser: boolean;
   deleteUser: (id: string) => void;
   activateUser: (id: string) => void;
+  openChangePasswordModal: () => void;
 }
 
 const StyledBox = styled(Box)`
   display: flex;
 `;
 
-const ChangePassword = () => (
-  <IconButton>
+const ChangePassword = ({ openModal }: { openModal: () => void }) => (
+  <IconButton onClick={openModal}>
     <PasswordIcon fontSize='small' />
   </IconButton>
 )
 
 export const ActionButtons = (props: ActionButtonsProps) => {
-  const { status, id, isCurrentUser, deleteUser, activateUser } = props;
+  const {
+    status,
+    id,
+    isCurrentUser,
+    deleteUser,
+    activateUser,
+    openChangePasswordModal
+  } = props;
 
   const activeActions = (
     <StyledBox>
@@ -33,13 +41,13 @@ export const ActionButtons = (props: ActionButtonsProps) => {
         <DeleteIcon fontSize='small' />
       </IconButton>
 
-      <ChangePassword />
+      <ChangePassword openModal={openChangePasswordModal}/>
     </StyledBox>
   )
 
   const currentUserActions = (
     <StyledBox>
-      <ChangePassword />
+      <ChangePassword openModal={openChangePasswordModal}/>
     </StyledBox>
   )
 

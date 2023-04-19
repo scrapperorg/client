@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormattedDate, GenericTableRow } from "components";
-import { UserDto } from "services/api/dtos";
+import { FormattedDate, GenericTableRow } from 'components';
+import { UserDto } from 'services/api/dtos';
 import { ActionButtons } from './actionsButttons';
 import { Translations } from 'constants/translations';
 import { ScrollableTable } from 'components/scrollableTable/table';
@@ -12,12 +12,13 @@ interface UsersTableProps {
   isLoading: boolean;
   deleteUser: (id: string) => void;
   activateUser: (id: string) => void;
+  openChangePasswordModal: () => void;
 }
 
 const columns = ["Nume", "Email", "Rol", "Data crearii", "Status", "Actiuni"];
 
 export const UsersTable = (props: UsersTableProps) => {
-  const { users, currentUser, isLoading, deleteUser, activateUser } = props;
+  const { users, currentUser, isLoading, deleteUser, activateUser, openChangePasswordModal } = props;
 
   
   const userRows = users.map((user) => {
@@ -43,6 +44,7 @@ export const UsersTable = (props: UsersTableProps) => {
             isCurrentUser={isCurrentUser}
             deleteUser={deleteUser}
             activateUser={activateUser}
+            openChangePasswordModal={openChangePasswordModal}
           />
         ]}
         className={disabledClassName}
