@@ -7,8 +7,8 @@ import { useUsersManagement } from 'screens/usersManagement/hooks/useUsersManage
 import { AuthContext } from 'contexts/authContext';
 import { ModalNames } from 'constants/modals';
 import { useModal } from 'screens/usersManagement/hooks/useModal';
-import { AddUserModal } from '../addUserModal';
-import { ChangePasswordModal } from '../changePasswordModal';
+import { AddUserModal } from '../modals/addUserModal';
+import { ChangePasswordModal } from '../modals/changePasswordModal';
 
 export default function UsersManagementContent () {
 
