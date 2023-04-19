@@ -13,9 +13,10 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
     <Box sx={{ mb: 4 }}>
       <Grid container>
 
-        <Grid item md={6}>
-          <Card>
-            <GeneralDataCardContent>
+        { project.source && ['camera_deputatilor_pl', 'senat_pl'].includes(project.source) && (
+          <Grid item md={6}>
+            <Card>
+              <GeneralDataCardContent>
                 <Grid container spacing={4}>
                   <PropertiesGrid item md={4}>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Senat:</Typography>
@@ -30,7 +31,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Initiator:</Typography>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Consultati:</Typography>
                   </PropertiesGrid>
-                
+
                   <Grid item md={8}>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat || '-'}</Typography>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareGuvern || '-'}</Typography>
@@ -43,13 +44,14 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                     <Typography variant="h5" sx={{mb: 3}}>{project?.stadiu || '-'}</Typography>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.initiator || '-'}</Typography>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.consultati || '-'}</Typography>
-                  </Grid> 
+                  </Grid>
                 </Grid>
               </GeneralDataCardContent>
             </Card>
           </Grid>
+        ) }
 
-        <Grid item md={4} sx={{ pl: 4, display: 'flex' }}>
+        <Grid item md={project.source && project.source === 'camera' ? 4 : 10} sx={{ pl: 4, display: 'flex' }}>
           <Card>
             <CardContent>
               <Chip label="Atasamente" color="primary" size="medium" sx={{mb: 3}}/>

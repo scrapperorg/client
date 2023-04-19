@@ -20,6 +20,7 @@ export interface ProjectDto {
   stadiu?: string;
   initiator?: string;
   consultati?: string;
+  source?: string;
 
   attachments: string[];
 }
