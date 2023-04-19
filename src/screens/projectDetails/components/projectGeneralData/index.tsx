@@ -8,12 +8,12 @@ interface ProjectGeneralDataProps {
 }
 
 export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
-
+  const isAttributesDisplayed = ['camera_deputatilor_pl', 'senat_pl'].includes(project.source || '');
   return (
     <Box sx={{ mb: 4 }}>
       <Grid container>
 
-        { project.source && ['camera_deputatilor_pl', 'senat_pl'].includes(project.source) && (
+        { project.source && isAttributesDisplayed && (
           <Grid item md={6}>
             <Card>
               <GeneralDataCardContent>
@@ -51,7 +51,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
           </Grid>
         ) }
 
-        <Grid item md={project.source && project.source === 'camera' ? 4 : 10} sx={{ pl: 4, display: 'flex' }}>
+        <Grid item md={project.source && isAttributesDisplayed ? 4 : 10} sx={{ pl: 4, display: 'flex' }}>
           <Card>
             <CardContent>
               <Chip label="Atasamente" color="primary" size="medium" sx={{mb: 3}}/>
