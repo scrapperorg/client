@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import useRobots from "../hooks/useRobots";
+import {useRobots} from "../hooks/useRobots";
 
 export interface RobotStatusDto {
   id: string;

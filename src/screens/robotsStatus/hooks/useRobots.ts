@@ -2,7 +2,7 @@ import {RobotDTO} from "../../../services/api/dtos/robot";
 import {useCallback, useEffect, useState} from "react";
 import {robotApiService} from "../../../services/api/RobotApiService";
 
-export default function useRobots() {
+export const useRobots = () => {
   const [robots, setRobots] = useState<RobotDTO[]>([]);
 
   const fetchRobots = useCallback(async () => {
