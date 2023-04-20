@@ -22,6 +22,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({ header, currentPath, items, is
             icon={subMenuItem.icon}
             text={subMenuItem.text}
             isCollapsed={isCollapsed}
+            atLeastRole={subMenuItem.atLeastRole}
+            exactRole={subMenuItem.exactRole}
           />
         ))}
       </Fragment>

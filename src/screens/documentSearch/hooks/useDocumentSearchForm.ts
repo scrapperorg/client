@@ -87,7 +87,3 @@ export function useDocumentSearchForm() {
     documentSearchForm
   }
 }
-
-
-
-/// TODO: autocomplete fields on document search form if there is data saved in session storage

@@ -11,7 +11,7 @@ export interface User {
   email: string;
   role: Role;
   sourcesOfInterest: string[];
-  createdAt: string;
+  createdAt: Date;
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;
@@ -43,7 +43,7 @@ export interface UseAuthHookReturnType {
 }
 
 const useAuth: () => UseAuthHookReturnType = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, _setUser] = useState<User | undefined>();
   const token = localStorage.getItem('token');
 
@@ -67,10 +67,18 @@ const useAuth: () => UseAuthHookReturnType = () => {
       authApiService
         .refreshToken(token)
         .then((data: OperationStatus<LoginDto>) => {
-          _setUser(data.payload?.user);
-          localStorage.setItem('token', token);
+          if (!data.success) {
+            logoutUser();
+          } else {
+            _setUser(data.payload?.user);
+            localStorage.setItem('token', token);
+          }
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => {
+          setIsLoading(false)
+        });
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
