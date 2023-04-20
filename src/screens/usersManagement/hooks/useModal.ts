@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 
 export function useModal(currentModal: string) {
