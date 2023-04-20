@@ -15,4 +15,11 @@ export const Translations: Record<string, string> = {
     mapn: 'Ministerul Apărării Naționale',
     DELETED: 'Șters',
     ACTIVE: 'Activ',
+    created: 'Creat',
+    downloaded: 'Descarcat',
+    unable_to_download: 'Nu se poate descarca',
+    locked: 'Blocat',
+    ocr_in_progress: 'Analiza automata este in curs de actualizare',
+    ocr_done: 'Analiza automata este finalizata',
+    ocr_failed: 'Eroare in analiza automata',
 }

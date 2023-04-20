@@ -30,4 +30,6 @@ export interface DocumentDto {
   link: string;
   highlightFile?: string;
   highlightMetadata?: any;
+  processingStatus: string;
+  ocrFile?: string;
 }

@@ -66,7 +66,7 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} />
+        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} document={document} />
       </Box>
 
       <Box sx={{ mb: 4 }}>
