@@ -21,7 +21,7 @@ interface SelectorProps {
   onMenuClose: () => void;
 }
 
-export const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport'];
+export const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport', 'mai', 'mae', 'mapn', 'mjustitiei', 'senat_pl', 'camera_deputation_pl'];
 
 export const SourcesSelector = (props: SelectorProps) => {
   const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;

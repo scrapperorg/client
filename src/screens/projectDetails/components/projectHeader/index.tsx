@@ -15,7 +15,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           <Grid container justifyContent='space-between'>
             <Grid item>
                 <Typography variant='h2'>
-                    Proiect
+                  { project.title }
                 </Typography>
             </Grid>
               {project.presentsInterest &&
