@@ -1,11 +1,11 @@
 import {useCallback, useEffect, useState} from "react";
-import {ApiMethod, APIServiceResponse} from "./useApiService";
+import {ApiMethod, APIServiceResponse, FetchArgs} from "./useApiService";
 
 interface PaginatedData<ResponseType> extends APIServiceResponse<ResponseType>{
     page: number;
     pageSize: number;
     onPageSizeChange: (pageSize: number) => void;
-    fetch: (page: number, pageSize: number, ...args: Parameters<ApiMethod<any>>) => Promise<void>;
+    fetch: (...args: FetchArgs) => Promise<void>;
     onPageChange: (page: number) => void;
 }
 
@@ -20,7 +20,7 @@ export const usePaginatedApiService = <DataType>(
     const [page, setPage] = useState<number>(0);
     const [pageSize, setPageSize] = useState<number>(10);
 
-    const fetch = useCallback(async (page: number, pageSize: number, ...args: Parameters<ApiMethod<DataType>>) => {
+    const fetch = useCallback(async (...args: FetchArgs) => {
         setLoading(true);
         const response = await method.call(apiService, page, pageSize, ...args);
 

@@ -1,4 +1,5 @@
-import {Role} from "constants/roles";
+import { Role } from "constants/roles";
+import { USER_STATUS } from './'
 
 export interface UserDto {
   id: string;
@@ -7,7 +8,8 @@ export interface UserDto {
   role: Role;
   email: string;
   sourcesOfInterest: string[];
-  createdAt: string;
+  createdAt: Date;
+  status: USER_STATUS;
 }
 
 export interface LoginDto {
