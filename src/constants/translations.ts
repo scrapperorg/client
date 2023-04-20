@@ -1,10 +1,16 @@
 export const Translations: Record<string, string> = {
     "senat": "Senat",
+    "senat_pl": "Senat",
     "guvern": "Guvern",
     'camera_deputatilor': 'Camera Deputaților',
+    'camera_deputation_pl': 'Camera Deputaților',
     'mfinante': 'Ministerul Finanțelor',
     'mmediu': 'Ministerul Mediului',
     'mdezvoltarii': 'Ministerul Dezvoltării',
     'meducatiei': 'Ministerul Educației',
     'mtransport': 'Ministerul Transporturilor',
+    'mjustitiei': 'Ministerul Justiției',
+    'mae': 'Ministerul Afacerilor Externe',
+    'mai': 'Ministerul Afacerilor Interne',
+    'mapn': 'Ministerul Apărării Naționale',
 }
