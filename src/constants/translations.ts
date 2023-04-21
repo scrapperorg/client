@@ -3,7 +3,7 @@ export const Translations: Record<string, string> = {
     senat_pl: 'Senat',
     guvern: 'Guvern',
     camera_deputatilor: 'Camera Deputaților',
-    camera_deputation_pl: 'Camera Deputaților PL-X',
+    camera_deputatilor_pl: 'Camera Deputaților PL-X',
     mfinante: 'Ministerul Finanțelor',
     mmediu: 'Ministerul Mediului',
     mdezvoltarii: 'Ministerul Dezvoltării',
