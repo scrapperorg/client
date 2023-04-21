@@ -4,6 +4,17 @@ import { DocumentDto } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
 import { downloadBlob } from 'helpers/downloadBlob';
+import { useForm } from "react-hook-form";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { documentDetailsSchema } from '../formSchemas/documentDetailsSchema';
+
+export interface AssignResponsibleModalFormValues {
+  documentId: string | undefined;
+  assignedUser?: string | undefined;
+  deadline: Date | undefined;
+  status: string | undefined;
+  decision: string | undefined;
+}
 
 export function useDocumentDetails() {
   const { document: contextDocument } = useContext(DocumentDetailsContext);
@@ -71,6 +82,20 @@ export function useDocumentDetails() {
     setDocument(payload);
   };
 
+  const assignResponsibleModalForm = useForm<AssignResponsibleModalFormValues>({
+    mode: 'onSubmit',
+    resolver: joiResolver(documentDetailsSchema),
+  });
+
+  const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {
+    modalParams.documentId = document?.id;
+    const response = await documentApiService.updateAnalysis(modalParams)
+
+    if (!response.success || !response.payload) {
+      return;
+    }
+  };
+
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
   return {
@@ -83,5 +108,7 @@ export function useDocumentDetails() {
     downloadOcrPdf,
     setStatus,
     setDecision,
+    assignResponsibleModalForm,
+    handleSubmitDocumentAnalysis,
   };
 }

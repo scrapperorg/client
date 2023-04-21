@@ -6,6 +6,8 @@ import { DocumentDto, UserDto } from '../../../../services/api/dtos';
 import { AssignResponsibleModal } from '../assignResponsibleModal';
 import { ModalNames } from 'constants/modals';
 import { Translations } from 'constants/translations';
+import { AssignResponsibleModalFormValues } from 'screens/documentDetails/hooks/useDocumentDetails';
+import { UseFormReturn } from 'react-hook-form';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -16,10 +18,12 @@ interface DocumentActivityProps {
   openModal: (modalName: string) => void;
   setStatus: (status: string) => void;
   setDecision: (status: string) => void;
+  form: UseFormReturn<AssignResponsibleModalFormValues, any>;
+  handleSubmitDocumentAnalysis: (props: AssignResponsibleModalFormValues) => Promise<void>;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
-  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus, setDecision } = props;
+  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus, setDecision, form, handleSubmitDocumentAnalysis } = props;
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
@@ -55,7 +59,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                     {assignedUser}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {document.deadline && <FormattedDate date={document.deadline} />}
+                    {document.deadline ? <FormattedDate date={document.deadline} /> : 'Lipsa termen predare'}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {Translations[document.decision]}
@@ -88,6 +92,8 @@ function DocumentActivity(props: DocumentActivityProps) {
         setDeadline={setDeadline}
         setStatus={setStatus}
         setDecision={setDecision}
+        form={form}
+        handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
       />
     </>
   );

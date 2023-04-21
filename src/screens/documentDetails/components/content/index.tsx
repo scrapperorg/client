@@ -26,6 +26,8 @@ export default function DocumentDetailsContent() {
     downloadOcrPdf,
     setStatus,
     setDecision,
+    assignResponsibleModalForm,
+    handleSubmitDocumentAnalysis,
   } = useDocumentDetails();
 
   if (!document) return null;
@@ -66,6 +68,8 @@ export default function DocumentDetailsContent() {
           setDeadline={setDeadline}
           setStatus={setStatus}
           setDecision={setDecision}
+          form={assignResponsibleModalForm}
+          handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
         />
       </Box>
 
