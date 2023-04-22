@@ -2,6 +2,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { axios } from 'config/http';
 import { OperationStatus, UserDto } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
+import { AddUserFormValues } from 'screens/usersManagement/hooks/useAddUserForm';
 
 class UserApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
@@ -116,6 +117,31 @@ class UserApiService {
       const response = await this.httpClient.put<boolean>(
         `/user/${id}/activate`,
         {},
+        {
+          headers: { authorization: token },
+        }
+      );
+      return {
+        success: true,
+        payload: response.data,
+      }
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async addUser(user: AddUserFormValues): Promise<OperationStatus<UserDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post<UserDto>(
+        '/user/create',
+        user,
         {
           headers: { authorization: token },
         }
