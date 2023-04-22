@@ -27,7 +27,7 @@ export const StandardModal = (props: StandardModalProps) => {
 };
 
 const StyledModalContainer = styled(Box)`
-  width: 400px;
+  width: 600px;
   padding: 24px 8px 8px;
 `;
 
