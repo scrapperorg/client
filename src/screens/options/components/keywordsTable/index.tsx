@@ -1,26 +1,26 @@
 import React from 'react';
 import { ScrollableTable } from 'components/scrollableTable/table';
 import { GenericTableRow } from 'components/genericTableRow';
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { KeywordDto } from '../../../../services/api/dtos/keyword';
+import { ActionButtons } from './actionButtons';
 
 interface OptionsTableProps {
-  keywords: string[];
+  keywords: KeywordDto[];
+  onDeleteKeyword: (id: string) => void;
 }
 
 const columns = ['Termen', 'Actiuni'];
 
-const deleteIcon = (
-  <IconButton>
-    <DeleteIcon fontSize='small' />
-  </IconButton>
-);
-
-export const OptionsTable = (props: OptionsTableProps) => {
-  const { keywords } = props;
-
+export const OptionsTable = ({ keywords, onDeleteKeyword }: OptionsTableProps) => {
   const rows = keywords.map((keyword) => (
-    <GenericTableRow id={keyword} key={keyword} values={[keyword, deleteIcon]} />
+    <GenericTableRow
+      id={keyword.id}
+      key={keyword.id}
+      values={[
+        keyword.name,
+        <ActionButtons key={'abc1'} keyword={keyword} onDeleteKeyword={onDeleteKeyword} />,
+      ]}
+    />
   ));
 
   return <ScrollableTable columns={columns} tableRows={rows} maxHeight='75vh' />;

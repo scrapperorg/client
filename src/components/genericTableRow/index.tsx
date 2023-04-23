@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 interface GenericTableRowProps {
   id: string;
-  values: Array<string | number | JSX.Element>;
+  values: Array<string | number | JSX.Element | Array<JSX.Element>>;
   className?: string;
 }
 
