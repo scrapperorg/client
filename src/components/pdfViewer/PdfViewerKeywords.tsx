@@ -116,7 +116,8 @@ interface PdfViewerPageGroupProps {
   currentPage: number;
   data: OccurrenceWithKeyword[];
   open: boolean;
-  onSkip: (page: number) => void;
+  onSkip: (page: number, termActive: string) => void;
+  activeTerm: string;
 }
 
 export function PdfViewerPageGroup({
@@ -125,6 +126,7 @@ export function PdfViewerPageGroup({
   data,
   open,
   onSkip,
+  activeTerm,
 }: PdfViewerPageGroupProps) {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -135,13 +137,7 @@ export function PdfViewerPageGroup({
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography
-          variant={'h4'}
-          onClick={() => {
-            onSkip(page + 1);
-          }}
-          sx={{ cursor: 'pointer' }}
-        >
+        <Typography variant={'h4'} sx={{ cursor: 'pointer' }}>
           Pagina {page + 1}
         </Typography>
         <IconButton onClick={() => setIsOpen(!isOpen)}>
@@ -152,15 +148,23 @@ export function PdfViewerPageGroup({
         {data.map((item) => (
           <Box
             key={item.location.x1 + item.location.x2}
+            onClick={() => {
+              onSkip(item.page + 1, (item.location.x1 + item.location.x2).toString());
+            }}
             sx={{
               padding: 3,
               paddingLeft: 5,
-              backgroundColor: '#F6F6F6',
+              backgroundColor:
+                activeTerm === (item.location.x1 + item.location.x2).toString()
+                  ? '#b9b9b9'
+                  : '#F6F6F6',
               borderRadius: '12px 0 0 12px',
               marginBottom: 2,
+              cursor: 'pointer',
             }}
           >
             <Box
+              // sx={{ pointer: 'cursor-pointer' }}
               onMouseEnter={() => {
                 if (currentPage !== item.page + 1) {
                   return;
@@ -201,6 +205,7 @@ export function PdfViewerKeywords({ data, onSkip, currentPage }: PdfViewerKeywor
   const [isAllOpen, setIsAllOpen] = useState(false);
   const orderedKeywords = orderOccurrencesByPageAndCoordinates(data);
   const groupByPage = groupOccurencesPerPage(orderedKeywords);
+  const [isTermActive, setIsTermActive] = useState('');
   return (
     <Fragment>
       <Box
@@ -224,7 +229,11 @@ export function PdfViewerKeywords({ data, onSkip, currentPage }: PdfViewerKeywor
             currentPage={currentPage}
             data={value}
             open={isAllOpen}
-            onSkip={onSkip}
+            onSkip={(page, term) => {
+              onSkip(page);
+              setIsTermActive(term);
+            }}
+            activeTerm={isTermActive}
           />
         );
       })}
