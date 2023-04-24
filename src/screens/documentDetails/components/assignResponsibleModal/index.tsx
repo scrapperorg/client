@@ -100,29 +100,6 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
-            Concluzia analizei legislative:
-          </Typography>
-
-          <FormControl fullWidth sx={{ mt: 4 }}>
-            <InputLabel id="status-document-label">
-              Concluzie
-            </InputLabel>
-            <Select
-              labelId='concluzie'
-              id='concluzie'
-              value={form.watch('decision') || documentDecision}
-              label='Concluzie'
-              {...form.register('decision')}
-            >
-               {Object.values(Decision).map((decisionValue) => (
-                <MenuItem key={decisionValue} value={decisionValue}>
-                  {Translations[decisionValue]}
-                </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-
-          <Typography variant="h3" sx={{ mt: 3 }}>
             Actualizeaza status:
           </Typography>
 
@@ -171,6 +148,29 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                 </LocalizationProvider>
               )}
               />
+          </FormControl>
+
+          <Typography variant="h3" sx={{ mt: 3 }}>
+            Concluzia analizei legislative:
+          </Typography>
+
+          <FormControl fullWidth sx={{ mt: 4, mb: 7 }}>
+            <InputLabel id="status-document-label">
+              Concluzie
+            </InputLabel>
+            <Select
+              labelId='concluzie'
+              id='concluzie'
+              value={form.watch('decision') || documentDecision}
+              label='Concluzie'
+              {...form.register('decision')}
+            >
+               {Object.values(Decision).map((decisionValue) => (
+                <MenuItem key={decisionValue} value={decisionValue}>
+                  {Translations[decisionValue]}
+                </MenuItem>
+                ))}
+            </Select>
           </FormControl>
 
           <Grid container justifyContent='center' spacing={10}>
