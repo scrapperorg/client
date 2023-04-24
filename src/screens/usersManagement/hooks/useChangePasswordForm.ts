@@ -19,7 +19,7 @@ export function useChangePasswordForm(userId: string | null) {
     resolver: joiResolver(changePasswordSchema),
   });
 
-  const handleSuccess = (payload: string) => {
+  const handleSuccess = () => {
     setSuccessMessage('Parola a fost salvata cu succes!');
     form.reset();
   }
@@ -32,7 +32,7 @@ export function useChangePasswordForm(userId: string | null) {
     if (!response.success || !response.payload) {
       setShowError(true);
     } else {
-      handleSuccess(response.payload);
+      handleSuccess();
     }
 
     setIsLoading(false);
