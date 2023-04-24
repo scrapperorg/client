@@ -1,19 +1,36 @@
 import React, { createContext } from 'react';
-import defaultKeywords from './keywords';
+import { KeywordDto } from '../../../services/api/dtos/keyword';
+import { useApiService } from '../../../hooks/useApiService';
+import { keywordApiService } from '../../../services/api/KeywordApiService';
+import { Loading } from 'components/loading';
 
 export interface OptionsProviderState {
-  keywords: string[];
+  keywords: KeywordDto[];
+  getAllKeywords: () => void;
 }
 
 const defaultState: OptionsProviderState = {
-    keywords: [],
+  keywords: [],
+  getAllKeywords: () => {
+    console.log('not implemented');
+  },
 };
 
 export const OptionsContext = createContext(defaultState);
 
 const OptionsDataProvider = ({ children }: any) => {
-  const state = {
-    keywords: defaultKeywords,
+  const { data, loading, fetch } = useApiService<KeywordDto[]>(
+    keywordApiService,
+    keywordApiService.getAll,
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const state: OptionsProviderState = {
+    keywords: data ?? defaultState.keywords,
+    getAllKeywords: fetch,
   };
 
   return <OptionsContext.Provider value={state}>{children}</OptionsContext.Provider>;
