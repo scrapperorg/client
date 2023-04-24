@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {ApiMethod, APIServiceResponse, FetchArgs} from "./useApiService";
 
 interface PaginatedData<ResponseType> extends APIServiceResponse<ResponseType>{
