@@ -31,15 +31,15 @@ export const usePaginatedApiService = <DataType>(
 
         setData(response.payload);
         setLoading(false);
-    }, [method, setLoading, setData, setError]);
+    }, [method, page, pageSize, setLoading, setData, setError]);
 
     const onPageChange = (page: number) => {
         setPage(page);
     }
 
     useEffect(() => {
-        fetch(page, pageSize, ...args);
-    }, [page, ...args]);
+        fetch(...args);
+    }, [pageSize, page, ...args]);
 
     return {data, loading, error, page, pageSize, onPageSizeChange: setPageSize, fetch, onPageChange};
 }

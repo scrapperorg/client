@@ -50,21 +50,20 @@ export const MonitorContext = createContext(defaultState);
 
 const MonitorDataProvider = ({ children }: any) => {
   const { sourcesOfInterest, updateSourcesOfInterest } = useDocumentsFilters();
-
-  const { start: startPolling, stop: stopPolling } = useInterval(
-    async () => {
-      await fetch(page, pageSize, sourcesOfInterest);
-    },
-    5000,
-    { autoStart: false, immediate: false },
-  );
-
   const { page, pageSize, data, fetch, onPageSizeChange, error, onPageChange } =
     usePaginatedApiService<QueryAll<DocumentDto>>(
       documentApiService,
       documentApiService.getDocuments,
       sourcesOfInterest,
     );
+
+  const { start: startPolling, stop: stopPolling } = useInterval(
+    async () => {
+      await fetch(sourcesOfInterest);
+    },
+    5000,
+    { autoStart: false, immediate: false },
+  );
 
   useEffect(() => {
     startPolling();
