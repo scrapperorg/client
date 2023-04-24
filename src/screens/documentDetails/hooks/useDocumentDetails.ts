@@ -1,6 +1,6 @@
 import { documentApiService } from 'services/api/DocumentApiService';
 import { useContext, useEffect, useState } from 'react';
-import { DocumentDto } from 'services/api/dtos';
+import { DocumentDto, OperationStatus } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
 import { downloadBlob } from 'helpers/downloadBlob';
@@ -89,10 +89,12 @@ export function useDocumentDetails() {
 
   const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {
     modalParams.documentId = document?.id;
-    const response = await documentApiService.updateAnalysis(modalParams)
-
-    if (!response.success || !response.payload) {
-      return;
+    const response = await documentApiService.updateAnalysis(modalParams);
+    
+    const documentResponse = response as OperationStatus<DocumentDto>;
+  
+    if (documentResponse.success && documentResponse.payload) {
+      setDocument(documentResponse.payload);
     }
   };
 
