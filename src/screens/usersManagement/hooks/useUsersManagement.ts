@@ -5,6 +5,7 @@ import { UsersManagementContext } from '../context';
 export function useUsersManagement() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null)
 
   const { loading: isFetchingUsers, fetch } = useContext(UsersManagementContext);
 
@@ -46,8 +47,10 @@ export function useUsersManagement() {
     isLoading,
     isFetchingUsers,
     showError,
+    currentUserId,
     setShowError,
     deleteUser,
-    activateUser
+    activateUser,
+    setCurrentUserId,
   }
 }

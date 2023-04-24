@@ -13,19 +13,32 @@ interface UsersTableProps {
   deleteUser: (id: string) => void;
   activateUser: (id: string) => void;
   openChangePasswordModal: () => void;
+  setCurrentUserId: (id: string) => void;
 }
 
 const columns = ["Nume", "Email", "Rol", "Data crearii", "Status", "Actiuni"];
 
 export const UsersTable = (props: UsersTableProps) => {
-  const { users, currentUser, isLoading, deleteUser, activateUser, openChangePasswordModal } = props;
+  const {
+    users,
+    currentUser,
+    isLoading,
+    deleteUser,
+    activateUser,
+    openChangePasswordModal,
+    setCurrentUserId,
+  } = props;
 
-  
   const userRows = users.map((user) => {
 
     const isCurrentUser = currentUser?.id === user.id;
 
     const disabledClassName = isLoading ? 'disabled' : '';
+
+    const onOpenChangePasswordModal = () => {
+      openChangePasswordModal();
+      setCurrentUserId(user.id);
+    }
 
     return (
       <GenericTableRow
@@ -44,7 +57,7 @@ export const UsersTable = (props: UsersTableProps) => {
             isCurrentUser={isCurrentUser}
             deleteUser={deleteUser}
             activateUser={activateUser}
-            openChangePasswordModal={openChangePasswordModal}
+            openChangePasswordModal={onOpenChangePasswordModal}
           />
         ]}
         className={disabledClassName}

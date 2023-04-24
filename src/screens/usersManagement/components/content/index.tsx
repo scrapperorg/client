@@ -24,9 +24,11 @@ export default function UsersManagementContent () {
     isLoading,
     showError,
     isFetchingUsers,
+    currentUserId,
     setShowError,
     deleteUser,
-    activateUser 
+    activateUser,
+    setCurrentUserId,
   } = useUsersManagement();
 
   return (
@@ -44,6 +46,7 @@ export default function UsersManagementContent () {
         users={users}
         deleteUser={deleteUser}
         activateUser={activateUser}
+        setCurrentUserId={setCurrentUserId}
         isLoading={isLoading || isFetchingUsers}
         currentUser={currentUser}
         openChangePasswordModal={openChangePasswordModal}
@@ -58,6 +61,8 @@ export default function UsersManagementContent () {
     <ChangePasswordModal
       isOpened={isChangePasswordModalOpen}
       closeModal={closeModal}
+      currentUserId={currentUserId}
+      setCurrentUserId={setCurrentUserId}
     />
 
     <Snackbar
