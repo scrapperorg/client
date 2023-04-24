@@ -72,7 +72,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
         <CloseIcon />
       </StyledModalCloseButton>
       <StyledModalContainer>
-        <form onSubmit={form.handleSubmit(handleSubmitDocumentAnalysis)}>
+        <form onSubmit={form.handleSubmit((data) => {
+          handleSubmitDocumentAnalysis(data);
+          closeModal();
+        })}>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
             Asigneaza responsabil:
@@ -85,10 +88,9 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             <Select
               labelId='responsabil'
               id='responsabil'
-              value={form.watch('assignedUser') || responsible?.id}
+              value={form.watch('assignedUser') || (responsible?.id || '')}
               label='Responsabil'
-              // onChange={onReponsibleChange}
-              {...form.register('assignedUser',  { required: false })}
+              {...form.register('assignedUser')}
             >
               {assignableResponsibles.map((user: UserDto) => (
                 <MenuItem key={user.id} value={user.id}>{`${user.surname} ${user.name}`}</MenuItem>
