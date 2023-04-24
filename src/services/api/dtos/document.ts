@@ -8,6 +8,12 @@ export enum Status {
   REVIZUIT = 'revizuit',
 }
 
+export enum Decision {
+  FARA_CONCLUZIE = 'fara_concluzie',
+  CONTRAVINE_LEGISLATIEI = 'contravine_legislatiei',
+  ADERA_LEGISLATIEI = 'adera_legislatiei',
+}
+
 export interface DocumentDto {
   id: string;
   createdAt: Date;
@@ -19,6 +25,7 @@ export interface DocumentDto {
   publicationDate: Date;
   source: string;
   status: Status;
+  decision: Decision;
   assignedUser?: UserDto;
   deadline?: Date;
   originalFormat?: string;

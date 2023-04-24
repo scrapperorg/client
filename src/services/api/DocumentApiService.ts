@@ -18,6 +18,14 @@ interface SearchProps {
   isRulesBreaker: boolean;
 }
 
+interface UpdateAnalysisProps {
+  documentId: string | undefined;
+  assignedUser?: string | undefined;
+  deadline: Date | undefined;
+  status: string | undefined;
+  decision: string | undefined;
+}
+
 class DocumentApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
 
@@ -174,6 +182,84 @@ class DocumentApiService {
           documentId,
           date,
         },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async setStatus(documentId: string, status: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/set-status',
+        {
+          documentId,
+          status,
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async setDecision(documentId: string, decision: string): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/set-decision',
+        {
+          documentId,
+          decision,
+        },
+        {
+          headers: { authorization: token },
+        },
+      );
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async updateAnalysis(props: UpdateAnalysisProps): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.post(
+        '/document/update-document-analysis',
+        props,
         {
           headers: { authorization: token },
         },

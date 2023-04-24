@@ -5,7 +5,9 @@ import React from 'react';
 import { DocumentDto, UserDto } from '../../../../services/api/dtos';
 import { AssignResponsibleModal } from '../assignResponsibleModal';
 import { ModalNames } from 'constants/modals';
-import { capitalizeString } from 'helpers/formatters';
+import { Translations } from 'constants/translations';
+import { AssignResponsibleModalFormValues } from 'screens/documentDetails/hooks/useDocumentDetails';
+import { UseFormReturn } from 'react-hook-form';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -14,10 +16,14 @@ interface DocumentActivityProps {
   assignResponsible: (userId: string) => void;
   setDeadline: (date: string | undefined) => void;
   openModal: (modalName: string) => void;
+  setStatus: (status: string) => void;
+  setDecision: (status: string) => void;
+  form: UseFormReturn<AssignResponsibleModalFormValues, any>;
+  handleSubmitDocumentAnalysis: (props: AssignResponsibleModalFormValues) => Promise<void>;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
-  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline } = props;
+  const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus, setDecision, form, handleSubmitDocumentAnalysis } = props;
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
@@ -29,7 +35,7 @@ function DocumentActivity(props: DocumentActivityProps) {
         <Grid item md={10}>
           <Card>
             <CardContent>
-              <Chip label='Activitate' color='primary' size='medium' sx={{ mb: 3 }} />
+              <Chip label='Analiza Legislativa' color='primary' size='medium' sx={{ mb: 3 }} />
               <Grid container spacing={4}>
                 <Grid item md={4}>
                   <Typography variant='h4' sx={{ mb: 3 }}>
@@ -41,16 +47,22 @@ function DocumentActivity(props: DocumentActivityProps) {
                   <Typography variant='h4' sx={{ mb: 3 }}>
                     Termen Predare:
                   </Typography>
+                  <Typography variant='h4' sx={{ mb: 3 }}>
+                    Concluzia analizei legislative:
+                  </Typography>
                 </Grid>
                 <Grid item md={8}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {capitalizeString(document.status)}
+                    {Translations[document.status]}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {assignedUser}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {document.deadline && <FormattedDate date={document.deadline} />}
+                    {document.deadline ? <FormattedDate date={document.deadline} /> : 'Lipsa termen predare'}
+                  </Typography>
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    {Translations[document.decision]}
                   </Typography>
                 </Grid>
               </Grid>
@@ -65,7 +77,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 openModal(ModalNames.ASSIGN_RESP);
               }}
             >
-              Actualizeaza responsabil / termen
+              Actualizeaza datele analizei
             </Button>
           </Stack>
         </Grid>
@@ -75,7 +87,13 @@ function DocumentActivity(props: DocumentActivityProps) {
         assignResponsible={assignResponsible}
         responsible={document.assignedUser}
         deadline={document.deadline}
+        documentStatus={document.status}
+        documentDecision={document.decision}
         setDeadline={setDeadline}
+        setStatus={setStatus}
+        setDecision={setDecision}
+        form={form}
+        handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
       />
     </>
   );

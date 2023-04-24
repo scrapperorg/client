@@ -1,9 +1,20 @@
 import { documentApiService } from 'services/api/DocumentApiService';
 import { useContext, useEffect, useState } from 'react';
-import { DocumentDto } from 'services/api/dtos';
+import { DocumentDto, OperationStatus } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
 import { downloadBlob } from 'helpers/downloadBlob';
+import { useForm } from "react-hook-form";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { documentDetailsSchema } from '../formSchemas/documentDetailsSchema';
+
+export interface AssignResponsibleModalFormValues {
+  documentId: string | undefined;
+  assignedUser?: string | undefined;
+  deadline: Date | undefined;
+  status: string | undefined;
+  decision: string | undefined;
+}
 
 export function useDocumentDetails() {
   const { document: contextDocument } = useContext(DocumentDetailsContext);
@@ -57,6 +68,35 @@ export function useDocumentDetails() {
       downloadBlob(blob, fileName);
     }
   };
+  const setStatus = async (status: string | undefined) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.setStatus(document.id, status ?? '');
+    if (!payload) return;
+    setDocument(payload);
+  };
+
+  const setDecision = async (status: string | undefined) => {
+    if (!document?.id) return false;
+    const { payload } = await documentApiService.setDecision(document.id, status ?? '');
+    if (!payload) return;
+    setDocument(payload);
+  };
+
+  const assignResponsibleModalForm = useForm<AssignResponsibleModalFormValues>({
+    mode: 'onSubmit',
+    resolver: joiResolver(documentDetailsSchema),
+  });
+
+  const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {
+    modalParams.documentId = document?.id;
+    const response = await documentApiService.updateAnalysis(modalParams);
+    
+    const documentResponse = response as OperationStatus<DocumentDto>;
+  
+    if (documentResponse.success && documentResponse.payload) {
+      setDocument(documentResponse.payload);
+    }
+  };
 
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
@@ -68,5 +108,9 @@ export function useDocumentDetails() {
     deleteAttachment,
     downloadAttachment,
     downloadOcrPdf,
+    setStatus,
+    setDecision,
+    assignResponsibleModalForm,
+    handleSubmitDocumentAnalysis,
   };
 }

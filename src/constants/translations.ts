@@ -22,4 +22,10 @@ export const Translations: Record<string, string> = {
     ocr_in_progress: 'Analiza automata este in curs de actualizare',
     ocr_done: 'Analiza automata este finalizata',
     ocr_failed: 'Eroare in analiza automata',
+    fara_concluzie: 'Fara concluzie',
+    contravine_legislatiei: 'Documentul contravine legislatiei achizitiilor publice in vigoare',
+    adera_legislatiei: 'Documentul NU contravine legislatiei achizitiilor publice in vigoare',
+    in_analiza: 'In analiza',
+    nou: 'Nou',
+    revizuit: 'Revizuit',
 }
