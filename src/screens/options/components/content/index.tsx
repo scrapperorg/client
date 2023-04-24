@@ -12,7 +12,7 @@ import { useOptions } from '../../hooks/useOptions';
 export default function OptionsContent() {
   const { keywords } = useContext(OptionsContext);
   const { openModal } = useModal(ModalNames.ADD_EDIT_KEYWORD);
-  const { deleteKeyword, createKeyword, updateKeyword } = useOptions();
+  const { deleteKeyword, createKeyword } = useOptions();
 
   return (
     <>
