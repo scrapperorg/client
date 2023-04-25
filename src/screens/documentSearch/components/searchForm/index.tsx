@@ -29,7 +29,7 @@ const Status: Record<string, string> = {
   revizuit: 'Revizuit',
 }
 
-const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport'];
+const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport', 'mai', 'mae', 'mapn', 'mjustitiei', 'senat_pl', 'camera_deputatilor_pl'];
 const sources = sources_of_interest_list.map((source: string) => <MenuItem key={`sursa-document-${source}`} value={source}>{Translations[source]}</MenuItem>)
 
 interface SearchFormProps {
