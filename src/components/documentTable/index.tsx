@@ -59,7 +59,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
           : 'Lipsa responsabil',
         <FormattedDate key={`date-for-${document.id}`} date={document.publicationDate} />,
         Translations[document.source],
-        document.status,
+        Translations[document.status],
         document.numberOfIdentifiedTerms || 0,
         <ActionButtons key={`action-for-${document.id}`} document={document} />,
       ]}

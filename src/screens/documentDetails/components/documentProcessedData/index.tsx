@@ -29,29 +29,37 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
                 <Typography variant='h4' sx={{ mb: 3 }}>
                   Nr de pagini:
                 </Typography>
-                <Typography variant='h4' sx={{ mb: 3 }}>
+                <Typography variant='h4' sx={{ mb: 4 }}>
                   Termeni identificati:
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Precizie interpretare text:
+                  Precizie procesare inteligenta:
                 </Typography>
               </Grid>
               <Grid item md={6}>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {Translations[document.processingStatus] || 'N/A'}
+                  {Translations[document.processingStatus] || 'Nu s-a putut actualiza'}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.link.split('.').pop()?.toUpperCase() || 'N/A'}
+                  {document.link.split('.').pop()?.toUpperCase() || 'Nu s-a putut actualiza'}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.numberOfPages || 'N/A'}
-                </Typography>
-                <Typography variant='h5' sx={{ mb: 2 }}>
-                  {document.numberOfIdentifiedTerms || 'N/A'}
+                  {document.numberOfPages || 'Nu s-a putut actualiza'}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  <CircularProgressIndicator percentage={document.textInterpretationPrecision || 0}/>
+                  {document.numberOfIdentifiedTerms || 'Nu s-a putut actualiza'}
                 </Typography>
+                {document.textInterpretationPrecision ? (
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    <CircularProgressIndicator
+                      percentage={document.textInterpretationPrecision}
+                    />
+                  </Typography>
+                ) : (
+                  <Typography variant='h5' sx={{ mb: 3, mt: 5 }}>
+                    Nu s-a putut actualiza
+                  </Typography>
+                )}
               </Grid>
               <Grid item md={4}></Grid>
             </Grid>

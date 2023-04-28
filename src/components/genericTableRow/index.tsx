@@ -12,8 +12,9 @@ interface GenericTableRowProps {
 export const GenericTableRow = (props: GenericTableRowProps) => {
   const { id, values, className } = props;
   const cells = values.map((value, i) => {
+    const statusCellWidth = i === 7 ? {width: '90px'} : {};
     return (
-      <StyledTableCell component='th' key={i}>
+      <StyledTableCell component='th' key={i} style={statusCellWidth}>
         {value}
       </StyledTableCell>
     );
