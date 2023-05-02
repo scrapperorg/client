@@ -4,7 +4,7 @@ import { GenericTableRow } from 'components/genericTableRow';
 import { ProjectDto } from 'services/api/dtos';
 import { Link } from 'react-router-dom';
 
-import { useTheme } from '@mui/material';
+import { Grid, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
 import { ProjectMarks } from '../projectsTableDocumentMarks';
@@ -54,6 +54,20 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       ]}
     />
   ));
+
+  if (projects.length === 0) {
+    projectRows.push(
+      <TableRow>
+        <TableCell colSpan={10}>
+          <Grid container alignItems='center' justifyContent='center'>
+            <Typography variant='h5' color='grey'>
+              Nu exista rezultate
+            </Typography>
+          </Grid>
+        </TableCell>
+      </TableRow>
+    )
+  }
 
   return (
     <GenericTable
