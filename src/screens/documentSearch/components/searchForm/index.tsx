@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import {
+  Autocomplete,
   Box,
   Button,
   Checkbox,
@@ -12,7 +13,8 @@ import {
   MenuItem,
   Select,
   styled,
-  TextField
+  TextField,
+  Typography
 } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -22,6 +24,8 @@ import { DocumentSearchFormValues } from '../../hooks/useDocumentSearchForm';
 import { DocumentSearchContext } from 'screens/documentSearch/context';
 import { Dayjs } from 'dayjs';
 import { Translations } from 'constants/translations';
+import { ProjectDto } from 'services/api/dtos';
+import { useProjectSearch } from 'screens/documentSearch/hooks/useProjectSearch';
 
 const Status: Record<string, string> = {
   nou: 'Nou',
@@ -50,8 +54,34 @@ export const SearchForm = (props: SearchFormProps) => {
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
 
+  const renderProjectOption = (props: React.HTMLAttributes<HTMLLIElement>, option: ProjectDto) => {
+    return (
+      <li {...props}>
+        <Grid container alignItems="center">
+          <Typography>
+            {option.title}
+          </Typography>
+        </Grid>
+      </li>
+    );
+  }
+
+  const { 
+    value: projectSearchValue,
+    setValue: projectSearchSetValue,
+    setInputValue: projectSearchSetInputValue,
+    options: projectSearchOptions,
+    setOptions: projectSearchSetOptions,
+    persistSelectedProject,
+   } = useProjectSearch()
+
+   const onSubmit = (data: DocumentSearchFormValues) => {
+    handleSubmit(data);
+    persistSelectedProject(projectSearchValue);
+   }
+
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
       <Box>
         <Grid container>
           <Grid item md={3}>
@@ -155,14 +185,45 @@ export const SearchForm = (props: SearchFormProps) => {
             </FormControl>
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
-            <TextField
-              fullWidth
-              label='Proiect legislativ'
-              variant='outlined'
-              error={false}
-              helperText={''}
-              disabled
-              {...form.register('projectId')}
+            <Controller
+              name='projectId'
+              control={form.control}
+              render={({ field }) => (
+                <Autocomplete
+                  fullWidth
+                  getOptionLabel={(option: unknown) => {
+                      if (typeof option === 'string') return option;
+
+                      function hasTitle(object: any): object is ProjectDto {
+                        return 'title' in object;
+                      }
+                      
+                      if (hasTitle(option)) return option.title;
+
+                      return ''
+                    }
+                  }
+                  filterOptions={(x) => x}
+                  options={projectSearchOptions}
+                  autoComplete
+                  includeInputInList
+                  filterSelectedOptions
+                  value={projectSearchValue}
+                  noOptionsText="Nu exista rezultate"
+                  onChange={(event: any, newValue: ProjectDto | null) => {
+                    projectSearchSetOptions(newValue ? [newValue, ...projectSearchOptions] : projectSearchOptions);
+                    projectSearchSetValue(newValue);
+                    field.onChange(newValue?.id);
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    projectSearchSetInputValue(newInputValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Proiect" fullWidth />
+                  )}
+                  renderOption={renderProjectOption}
+                />
+              )}
             />
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>

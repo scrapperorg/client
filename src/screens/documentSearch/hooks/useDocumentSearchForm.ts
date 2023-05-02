@@ -13,7 +13,7 @@ export interface DocumentSearchFormValues {
   source: string,
   status: string,
   assignedUserId: string,
-  projectId: string, // autocomplete this with search in existing projects after project search is implemented
+  projectId: string,
   publishedAfter: string,
   publishedBefore: string,
   postOcrContent: string;
