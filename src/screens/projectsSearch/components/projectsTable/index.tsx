@@ -58,7 +58,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
   if (projects.length === 0) {
     projectRows.push(
       <TableRow>
-        <TableCell colSpan={10}>
+        <TableCell colSpan={6}>
           <Grid container alignItems='center' justifyContent='center'>
             <Typography variant='h5' color='grey'>
               Nu exista rezultate
