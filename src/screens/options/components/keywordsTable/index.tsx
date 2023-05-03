@@ -6,19 +6,25 @@ import { ActionButtons } from './actionButtons';
 
 interface OptionsTableProps {
   keywords: KeywordDto[];
-  onDeleteKeyword: (id: string) => void;
+  onDeleteKeyword: (keyword: KeywordDto) => void;
+  onUpdateKeyword: (keyword: KeywordDto) => void;
 }
 
 const columns = ['Termen', 'Actiuni'];
 
-export const OptionsTable = ({ keywords, onDeleteKeyword }: OptionsTableProps) => {
+export const OptionsTable = ({ keywords, onDeleteKeyword, onUpdateKeyword }: OptionsTableProps) => {
   const rows = keywords.map((keyword) => (
     <GenericTableRow
       id={keyword.id}
       key={keyword.id}
       values={[
         keyword.name,
-        <ActionButtons key={'abc1'} keyword={keyword} onDeleteKeyword={onDeleteKeyword} />,
+        <ActionButtons
+          key={'abc1'}
+          keyword={keyword}
+          onDeleteKeyword={onDeleteKeyword}
+          onUpdateKeyword={onUpdateKeyword}
+        />,
       ]}
     />
   ));

@@ -8,23 +8,41 @@ import { useModal } from '../../../usersManagement/hooks/useModal';
 import { ModalNames } from '../../../../constants/modals';
 import { CreateEditKeywordModal } from '../createKeywordModal';
 import { useOptions } from '../../hooks/useOptions';
+import { DeleteKeywordModal } from '../deleteKeywordModal';
 
 export default function OptionsContent() {
   const { keywords } = useContext(OptionsContext);
-  const { openModal } = useModal(ModalNames.ADD_EDIT_KEYWORD);
-  const { deleteKeyword, createKeyword } = useOptions();
+  const { openModal: openCreateEditModal } = useModal(ModalNames.ADD_EDIT_KEYWORD);
+  const { openModal: openDeleteModal } = useModal(ModalNames.DELETE_KEYWORD);
+  const { keywordToEdit, deleteKeyword, createEditKeyword, setKeywordToEdit, setKeywordToDelete } =
+    useOptions();
 
   return (
     <>
       <ButtonBox>
-        <Button variant='contained' onClick={openModal}>
+        <Button variant='contained' onClick={openCreateEditModal}>
           Adauga termen
         </Button>
       </ButtonBox>
       <Box>
-        <OptionsTable keywords={keywords} onDeleteKeyword={deleteKeyword} />
+        <OptionsTable
+          keywords={keywords}
+          onDeleteKeyword={(keyword) => {
+            setKeywordToDelete(keyword);
+            openDeleteModal();
+          }}
+          onUpdateKeyword={(keyword) => {
+            setKeywordToEdit(keyword);
+            openCreateEditModal();
+          }}
+        />
       </Box>
-      <CreateEditKeywordModal onSubmit={createKeyword} />
+      <CreateEditKeywordModal
+        onSubmit={createEditKeyword}
+        onSetKeyword={setKeywordToEdit}
+        keyword={keywordToEdit}
+      />
+      <DeleteKeywordModal onDelete={deleteKeyword} onSetKeywordToDelete={setKeywordToDelete} />
     </>
   );
 }
