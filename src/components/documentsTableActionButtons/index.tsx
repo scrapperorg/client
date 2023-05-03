@@ -1,5 +1,4 @@
-import { Box, IconButton } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Box } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import ViewDocumentButton from 'components/viewDocumentButton';
@@ -14,9 +13,6 @@ export const ActionButtons = ({ document }: any) => {
     <StyledBox>
       <DownloadDocumentButton fileUrl={document.id} />
       <ViewDocumentButton fileUrl={document.link} />
-      <IconButton>
-        <SearchIcon fontSize='small' />
-      </IconButton>
     </StyledBox>
   );
 };

@@ -62,7 +62,6 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
 
         <Grid item md={2} sx={{ pl: 4 }}>
           <Stack gap={4}>
-            <Button variant='contained'>Descarca</Button>
             <Button variant='contained'>Ataseaza document</Button>
           </Stack>
         </Grid>
