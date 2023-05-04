@@ -12,6 +12,7 @@ import { Translations } from '../../constants/translations';
 import { DocumentMarks } from 'components/documentsTableDocumentMarks';
 import { ActionButtons } from 'components/documentsTableActionButtons';
 import { capitalizeString } from 'helpers/formatters';
+import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
@@ -65,6 +66,10 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
       ]}
     />
   ));
+
+  if (documents.length === 0) {
+    documentRows.push(<EmptyTableRow />)
+  }
 
   return (
     <GenericTable

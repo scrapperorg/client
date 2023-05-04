@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
 import { ProjectMarks } from '../projectsTableDocumentMarks';
+import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
 
 interface ProjectsTableProps {
   projects: ProjectDto[];
@@ -54,6 +55,10 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       ]}
     />
   ));
+
+  if (projects.length === 0) {
+    projectRows.push(<EmptyTableRow colSpan={6}/>)
+  }
 
   return (
     <GenericTable
