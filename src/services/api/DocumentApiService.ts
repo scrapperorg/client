@@ -4,6 +4,7 @@ import { axios } from 'config/http';
 import { OperationStatus, DocumentDto } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
 import { downloadBlob } from 'helpers/downloadBlob';
+import { KeywordDto } from './dtos/keyword';
 
 interface SearchProps {
   identificator: string;
@@ -100,15 +101,20 @@ class DocumentApiService {
       const sourcesQueryParams =
         sourcesOfInterest &&
         sourcesOfInterest.map((source) => `&sourcesOfInterest=${source}`).join('');
-      const response = await this.httpClient.get<QueryAll<DocumentDto>>(
-        `/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`,
-        {
-          headers: { authorization: token },
-        },
-      );
+      const response = await this.httpClient.get<{
+        keywords: KeywordDto;
+        keywordsHash: string;
+        documents: QueryAll<DocumentDto>;
+      }>(`/document?page=${page}&pageSize=${pageSize}${sourcesQueryParams}`, {
+        headers: { authorization: token },
+      });
+
       return {
         success: true,
-        payload: response.data,
+        payload: {
+          results: response.data.documents.results,
+          totalNumberOfResults: response.data.documents.totalNumberOfResults,
+        },
       };
     } catch (err: any) {
       const error: AxiosError = err;
@@ -257,13 +263,9 @@ class DocumentApiService {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await this.httpClient.post(
-        '/document/update-document-analysis',
-        props,
-        {
-          headers: { authorization: token },
-        },
-      );
+      const response = await this.httpClient.post('/document/update-document-analysis', props, {
+        headers: { authorization: token },
+      });
       return {
         success: true,
         payload: response.data,
