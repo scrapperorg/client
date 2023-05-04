@@ -1,22 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { Modal } from 'components/modal';
 import { Box, Button, FormControl, IconButton, styled, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ModalNames } from 'constants/modals';
 import { useForm } from 'react-hook-form';
+import { KeywordDto } from '../../../../services/api/dtos/keyword';
 
 interface CreateKeywordModalProps {
+  keyword: KeywordDto | null;
   onSubmit: (name: string) => void;
+  onSetKeyword: (keyword: KeywordDto | null) => void;
 }
 
-export const CreateEditKeywordModal = ({ onSubmit }: CreateKeywordModalProps) => {
+export const CreateEditKeywordModal = ({
+  keyword,
+  onSubmit,
+  onSetKeyword,
+}: CreateKeywordModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
   const form = useForm();
 
+  useEffect(() => {
+    if (keyword) {
+      form.reset({ name: keyword.name });
+    }
+  }, [keyword]);
+
   return (
     <Modal isModalOpened={modalName === ModalNames.ADD_EDIT_KEYWORD} closeModal={closeModal}>
-      <StyledModalCloseButton aria-label='close' onClick={closeModal}>
+      <StyledModalCloseButton
+        aria-label='close'
+        onClick={() => {
+          onSetKeyword(null);
+          closeModal();
+        }}
+      >
         <CloseIcon />
       </StyledModalCloseButton>
       <StyledModalContainer>
@@ -24,10 +43,11 @@ export const CreateEditKeywordModal = ({ onSubmit }: CreateKeywordModalProps) =>
           onSubmit={form.handleSubmit(async (values) => {
             await onSubmit(values.name);
             closeModal();
+            onSetKeyword(null);
           })}
         >
           <Typography variant='h3' sx={{ mt: 3 }}>
-            Adauga termen
+            {keyword ? 'Editeaza termen' : 'Adauga termen'}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
@@ -43,7 +63,14 @@ export const CreateEditKeywordModal = ({ onSubmit }: CreateKeywordModalProps) =>
           </FormControl>
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-            <Button onClick={closeModal}>Anuleaza</Button>
+            <Button
+              onClick={() => {
+                closeModal();
+                onSetKeyword(null);
+              }}
+            >
+              Anuleaza
+            </Button>
             <Button type={'submit'} variant={'contained'}>
               Salveaza
             </Button>
