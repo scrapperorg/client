@@ -57,7 +57,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
   ));
 
   if (projects.length === 0) {
-    projectRows.push(<EmptyTableRow />)
+    projectRows.push(<EmptyTableRow colSpan={6}/>)
   }
 
   return (
