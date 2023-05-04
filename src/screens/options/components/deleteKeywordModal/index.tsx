@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { Modal } from 'components/modal';
-import { Box, Button, FormControl, IconButton, styled, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, styled, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ModalNames } from 'constants/modals';
-import { useForm } from 'react-hook-form';
 import { KeywordDto } from '../../../../services/api/dtos/keyword';
 
 interface DeleteKeywordModalProps {
