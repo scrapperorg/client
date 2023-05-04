@@ -4,7 +4,7 @@ import { GenericTableRow } from 'components/genericTableRow';
 import { DocumentDto } from 'services/api/dtos';
 import { Link } from 'react-router-dom';
 
-import { Grid, TableCell, TableRow, Typography, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { Status } from 'services/api/dtos/document';
 import { FormattedDate } from 'components/formatedDate';
@@ -12,6 +12,7 @@ import { Translations } from '../../constants/translations';
 import { DocumentMarks } from 'components/documentsTableDocumentMarks';
 import { ActionButtons } from 'components/documentsTableActionButtons';
 import { capitalizeString } from 'helpers/formatters';
+import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
@@ -67,17 +68,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
   ));
 
   if (documents.length === 0) {
-    documentRows.push(
-      <TableRow>
-        <TableCell colSpan={10}>
-          <Grid container alignItems='center' justifyContent='center'>
-            <Typography variant='h5' color='grey'>
-              Nu exista rezultate
-            </Typography>
-          </Grid>
-        </TableCell>
-      </TableRow>
-    )
+    documentRows.push(<EmptyTableRow />)
   }
 
   return (
