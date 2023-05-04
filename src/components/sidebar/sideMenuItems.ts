@@ -52,7 +52,7 @@ export const menuItems: SubMenuProps[] = [
       },
       {
         icon: SmartToyIcon,
-        text: 'Status Roboți',
+        text: 'Status Roboti',
         href: Paths.ROBOTS_STATUS,
       },
       {
