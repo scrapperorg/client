@@ -57,6 +57,10 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
+        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} document={document} />
+      </Box>
+      
+      <Box sx={{ mb: 4 }}>
         <DocumentActivity
           document={document}
           isModalOpened={modalName === ModalNames.ASSIGN_RESP}
@@ -71,10 +75,6 @@ export default function DocumentDetailsContent() {
           form={assignResponsibleModalForm}
           handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
         />
-      </Box>
-
-      <Box sx={{ mb: 4 }}>
-        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} document={document} />
       </Box>
 
       <Box sx={{ mb: 4 }}>
