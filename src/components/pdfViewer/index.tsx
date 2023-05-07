@@ -17,6 +17,12 @@ interface PdfViewerProps {
   highlightCoords: Array<Record<string, any>>;
 }
 
+export interface PageDetails {
+  page: number;
+  wordIndex: number | null;
+  word: string | null;
+}
+
 export function PdfViewer({
   isOpen,
   onClose: handleOnClose,
@@ -26,13 +32,13 @@ export function PdfViewer({
   // This must be here not outside of component otherwise style breaks
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const [numPages, setNumPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageDetails, setPageDetails] = useState<PageDetails>({ page: 0, wordIndex: 0, word: '' });
   const [docLoadError, setDocLoadError] = useState<Error | undefined>();
   const pdfBoxRef = useRef(null);
 
   const handleDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy): void => {
     setNumPages(numPages);
-    setPageNumber(1);
+    setPageDetails({ page: 1, wordIndex: null, word: null });
   };
 
   const handleDocumentLoadError = (err: Error): void => {
@@ -40,19 +46,22 @@ export function PdfViewer({
   };
 
   const handleSkip = useCallback(
-    (skip: number) => {
-      setPageNumber(Math.min(Math.max(1, skip), numPages));
+    (pageDetails: PageDetails) => {
+      const page = Math.min(Math.max(1, pageDetails.page), numPages);
+      setPageDetails({ page, wordIndex: pageDetails.wordIndex, word: pageDetails.word });
     },
-    [setPageNumber, numPages],
+    [pageDetails, setPageDetails, numPages],
   );
 
   const handleOnNextPage = useCallback(() => {
-    setPageNumber(Math.min(pageNumber + 1, numPages));
-  }, [setPageNumber, pageNumber, numPages]);
+    const page = Math.min(pageDetails.page + 1, numPages);
+    setPageDetails({ page, wordIndex: null, word: null });
+  }, [pageDetails, setPageDetails, numPages]);
 
   const handleOnPreviousPage = useCallback(() => {
-    setPageNumber(Math.max(1, pageNumber - 1));
-  }, [setPageNumber, pageNumber]);
+    const page = Math.max(1, pageDetails.page - 1);
+    setPageDetails({ page, wordIndex: null, word: null });
+  }, [pageDetails, setPageDetails]);
 
   return (
     <Drawer anchor='right' open={isOpen} onClose={handleOnClose}>
@@ -64,7 +73,7 @@ export function PdfViewer({
                 <IconButton size='large' onClick={handleOnPreviousPage}>
                   <NavigateBeforeIcon fontSize='inherit' />
                 </IconButton>
-                {pageNumber}/{numPages}
+                {pageDetails.page}/{numPages}
                 <IconButton size='large' onClick={handleOnNextPage}>
                   <NavigateNextIcon fontSize='inherit' />
                 </IconButton>
@@ -78,7 +87,7 @@ export function PdfViewer({
             >
               <Page
                 width={700}
-                pageNumber={pageNumber}
+                pageNumber={pageDetails.page}
                 renderTextLayer={true}
                 // DO NOT DELETE, MIGHT NEED
                 // customTextRenderer={(layer) => {
@@ -91,9 +100,10 @@ export function PdfViewer({
           {!docLoadError && (
             <Box sx={{ width: '200px' }}>
               <PdfViewerKeywords
+                pageDetails={pageDetails}
                 data={highlightCoords as Keyword[]}
                 onSkip={handleSkip}
-                currentPage={pageNumber}
+                currentPage={pageDetails.page}
               />
             </Box>
           )}
