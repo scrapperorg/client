@@ -119,7 +119,7 @@ export function PdfViewerPageGroup({
     // Pdf render is way too slow, we need this
     setTimeout(() => {
       hightlightWordInPdf(pageDetails.wordIndex);
-    }, 0);
+    }, 50);
   }, [pageDetails]);
 
   useEffect(() => {
