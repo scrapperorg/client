@@ -35,8 +35,9 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
         <Typography variant='h3'>ATENTIE!</Typography>
         <br />
         <Typography variant='h3' sx={{ mb: 3 }}>
-          Stergerea acestui termen va afecta intregul sistem. Continuati doar daca sunteti sigur de
-          ceea ce faceti!
+          Modificarea cuvintelor cheie va fi aplicata pentru toti utilizatorii aplicatiei.
+          <br />
+          Confirmati?
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
           <Button
@@ -45,7 +46,7 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
               closeModal();
             }}
           >
-            Anuleaza
+            Nu
           </Button>
           <Button
             variant='contained'
@@ -56,7 +57,7 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
               closeModal();
             }}
           >
-            Sterge
+            Da
           </Button>
         </Box>
       </StyledModalContainer>
