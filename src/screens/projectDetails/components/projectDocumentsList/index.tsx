@@ -3,6 +3,7 @@ import { ProjectDto } from "services/api/dtos";
 import { Box, Grid, useTheme } from "@mui/material";
 import { Translations } from "../../../../constants/translations";
 import { GenericTable, GenericTableRow, DocumentMarks, FormattedDate } from 'components';
+import { ActionButtons } from 'components/documentsTableActionButtons';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +19,8 @@ const columns = [
   'Sursa',
   'Stare',
   'Termeni identificati',
+  'Concluzia analizei legislative',
+  'Actiuni',
 ];
 
 
@@ -37,8 +40,10 @@ export function ProjectDocumentsList({ project }: ProjectDocumentsListProps) {
         <StyledLink to={`/document/${document.id}`} key={document.id} theme={theme}>{document.title}</StyledLink>,
         <FormattedDate key={`date-for-${document.id}`} date={document.publicationDate} />,
         Translations[document.source],
-        document.status,
+        Translations[document.status],
         document.numberOfIdentifiedTerms || 0,
+        Translations[document.decision],
+        <ActionButtons key={`action-for-${document.id}`} document={document} />,
         ]
       }/>
 ))
