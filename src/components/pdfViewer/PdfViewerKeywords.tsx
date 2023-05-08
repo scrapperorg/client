@@ -2,6 +2,7 @@ import { Box, Collapse, IconButton, Typography } from '@mui/material';
 import React, { Fragment, useEffect, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { PageDetails } from './index';
 
 interface Occurrence {
   location: {
@@ -34,11 +35,13 @@ function orderOccurrencesByPageAndCoordinates(keywords: Keyword[]): OccurrenceWi
     });
   });
 
+  const yTolerance = 0.5; // You can adjust this value based on your requirements
+
   return occurrences.sort((a, b) => {
     if (a.page !== b.page) {
       return a.page - b.page;
     }
-    if (a.location.y1 !== b.location.y1) {
+    if (Math.abs(a.location.y1 - b.location.y1) > yTolerance) {
       return a.location.y1 - b.location.y1;
     }
     if (a.location.x1 !== b.location.x1) {
@@ -62,73 +65,62 @@ function groupOccurencesPerPage(
   return pages;
 }
 
-const handleRemoveVoodooHighlight = () => {
-  const elements = document.querySelectorAll('.voodoo_highlight');
-
-  if (elements.length === 0) {
-    return;
-  }
-
-  elements.forEach((element) => {
-    const elementParent = element.parentElement;
-
-    if (!elementParent) {
-      return;
-    }
-
-    elementParent.innerHTML = element.innerHTML;
-    element.remove();
-  });
-};
-
-const handleVoodooHighlight = (
-  targetX: number,
-  targetY: number,
-  filterText: string,
-): HTMLElement | null => {
-  let closestElement = null;
-  let closestDistance = Infinity;
-
-  const elements = document.querySelectorAll('.textLayer > span');
-
-  if (elements.length === 0) {
-    return null;
-  }
-
-  elements.forEach((element: any) => {
-    const elementX = element.offsetLeft;
-    const elementY = element.offsetTop;
-    const distance = Math.sqrt((targetX - elementX) ** 2 + (targetY - elementY) ** 2);
-    const text = (element.textContent || element.innerText).toLowerCase();
-
-    if (distance < closestDistance) {
-      if (text.includes(filterText.toLowerCase())) {
-        closestElement = element;
-        closestDistance = distance;
-      }
-    }
-  });
-  return closestElement;
-};
-
 interface PdfViewerPageGroupProps {
+  pageDetails: PageDetails;
   page: number;
   currentPage: number;
   data: OccurrenceWithKeyword[];
   open: boolean;
-  onSkip: (page: number, termActive: string) => void;
-  activeTerm: string;
+  onSkip: (pageDetails: PageDetails) => void;
 }
 
 export function PdfViewerPageGroup({
+  pageDetails,
   page,
-  currentPage,
   data,
   open,
   onSkip,
-  activeTerm,
 }: PdfViewerPageGroupProps) {
   const [isOpen, setIsOpen] = useState(true);
+
+  const words = data.map((w) => w.keyword);
+
+  const isTermActive = (wordPage: number, wordIndex: number): boolean =>
+    wordPage === pageDetails.page && wordIndex === pageDetails.wordIndex;
+
+  const hightlightWordInPdf = (wordIndex: number | null) => {
+    if (words.length === 0 || wordIndex === null) {
+      return;
+    }
+
+    const popupWrappers = document.querySelectorAll('.popupWrapper');
+
+    if (popupWrappers.length === 0) {
+      return;
+    }
+    popupWrappers.forEach((elem) => {
+      if (!elem.parentElement) {
+        return;
+      }
+
+      elem.parentElement.style.border = 'none';
+    });
+
+    const outline = popupWrappers[wordIndex].parentElement;
+
+    if (!outline) {
+      return;
+    }
+
+    outline.style.border = '3px solid red';
+  };
+
+  useEffect(() => {
+    // Pdf render is way too slow, we need this
+    setTimeout(() => {
+      hightlightWordInPdf(pageDetails.wordIndex);
+    }, 50);
+  }, [pageDetails]);
 
   useEffect(() => {
     setIsOpen(open);
@@ -145,50 +137,22 @@ export function PdfViewerPageGroup({
         </IconButton>
       </Box>
       <Collapse in={isOpen}>
-        {data.map((item) => (
+        {data.map((item, index) => (
           <Box
-            key={item.location.x1 + item.location.x2}
+            key={index}
             onClick={() => {
-              onSkip(item.page + 1, (item.location.x1 + item.location.x2).toString());
+              onSkip({ page: page + 1, wordIndex: index, word: item.keyword });
             }}
             sx={{
               padding: 3,
               paddingLeft: 5,
-              backgroundColor:
-                activeTerm === (item.location.x1 + item.location.x2).toString()
-                  ? '#b9b9b9'
-                  : '#F6F6F6',
+              backgroundColor: isTermActive(item.page + 1, index) ? '#b9b9b9' : '#F6F6F6',
               borderRadius: '12px 0 0 12px',
               marginBottom: 2,
               cursor: 'pointer',
             }}
           >
-            <Box
-              // sx={{ pointer: 'cursor-pointer' }}
-              onMouseEnter={() => {
-                if (currentPage !== item.page + 1) {
-                  return;
-                }
-
-                const element = handleVoodooHighlight(
-                  item.location.x1,
-                  item.location.y1,
-                  item.keyword,
-                );
-
-                if (!element) {
-                  return;
-                }
-
-                element.innerHTML = element.textContent!.replace(
-                  new RegExp(item.keyword, 'gi'),
-                  '<span class="voodoo_highlight" style="border-bottom: 3px solid red;">$&</span>',
-                );
-              }}
-              onMouseLeave={handleRemoveVoodooHighlight}
-            >
-              {item.keyword}
-            </Box>
+            <Box>{item.keyword}</Box>
           </Box>
         ))}
       </Collapse>
@@ -197,15 +161,16 @@ export function PdfViewerPageGroup({
 }
 
 interface PdfViewerKeywords {
+  pageDetails: PageDetails;
   data: Keyword[];
   currentPage: number;
-  onSkip: (page: number) => void;
+  onSkip: (pageDetails: PageDetails) => void;
 }
-export function PdfViewerKeywords({ data, onSkip, currentPage }: PdfViewerKeywords) {
+export function PdfViewerKeywords({ data, onSkip, currentPage, pageDetails }: PdfViewerKeywords) {
   const [isAllOpen, setIsAllOpen] = useState(false);
   const orderedKeywords = orderOccurrencesByPageAndCoordinates(data);
   const groupByPage = groupOccurencesPerPage(orderedKeywords);
-  const [isTermActive, setIsTermActive] = useState('');
+
   return (
     <Fragment>
       <Box
@@ -225,15 +190,12 @@ export function PdfViewerKeywords({ data, onSkip, currentPage }: PdfViewerKeywor
         return (
           <PdfViewerPageGroup
             key={key}
+            pageDetails={pageDetails}
             page={parseInt(key)}
             currentPage={currentPage}
             data={value}
             open={isAllOpen}
-            onSkip={(page, term) => {
-              onSkip(page);
-              setIsTermActive(term);
-            }}
-            activeTerm={isTermActive}
+            onSkip={onSkip}
           />
         );
       })}
