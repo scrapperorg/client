@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
 import { ProjectMarks } from '../projectsTableDocumentMarks';
 import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
+import { Translations } from '../../../../constants/translations';
 
 interface ProjectsTableProps {
   projects: ProjectDto[];
@@ -40,17 +41,17 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       values={[
         <ProjectMarks project={project} key={`${project.id}-marks`} />,
         <span key={`${project.id}-identificator`}>
-          {project.numarInregistrareGuvern || project.numarInregistrareSenat}
+          {!!project.numarInregistrareGuvern && project.numarInregistrareGuvern !== '-' ? project.numarInregistrareGuvern : project.numarInregistrareSenat}
         </span>,
         <StyledLink to={`/project/${project.id}`} key={`${project.id}-title`} theme={theme}>
           {project.title}
         </StyledLink>,
-        <StyledLink to={`/project/${project.id}`} key={`${project.id}-decision`} theme={theme}>
-          {project.cameraDecizionala}
-        </StyledLink>,
-        <StyledLink to={`/project/${project.id}`} key={`${project.id}-initiator`} theme={theme}>
-          {project.initiator}
-        </StyledLink>,
+        <span key={`${project.id}-forum`}>
+          { project.source && Translations[project.source] }
+        </span>,
+        <span key={`${project.id}-initiator`}>
+          { project.initiator }
+        </span>,
         <FormattedDate key={`${project.id}-date`} date={project.createdAt} />,
       ]}
     />
