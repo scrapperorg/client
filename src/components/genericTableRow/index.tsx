@@ -31,9 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: '#81B9D7',
     '& > th': {
       fontWeight: 700,
-      '&:nth-child(8)': {
-        textTransform: 'uppercase',
-      },
     },
     '& > th > a:hover': {
       color: theme.palette.common.white,
