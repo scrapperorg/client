@@ -28,4 +28,6 @@ export const Translations: Record<string, string> = {
     in_analiza: 'In analiza',
     nou: 'Nou',
     revizuit: 'Revizuit',
+    NOT_FUNCTIONAL: 'Eroare',
+    FUNCTIONAL: 'Succes',
 }
