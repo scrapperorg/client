@@ -32,7 +32,7 @@ export const useApiService = <DataType>(
 
     setData(response.payload);
     setLoading(false);
-  }, [method, setData, setLoading, setError]);
+  }, [method, args]);
 
   const shouldFetch = useRef(true);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, {createContext, useEffect} from 'react';
 import { FullScreenLoading as Loading } from 'components/loading';
 import { ProjectDto } from 'services/api/dtos';
 import { useApiService } from 'hooks/useApiService';
@@ -18,7 +18,11 @@ export const ProjectDetailsContext = createContext(defaultState);
 const ProjecttDetailsDataProvider = ({ children }: any) => {
   const { id='' } = useParams();
 
-  const { data, loading } = useApiService<ProjectDto>(projectApiService, projectApiService.getProjectById, id);
+  const { data, loading, fetch } = useApiService<ProjectDto>(projectApiService, projectApiService.getProjectById, id);
+
+  useEffect(() => {
+    fetch();
+  }, [id]);
 
   if (loading) {
     return <Loading />;
