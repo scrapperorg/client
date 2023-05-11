@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import { ProjectDetailsContext } from 'screens/projectDetails/context';
 import { ProjectDocumentsList } from '../projectDocumentsList';
 import { ProjectGeneralData } from '../projectGeneralData';
 import { ProjectHeader } from '../projectHeader';
-import {useParams} from "react-router-dom";
 
 export default function ProjectDetailsContent () {
 
