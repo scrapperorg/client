@@ -1,18 +1,9 @@
-import React from 'react';
-import {
-  Checkbox,
-  Chip,
-  FormControl,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
-import styled from 'styled-components';
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
-import {Translations} from "../../../../constants/translations";
+import { Translations } from '../../../../constants/translations';
 
 interface SelectorProps {
   value: string[];
@@ -21,56 +12,66 @@ interface SelectorProps {
   onMenuClose: () => void;
 }
 
-export const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport', 'mai', 'mae', 'mapn', 'mjustitiei', 'senat_pl', 'camera_deputatilor_pl'];
+const sources_of_interest_list = [
+  'camera_deputatilor',
+  'mfinante',
+  'mmediu',
+  'mdezvoltarii',
+  'meducatiei',
+  'mtransport',
+  'mai',
+  'mae',
+  'mapn',
+  'mjustitiei',
+  'senat_pl',
+  'camera_deputatilor_pl',
+];
+
+const translatedSources = sources_of_interest_list.map((source) => Translations[source]);
+
+const translationToValueMap = sources_of_interest_list.reduce((map, source) => {
+  const translation = Translations[source];
+  map[translation] = source;
+  return map;
+}, {} as { [key: string]: string });
+
 
 export const SourcesSelector = (props: SelectorProps) => {
   const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;
 
-  const sources = sources_of_interest_list.map((source) => (
-    <StyledMenuItem key={source} value={source}>
-      <Checkbox checked={selectedOptions.indexOf(source) > -1} />
-      <ListItemText primary={Translations[source]} />
-    </StyledMenuItem>
-  ));
-
-  const handleChange = (event: SelectChangeEvent<unknown>) => {
-    const value = event.target.value as string | string[];
-    onSelect(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+  const handleChange = (event: any, newValue: string[]) => {
+    const originalValues = newValue.map((translation) => translationToValueMap[translation]);
+    onSelect(originalValues);
   };
 
   return (
-    <FormControl>
-      <InputLabel id='sources_of_interest_label'>Surse</InputLabel>
-      <StyledSelect
-        label='sources_of_interest_label'
-        id='sources_of_interest'
-        value={selectedOptions}
+    <div>
+      <Autocomplete
         multiple
-        input={<OutlinedInput label='Surse' />}
-        renderValue={(selected) => (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {(selected as string[]).map((value: string) => (
-              <Chip key={value} label={value.replace('_', ' ')} />
-            ))}
-          </Box>
-        )}
+        id="sources_of_interest"
+        sx={{ width: 250 }}
+        options={translatedSources}
+        value={selectedOptions.map((value) => Translations[value])}
         onChange={handleChange}
         onOpen={onMenuOpen}
         onClose={onMenuClose}
-      >
-        {sources}
-      </StyledSelect>
-    </FormControl>
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Surse"
+            placeholder="Search"
+            InputLabelProps={{ shrink: true }}
+          />
+        )}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox checked={selected} />
+            <Box component="span" sx={{ ml: 1 }}>
+              {option}
+            </Box>
+          </li>
+        )}
+      />
+    </div>
   );
 };
-
-const StyledSelect = styled(Select)`
-  width: 250px;
-`;
-
-const StyledMenuItem = styled(MenuItem)`
-  width: 250px;
-`;
