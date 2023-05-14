@@ -6,6 +6,7 @@ import { GenericTable, GenericTableRow, DocumentMarks, FormattedDate } from 'com
 import { ActionButtons } from 'components/documentsTableActionButtons';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Status } from 'services/api/dtos/document';
 
 interface ProjectDocumentsListProps {
   project: ProjectDto;
@@ -32,6 +33,7 @@ export function ProjectDocumentsList({ project }: ProjectDocumentsListProps) {
 
   const documentRows = documents.map(document => (
     <GenericTableRow
+      className={`${document.status === Status.NOU ? 'new' : ''}`}
       id={document.id}
       key={document.id}
       values={[
