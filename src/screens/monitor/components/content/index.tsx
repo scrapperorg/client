@@ -4,6 +4,8 @@ import { MonitorContext } from 'screens/monitor/context';
 import styled from 'styled-components';
 import { DocumentsTable } from 'components/documentTable';
 import { SourcesSelector } from '../sourcesSelector';
+import CardsList from '../cardsList';
+import { AuthContext } from '../../../../contexts/authContext';
 
 export default function MonitorContent() {
   const {
@@ -19,27 +21,34 @@ export default function MonitorContent() {
     startPolling,
   } = useContext(MonitorContext);
 
+  const { user } = useContext(AuthContext);
+
   if (!documents) return null;
 
   return (
     <>
-      <SelectBox>
-        <SourcesSelector
-          value={sourcesOfInterest}
-          onSelect={updateSourcesOfInterest}
-          onMenuOpen={stopPolling}
-          onMenuClose={startPolling}
-        />
-      </SelectBox>
       <Box>
-        <DocumentsTable
-          documents={documents}
-          totalNumberOfDocuments={totalNumberOfDocuments}
-          page={page}
-          pageSize={pageSize}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
-        />
+        <CardsList user={user} />
+      </Box>
+      <Box>
+        <SelectBox>
+          <SourcesSelector
+            value={sourcesOfInterest}
+            onSelect={updateSourcesOfInterest}
+            onMenuOpen={stopPolling}
+            onMenuClose={startPolling}
+          />
+        </SelectBox>
+        <Box>
+          <DocumentsTable
+            documents={documents}
+            totalNumberOfDocuments={totalNumberOfDocuments}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+          />
+        </Box>
       </Box>
     </>
   );
