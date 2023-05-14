@@ -33,13 +33,13 @@ const translationToValueMap = sources_of_interest_list.reduce((map, source) => {
   const translation = Translations[source];
   map[translation] = source;
   return map;
-}, {} as { [key: string]: string });
+}, {} as Record<string, string>);
 
 
 export const SourcesSelector = (props: SelectorProps) => {
   const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;
 
-  const handleChange = (event: any, newValue: string[]) => {
+  const handleChange = (_: any, newValue: string[]) => {
     const originalValues = newValue.map((translation) => translationToValueMap[translation]);
     onSelect(originalValues);
   };
