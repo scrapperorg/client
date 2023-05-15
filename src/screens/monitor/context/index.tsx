@@ -4,6 +4,9 @@ import { documentApiService } from 'services/api/DocumentApiService';
 import { useDocumentsFilters } from '../hooks/useDocumentsFilters';
 import { usePaginatedApiService } from 'hooks/usePaginatedApiService';
 import { useInterval } from 'react-interval-hook';
+import { MonitorCardsListDto } from 'services/api/dtos/presentation';
+import { useApiService } from '../../../hooks/useApiService';
+import { presentationApiService } from '../../../services/api/PresentationApiService';
 
 export interface MonitorProviderState {
   documents: DocumentDto[];
@@ -12,6 +15,7 @@ export interface MonitorProviderState {
   pageSize: number;
   error?: string;
   sourcesOfInterest: string[];
+  monitorCardsList: MonitorCardsListDto;
   fetch: (page: number, pageSize: number, sourceOfInterest?: string[]) => void;
   onPageSizeChange: (pageSize: number) => void;
   onPageChange: (page: number) => void;
@@ -26,6 +30,12 @@ const defaultState: MonitorProviderState = {
   page: 0,
   pageSize: 2,
   sourcesOfInterest: [],
+  monitorCardsList: {
+    documentsCount: 0,
+    projectsCount: 0,
+    robotsCount: 0,
+    failedRobotsCount: 0,
+  },
   fetch: () => {
     console.log('method not implemented');
   },
@@ -56,6 +66,10 @@ const MonitorDataProvider = ({ children }: any) => {
       documentApiService.getDocuments,
       sourcesOfInterest,
     );
+  const { data: monitorCardsList } = useApiService<MonitorCardsListDto>(
+    presentationApiService,
+    presentationApiService.getMonitorCardsList,
+  );
 
   const { start: startPolling, stop: stopPolling } = useInterval(
     async () => {
@@ -84,6 +98,7 @@ const MonitorDataProvider = ({ children }: any) => {
     updateSourcesOfInterest: updateSourcesOfInterest || defaultState.updateSourcesOfInterest,
     startPolling,
     stopPolling,
+    monitorCardsList: monitorCardsList ?? defaultState.monitorCardsList,
   };
 
   return <MonitorContext.Provider value={state}>{children}</MonitorContext.Provider>;
