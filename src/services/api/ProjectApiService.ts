@@ -49,6 +49,35 @@ class ProjectApiService {
     }
   }
 
+  async getProjectByFilter(filters: { title?: string, nrInrCDep?: string, nrInrSenat?: string }) {
+    const token = localStorage.getItem('token');
+
+    try {
+      const queryParams = new URLSearchParams({
+        title: filters.title ?? '',
+        nrInrCDep: filters.nrInrCDep ?? '',
+        nrInrSenat: filters.nrInrSenat ?? '',
+      });
+
+      const response = await this.httpClient.get<ProjectDto[]>(`/project/find?${queryParams}`, {
+        headers: { authorization: token },
+      });
+
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      console.log(err);
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
   async getProjectById(id: string): Promise<OperationStatus<ProjectDto>> {
     const token = localStorage.getItem('token');
 

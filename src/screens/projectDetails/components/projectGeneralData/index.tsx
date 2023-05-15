@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { ProjectDto } from "services/api/dtos";
 import { Box, Button, Card, CardContent, Chip, Grid, Stack, Typography } from '@mui/material';
 import styled from 'styled-components';
+import useProjectLink from "../../hooks/useProjectLink";
+import {Loading} from "../../../../components/loading";
+import {Link} from "react-router-dom";
 
 interface ProjectGeneralDataProps {
   project: ProjectDto;
@@ -9,6 +12,31 @@ interface ProjectGeneralDataProps {
 
 export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
   const isAttributesDisplayed = ['camera_deputatilor_pl', 'senat_pl'].includes(project.source || '');
+  const { project: linkProject, loading, fetchProjectLink } = useProjectLink();
+
+  useEffect(() => {
+    fetchProjectLink(project);
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const renderProjectLinkSenat = () => {
+    if (project.numarInregistrareSenat && linkProject?.id) {
+      return (<Link to={`/project/${linkProject.id}`}><Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat}</Typography></Link>)
+    }
+    return <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat || '-'}</Typography>
+  }
+
+  const renderProjectLinkCdep = () => {
+    if (project.numarInregistrareCDep && linkProject?.id) {
+      return (<Link to={`/project/${linkProject.id}`}><Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareCDep}</Typography></Link>)
+    }
+    return <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareCDep || '-'}</Typography>
+  }
+
+
   return (
     <Box sx={{ mb: 4 }}>
       <Grid container>
@@ -20,6 +48,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                 <Grid container spacing={4}>
                   <PropertiesGrid item md={4}>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Senat:</Typography>
+                    <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Camera Deputatilor:</Typography>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Guvern:</Typography>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Procedura Legislativa:</Typography>
                     <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Camera decizionala:</Typography>
@@ -33,7 +62,8 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                   </PropertiesGrid>
 
                   <Grid item md={8}>
-                    <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareSenat || '-'}</Typography>
+                    {renderProjectLinkSenat()}
+                    {renderProjectLinkCdep()}
                     <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareGuvern || '-'}</Typography>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.proceduraLegislativa || '-'}</Typography>
                     <Typography variant="h5" sx={{mb: 3}}>{project?.cameraDecizionala || '-'}</Typography>

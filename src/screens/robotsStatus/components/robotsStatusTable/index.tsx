@@ -27,7 +27,7 @@ export const RobotsStatusTable = (props: RobotsStatusTableProps) => {
       values={[
         <Chip
           key={robot.name}
-          label={robot.status}
+          label={Translations[robot.status]}
           color={robot.status === 'FUNCTIONAL' ? 'success' : 'error'}
           icon={robot.status === 'FUNCTIONAL' ? <DoneIcon /> : <ErrorIcon />}
         />,

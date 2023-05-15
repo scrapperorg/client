@@ -11,6 +11,7 @@ export interface ProjectDto {
 
   numarInregistrareSenat?: string;
   numarInregistrareGuvern?: string;
+  numarInregistrareCDep?: string;
   proceduraLegislativa?: string;
   cameraDecizionala?: string;
   termenAdoptare?: string;
