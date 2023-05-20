@@ -70,6 +70,7 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       onPageChange={onPageChange}
       rowsPerPage={pageSize}
       onPageSizeChange={onPageSizeChange}
+      maxHeight='60vh'
     ></GenericTable>
   );
 };
