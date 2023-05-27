@@ -7,6 +7,7 @@ interface GenericTableProps {
   columns: string[];
   tableRows: JSX.Element[];
   count?: number;
+  maxHeight?: number | string;
   rowsPerPage?: number;
   page?: number;
   onPageChange?: (page: number) => void;
@@ -18,6 +19,7 @@ export const GenericTable = (props: GenericTableProps) => {
     columns,
     tableRows,
     count,
+    maxHeight,
     rowsPerPage,
     page,
     onPageChange,
@@ -44,8 +46,8 @@ export const GenericTable = (props: GenericTableProps) => {
   
   return (
     <Paper>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+      <TableContainer component={Paper} sx={{ maxHeight: maxHeight || 'maxContent' }}>
+        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table" >
           <TableHead>
             <TableRow>
               {tableHeadCells}

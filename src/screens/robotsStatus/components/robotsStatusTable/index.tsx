@@ -42,5 +42,5 @@ export const RobotsStatusTable = (props: RobotsStatusTableProps) => {
     />
   ));
 
-  return <GenericTable columns={columns} tableRows={rows} />;
+  return <GenericTable columns={columns} tableRows={rows} maxHeight='75vh' />;
 };

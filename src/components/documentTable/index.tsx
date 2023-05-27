@@ -80,6 +80,7 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
       onPageChange={onPageChange}
       rowsPerPage={pageSize}
       onPageSizeChange={onPageSizeChange}
+      maxHeight='55vh'
     ></GenericTable>
   );
 };
