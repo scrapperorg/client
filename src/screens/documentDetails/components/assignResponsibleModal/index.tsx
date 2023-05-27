@@ -82,13 +82,11 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
-            <InputLabel id="sursa-document-label">
-              Utilizator
-            </InputLabel>
+            <InputLabel id='sursa-document-label'>Utilizator</InputLabel>
             <Select
               labelId='responsabil'
               id='responsabil'
-              value={form.watch('assignedUser') || (responsible?.id || '')}
+              value={form.watch('assignedUser') || responsible?.id || ''}
               label='Responsabil'
               {...form.register('assignedUser')}
             >
@@ -96,7 +94,9 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                 <MenuItem key={user.id} value={user.id}>{`${user.surname} ${user.name}`}</MenuItem>
               ))}
             </Select>
-            <FormHelperText error={!!form.formState.errors}>{form.formState.errors.assignedUser && <span>{form.formState.errors.assignedUser.message}</span>}</FormHelperText>
+            <FormHelperText error={!!form.formState.errors}>
+              {form.formState.errors.assignedUser && <span>{form.formState.errors.assignedUser.message}</span>}
+            </FormHelperText>
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
