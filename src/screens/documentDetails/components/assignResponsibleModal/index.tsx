@@ -95,9 +95,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
               ))}
             </Select>
             <FormHelperText error={!!form.formState.errors}>
-              {form.formState.errors.assignedUser && (
-                <span>Camp obligatoriu! Trebuie sa selectati un responsabil.</span>
-              )}
+              {form.formState.errors.assignedUser && <span>{form.formState.errors.assignedUser.message}</span>}
             </FormHelperText>
           </FormControl>
 
