@@ -28,6 +28,7 @@ export default function DocumentDetailsContent() {
     setDecision,
     assignResponsibleModalForm,
     handleSubmitDocumentAnalysis,
+    handleReanalyseDocument,
   } = useDocumentDetails();
 
   if (!document) return null;
@@ -57,7 +58,11 @@ export default function DocumentDetailsContent() {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentProcessedData onDownloadOcrPdf={downloadOcrPdf} document={document} />
+        <DocumentProcessedData
+          onDownloadOcrPdf={downloadOcrPdf}
+          onReanalyseDocument={handleReanalyseDocument}
+          document={document}
+        />
       </Box>
       
       <Box sx={{ mb: 4 }}>

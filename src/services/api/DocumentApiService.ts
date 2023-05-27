@@ -348,6 +348,25 @@ class DocumentApiService {
       };
     }
   }
+
+  async updateDocument(documentId: string, props: Partial<DocumentDto>): Promise<OperationStatus<DocumentDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.put(`/document/${documentId}`, props, {
+        headers: { authorization: token },
+      });
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err) {
+      handleUnauthorized(err);
+      return {
+        success: false,
+      };
+    }
+  }
 }
 
 export const documentApiService = new DocumentApiService(axios);

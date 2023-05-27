@@ -1,6 +1,6 @@
 import { documentApiService } from 'services/api/DocumentApiService';
 import { useContext, useEffect, useState } from 'react';
-import { DocumentDto, OperationStatus } from 'services/api/dtos';
+import { DocumentDto, OperationStatus, ProcessingStatus } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
 import { downloadBlob } from 'helpers/downloadBlob';
@@ -98,6 +98,19 @@ export function useDocumentDetails() {
     }
   };
 
+  const handleReanalyseDocument = async () => {
+    if (!document?.id) return false;
+
+    const { payload } = await documentApiService.updateDocument(document.id, {
+      processingStatus: ProcessingStatus.downloaded,
+    })
+
+    if (!payload) return;
+
+    setDocument(payload);
+
+  };
+
   useEffect(() => setDocument(contextDocument), [contextDocument]);
 
   return {
@@ -112,5 +125,6 @@ export function useDocumentDetails() {
     setDecision,
     assignResponsibleModalForm,
     handleSubmitDocumentAnalysis,
+    handleReanalyseDocument,
   };
 }

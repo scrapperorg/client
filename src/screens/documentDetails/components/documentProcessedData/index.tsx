@@ -7,11 +7,12 @@ import CircularProgressIndicator from 'components/circularProgressIndicator';
 
 interface DocumentProcessedDataProps {
   onDownloadOcrPdf: () => void;
+  onReanalyseDocument: () => void;
   document: DocumentDto;
 }
 
 function DocumentProcessedData(props: DocumentProcessedDataProps) {
-  const { onDownloadOcrPdf, document } = props;
+  const { onDownloadOcrPdf, onReanalyseDocument, document } = props;
   return (
     <Grid container spacing={4}>
       <Grid item md={10}>
@@ -41,7 +42,7 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
                   {Translations[document.processingStatus] || 'Nu s-a putut actualiza'}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.link.split('.').pop()?.toUpperCase() || 'Nu s-a putut actualiza'}
+                  {document.link?.split('.').pop()?.toUpperCase() || 'Nu s-a putut actualiza'}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
                   {document.numberOfPages || 'Nu s-a putut actualiza'}
@@ -72,7 +73,9 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
           <Button variant='contained' onClick={onDownloadOcrPdf}>
             Descarca document analizat
           </Button>
-          {/*<Button variant='contained'>Analizeaza</Button>*/}
+          <Button variant='contained' onClick={onReanalyseDocument}>
+            Re-Analizeaza
+          </Button>
           {/*<Button variant='contained'>Actualizeaza stare</Button>*/}
           {/*<Button variant='contained'>Analizeaza rezultat analiza</Button>*/}
         </Stack>
