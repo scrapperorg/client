@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import React, { Fragment } from 'react';
 import { NotificationDto } from 'services/api/dtos';
 import { NotificationsListItem } from '../notificationsListItem';

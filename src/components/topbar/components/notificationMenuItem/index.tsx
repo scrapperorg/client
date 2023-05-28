@@ -1,15 +1,12 @@
-import { Box, IconButton, MenuItem } from '@mui/material';
+import { Box, MenuItem } from '@mui/material';
 import React from 'react';
-// import { NotificationIcon } from '../notificationsMenu';
 import { NotificationDto, NotificationType } from '../../../../services/api/dtos';
-import CircularProgress from '@mui/material/CircularProgress';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SnoozeIcon from '@mui/icons-material/Snooze';
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import AlarmOffIcon from '@mui/icons-material/AlarmOff';
-import CloseIcon from '@mui/icons-material/Close';
 
 export interface NotificationIconProps {
   type: NotificationType;
@@ -39,21 +36,18 @@ export function NotificationIcon({ type }: NotificationIconProps) {
 
 export interface NotificationMenuItemProps {
   notification: NotificationDto;
-  onDeleteNotification: (id: string) => Promise<boolean>;
+  onDeleteNotification?: (id: string) => Promise<boolean>;
 }
 
-export function NotificationMenuItem({
-  notification,
-  onDeleteNotification,
-}: NotificationMenuItemProps) {
-  const [isHover, setIsHover] = React.useState(false);
-  const [isDeleting, setIsDeleting] = React.useState(false);
+export function NotificationMenuItem({ notification }: NotificationMenuItemProps) {
+  // const [isHover, setIsHover] = React.useState(false);
+  // const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
     <MenuItem
       key={notification.id}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Box sx={{ my: '8px', display: 'flex', alignItems: 'center' }}>

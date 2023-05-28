@@ -46,8 +46,7 @@ export default function TopBar({ notifications, onDeleteNotification }: TopBarPr
                     size='large'
                     aria-label='show 3 new notifications'
                     color='inherit'
-                    onClick={(event) => {
-                      // toggleNotificationMenu(event.currentTarget);
+                    onClick={() => {
                       toggleNotificationMenu();
                     }}
                   >

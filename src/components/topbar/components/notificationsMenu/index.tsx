@@ -1,6 +1,6 @@
-import React, { ReactNode, useContext } from 'react';
-import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { NotificationDto, NotificationType } from '../../../../services/api/dtos';
+import React from 'react';
+import { Box, Button, Menu } from '@mui/material';
+import { NotificationDto } from '../../../../services/api/dtos';
 import { NotificationMenuItem } from '../notificationMenuItem';
 import PATHS from '../../../../constants/paths';
 import { Link } from 'react-router-dom';
