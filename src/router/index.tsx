@@ -19,6 +19,7 @@ const ResetPasswordScreen = React.lazy(() => import('screens/resetPassword'));
 const DocumentDetailsScreen = React.lazy(() => import('screens/documentDetails'));
 const ProjectDetailsScreen = React.lazy(() => import('screens/projectDetails'));
 const ProfileDetailsScreen = React.lazy(() => import('screens/profileDetails'));
+const NotificationsScreen = React.lazy(() => import('screens/notifications'));
 
 export default function CustomRouter() {
   return (
@@ -34,7 +35,9 @@ export default function CustomRouter() {
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<Layout />}>
+            <Route path={PATHS.NOTIFICATIONS} element={<NotificationsScreen />} />
             <Route path={PATHS.MONITOR} element={<MonitorScreen />}></Route>
+            <Route path={PATHS.DOCUMENT_DETAILS} element={<DocumentDetailsScreen />}></Route>
             <Route path={PATHS.DOCUMENT_DETAILS} element={<DocumentDetailsScreen />}></Route>
             <Route path={PATHS.PROJECT_DETAILS} element={<ProjectDetailsScreen />}></Route>
             <Route path={PATHS.DOCUMENTS_SEARCH} element={<DocumentsSearchScreen />}></Route>

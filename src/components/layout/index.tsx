@@ -7,6 +7,8 @@ import TopBar from '../topbar';
 import { menuItems } from '../sidebar/sideMenuItems';
 import { SidebarTitleProps } from 'components/sidebar/components/SidebarTitle';
 import MotionPhotosAutoIcon from '@mui/icons-material/MotionPhotosAuto';
+import LayoutDataProvider, { LayoutContext } from './context';
+import { notificationApiService } from '../../services/api/NotificationApiService';
 
 const Content = ({ children }: { children: ReactNode }) => {
   return <ContentWrapper>{children}</ContentWrapper>;
@@ -17,23 +19,35 @@ const Main = ({ children }: { children: ReactNode }) => {
 };
 
 const title: SidebarTitleProps = {
-  title: "Monitor Legislativ",
+  title: 'Monitor Legislativ',
   icon: <MotionPhotosAutoIcon />,
 };
 
-export default function Layout() {
+export function LayoutContent() {
   const { isCollapsed } = useContext(InteractiveComponentsContext);
   const { pathname } = useLocation();
+  const { notifications } = useContext(LayoutContext);
 
   return (
     <StyledLayout>
       <SideMenu items={menuItems} currentPath={pathname} isCollapsed={isCollapsed} title={title} />
       <Content>
-        <TopBar />
+        <TopBar
+          notifications={notifications}
+          onDeleteNotification={(id) => notificationApiService.delete(id)}
+        />
         <Main>
           <Outlet />
         </Main>
       </Content>
     </StyledLayout>
+  );
+}
+
+export default function Layout() {
+  return (
+    <LayoutDataProvider>
+      <LayoutContent />
+    </LayoutDataProvider>
   );
 }

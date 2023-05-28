@@ -4,6 +4,9 @@ import { SIDEBAR_BUTTONS_LIST } from 'constants/icons';
 export interface InteractiveComponentsState {
   isCollapsed: boolean;
   toggleSidebar: () => void;
+  toggleNotificationMenu: (state?: boolean) => void;
+  isNotificationMenuOpen: boolean;
+
   selectedIndex: string;
   selectIndex: (index: string) => void;
   closeModal: () => void;
@@ -14,6 +17,8 @@ export interface InteractiveComponentsState {
 const InteractiveComponentsDefaultState: InteractiveComponentsState = {
   isCollapsed: false,
   toggleSidebar: () => null,
+  toggleNotificationMenu: () => null,
+  isNotificationMenuOpen: false,
   selectedIndex: '',
   selectIndex: () => null,
   closeModal: () => null,
@@ -75,6 +80,7 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
   const { selectedIndex, selectIndex } = useIndex();
   const { isCollapsed, toggleSidebar } = useSidebar();
   const { closeModal, openModal, modalName } = useModal();
+  const [notificationMenuIsOpen, setNotificationMenuIsOpen] = useState<boolean>(false);
 
   const state: InteractiveComponentsState = {
     isCollapsed,
@@ -84,6 +90,8 @@ export const InteractiveComponentsProvider: React.FC<InteractiveComponentsProvid
     closeModal,
     openModal,
     modalName,
+    toggleNotificationMenu: (state) => setNotificationMenuIsOpen(state ?? !notificationMenuIsOpen),
+    isNotificationMenuOpen: notificationMenuIsOpen,
   };
 
   return (
