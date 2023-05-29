@@ -13,6 +13,7 @@ const PATHS = {
   ROBOTS_STATUS: '/robots-status',
   OPTIONS: '/options',
   USERS_MANAGEMENT: '/user-management',
+  NOTIFICATIONS: '/notifications',
 };
 
 export default PATHS;

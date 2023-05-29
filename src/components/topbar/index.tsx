@@ -10,9 +10,18 @@ import {
 import { ProfileModal } from 'components/modal/profile';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { ModalNames } from 'constants/modals';
+import NotificationsMenu from './components/notificationsMenu';
+import { NotificationDto } from '../../services/api/dtos';
 
-export default function TopBar() {
-  const { openModal, toggleSidebar, isCollapsed } = useContext(InteractiveComponentsContext);
+export interface TopBarProps {
+  notifications: NotificationDto[];
+  onDeleteNotification: (id: string) => Promise<boolean>;
+}
+
+export default function TopBar({ notifications, onDeleteNotification }: TopBarProps) {
+  const { openModal, toggleSidebar, isCollapsed, toggleNotificationMenu, isNotificationMenuOpen } =
+    useContext(InteractiveComponentsContext);
+  const anchorRef = React.useRef(null);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -32,10 +41,21 @@ export default function TopBar() {
             <RightSide>
               <Box sx={{ display: { md: 'flex' } }}>
                 <Tooltip title='Notificari'>
-                  <IconButton size='large' aria-label='show 3 new notifications' color='inherit'>
-                    <Badge badgeContent={3} color='error'>
-                      <NotificationsIcon />
-                    </Badge>
+                  <IconButton
+                    ref={anchorRef}
+                    size='large'
+                    aria-label='show 3 new notifications'
+                    color='inherit'
+                    onClick={() => {
+                      toggleNotificationMenu();
+                    }}
+                  >
+                    {notifications.length > 0 && (
+                      <Badge badgeContent={notifications.length} color='error'>
+                        <NotificationsIcon />
+                      </Badge>
+                    )}
+                    {notifications.length === 0 && <NotificationsIcon />}
                   </IconButton>
                 </Tooltip>
                 <Tooltip title='Profilul meu'>
@@ -57,6 +77,14 @@ export default function TopBar() {
             </RightSide>
           </StyledContainer>
         </Toolbar>
+
+        <NotificationsMenu
+          notifications={notifications}
+          anchor={anchorRef.current}
+          isOpen={isNotificationMenuOpen}
+          onClose={() => toggleNotificationMenu(false)}
+          onDeleteNotification={onDeleteNotification}
+        />
       </AppBar>
     </Box>
   );
