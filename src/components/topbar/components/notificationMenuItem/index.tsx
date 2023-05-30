@@ -1,4 +1,4 @@
-import { Box, MenuItem } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import { NotificationDto, NotificationType } from '../../../../services/api/dtos';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -7,6 +7,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import SnoozeIcon from '@mui/icons-material/Snooze';
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import AlarmOffIcon from '@mui/icons-material/AlarmOff';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PATHS from 'constants/paths';
 
 export interface NotificationIconProps {
   type: NotificationType;
@@ -36,37 +38,55 @@ export function NotificationIcon({ type }: NotificationIconProps) {
 
 export interface NotificationMenuItemProps {
   notification: NotificationDto;
-  onDeleteNotification?: (id: string) => Promise<boolean>;
+  onDeleteNotification: (id: string) => Promise<boolean>;
+  onClose: () => void;
 }
 
-export function NotificationMenuItem({ notification }: NotificationMenuItemProps) {
-  // const [isHover, setIsHover] = React.useState(false);
-  // const [isDeleting, setIsDeleting] = React.useState(false);
+export function NotificationMenuItem({
+  notification,
+  onDeleteNotification,
+  onClose,
+}: NotificationMenuItemProps) {
+  const [isHover, setIsHover] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
-    <MenuItem
+    <Box
       key={notification.id}
-      // onMouseEnter={() => setIsHover(true)}
-      // onMouseLeave={() => setIsHover(false)}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      sx={{
+        backgroundColor: isHover ? '#e5e5e5' : '#fff',
+        cursor: 'pointer',
+      }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-        <Box sx={{ my: '8px', display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', maxWidth: '500px' }}>
+        <Box
+          sx={{ m: '16px', display: 'flex', alignItems: 'flex-start', width: 'calc(100% - 50px)' }}
+          onClick={() => {
+            onClose();
+            window.location.href =
+              PATHS.DOCUMENT_DETAILS.split(':id')[0] + notification.document.id;
+          }}
+        >
           <NotificationIcon type={notification.type} />
-          <Box sx={{ marginLeft: '8px' }}>{notification.message}</Box>
+          <Box sx={{ marginLeft: '8px' }}>
+            <Typography variant='body1'>{notification.message}</Typography>
+          </Box>
         </Box>
-        {/*{isHover && (*/}
-        {/*  <Box>*/}
-        {/*    <IconButton*/}
-        {/*      onClick={async () => {*/}
-        {/*        setIsDeleting(true);*/}
-        {/*        await onDeleteNotification(notification.id);*/}
-        {/*      }}*/}
-        {/*    >*/}
-        {/*      {isDeleting ? <CircularProgress size='20px' /> : <CloseIcon />}*/}
-        {/*    </IconButton>*/}
-        {/*  </Box>*/}
-        {/*)}*/}
+        <Box sx={{ display: 'flex', alignItems: 'center', width: '50px' }}>
+          {isHover && (
+            <IconButton
+              onClick={async () => {
+                setIsDeleting(true);
+                await onDeleteNotification(notification.id);
+              }}
+            >
+              {isDeleting ? <CircularProgress size='20px' /> : <DeleteIcon />}
+            </IconButton>
+          )}
+        </Box>
       </Box>
-    </MenuItem>
+    </Box>
   );
 }

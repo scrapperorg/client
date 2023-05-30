@@ -12,8 +12,8 @@ export enum NotificationType {
 
 export interface NotificationDto {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   message: string;
   type: NotificationType;
   user: Pick<UserDto, 'id'>;
