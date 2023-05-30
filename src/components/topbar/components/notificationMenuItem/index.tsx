@@ -1,4 +1,4 @@
-import { Box, CircularProgress, IconButton, MenuItem, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import { NotificationDto, NotificationType } from '../../../../services/api/dtos';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -8,7 +8,6 @@ import SnoozeIcon from '@mui/icons-material/Snooze';
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import AlarmOffIcon from '@mui/icons-material/AlarmOff';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom';
 import PATHS from 'constants/paths';
 
 export interface NotificationIconProps {
@@ -48,7 +47,6 @@ export function NotificationMenuItem({
   onDeleteNotification,
   onClose,
 }: NotificationMenuItemProps) {
-  const navigate = useNavigate();
   const [isHover, setIsHover] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
 
