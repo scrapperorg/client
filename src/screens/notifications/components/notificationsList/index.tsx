@@ -10,13 +10,15 @@ export interface NotificationListProps {
 export function NotificationList({ notifications, onDeleteNotification }: NotificationListProps) {
   return (
     <Fragment>
-      {notifications.map((notification) => (
-        <NotificationsListItem
-          key={notification.id}
-          notification={notification}
-          onDeleteNotification={onDeleteNotification}
-        />
-      ))}
+      {notifications
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .map((notification) => (
+          <NotificationsListItem
+            key={notification.id}
+            notification={notification}
+            onDeleteNotification={onDeleteNotification}
+          />
+        ))}
     </Fragment>
   );
 }
