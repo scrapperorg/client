@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, createRef, useCallback } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import { DocumentDto } from '../../../../services/api/dtos';
+import { useTranslation } from 'react-i18next';
 
 export interface DocumentAttachmentsProps {
   document: DocumentDto;
@@ -20,6 +21,7 @@ function DocumentAttachments({
 }: DocumentAttachmentsProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const documentInput = createRef<HTMLInputElement>();
+  const { t } = useTranslation();
 
   const handleAddDocument = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -71,7 +73,7 @@ function DocumentAttachments({
             loadingPosition='end'
             variant='contained'
           >
-            <span>Ataseaza</span>
+            <span>{t('generic.attach')}</span>
           </LoadingButton>
         </Stack>
       </Grid>

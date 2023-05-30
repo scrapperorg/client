@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { ModalNames } from 'constants/modals';
 import { useForm } from 'react-hook-form';
 import { KeywordDto } from '../../../../services/api/dtos/keyword';
+import { useTranslation } from 'react-i18next';
 
 interface CreateKeywordModalProps {
   keyword: KeywordDto | null;
@@ -20,6 +21,7 @@ export const CreateEditKeywordModal = ({
 }: CreateKeywordModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
   const form = useForm();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (keyword) {
@@ -47,14 +49,14 @@ export const CreateEditKeywordModal = ({
           })}
         >
           <Typography variant='h3' sx={{ mt: 3 }}>
-            {keyword ? 'Editeaza termen' : 'Adauga termen'}
+            {t(`options.${keyword ? 'editTerm' : 'addTerm'}`)}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
             <TextField
               autoComplete='off'
               fullWidth
-              label='Nume'
+              label={t('options.name')}
               variant='outlined'
               error={false}
               helperText={''}
@@ -69,10 +71,10 @@ export const CreateEditKeywordModal = ({
                 onSetKeyword(null);
               }}
             >
-              Anuleaza
+              {t('generic.cancel')}
             </Button>
             <Button type={'submit'} variant={'contained'}>
-              Salveaza
+              {t('generic.save')}
             </Button>
           </Box>
         </form>

@@ -18,6 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { ProjectSearchFormValues } from 'screens/projectsSearch/hooks/useProjectSearchForm';
 import { Dayjs } from 'dayjs';
+import { useTranslation } from 'react-i18next'
 
 const initiator: Record<string, string> = {
   TO_CHANGE_1: 'TO_CHANGE_1',
@@ -46,6 +47,7 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 
 export const SearchForm = (props: SearchFormProps) => {
   const { form, handleSubmit } = props;
+  const { t } = useTranslation();
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -54,7 +56,7 @@ export const SearchForm = (props: SearchFormProps) => {
           <Grid item md={4}>
             <TextField
               fullWidth
-              label='Nume proiect'
+              label={t('projectSearch.title')}
               variant='outlined'
               error={false}
               helperText={''}
@@ -64,7 +66,7 @@ export const SearchForm = (props: SearchFormProps) => {
           <Grid item md={4} sx={{ pl: 4 }}>
             <TextField
               fullWidth
-              label='Nr. de inregistrare'
+              label={t('projectSearch.number')}
               variant='outlined'
               error={false}
               helperText={''}
@@ -74,12 +76,12 @@ export const SearchForm = (props: SearchFormProps) => {
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
             <FormControl fullWidth>
-              <InputLabel id='sursa-document-label'>Forum Legislativ</InputLabel>
+              <InputLabel id='sursa-document-label'>{t('projectSearch.forum')}</InputLabel>
               <Select
                 labelId='forum-legislativ'
                 id='forum'
                 value={''}
-                label='Forum legislativ'
+                label={t('projectSearch.forum')}
                 disabled
                 onChange={() => {
                   /** */
@@ -100,12 +102,12 @@ export const SearchForm = (props: SearchFormProps) => {
         <Grid container>
           <Grid item md={4}>
             <FormControl fullWidth>
-              <InputLabel id='sursa-document-label'>Initiator</InputLabel>
+              <InputLabel id='sursa-document-label'>{t('projectSearch.initiator')}</InputLabel>
               <Select
                 labelId='initiator'
                 id='initiator'
                 value={''}
-                label='Initiator'
+                label={t('projectSearch.initiator')}
                 disabled
                 onChange={() => {
                   /** */
@@ -127,7 +129,7 @@ export const SearchForm = (props: SearchFormProps) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
-                    label="Inregistrat de la:"
+                    label={t('projectSearch.createdAfter')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
@@ -150,7 +152,7 @@ export const SearchForm = (props: SearchFormProps) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
-                    label="Inregistrat pana la:"
+                    label={t('projectSearch.createdBefore')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
@@ -185,14 +187,14 @@ export const SearchForm = (props: SearchFormProps) => {
                   )}
                 />
               }
-              label='Proiect legislativ de interes/cu impact'
+              label={t('projectSearch.presentsInterest')}
             />
           </Grid>
         </Grid>
       </Box>
 
       <ButtonBox>
-        <Button type='submit' variant='contained'>Cauta</Button>
+        <Button type='submit' variant='contained'>{t('generic.search')}</Button>
       </ButtonBox>
     </form>
   );

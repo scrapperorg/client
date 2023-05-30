@@ -5,26 +5,28 @@ import { Link } from 'react-router-dom';
 import PATHS from 'constants/paths';
 import { LoadingButton } from '@mui/lab';
 import {useLoginForm} from "./hooks/useLoginForm";
+import { useTranslation } from 'react-i18next'
 
 export default function LoginScreen() {
   const { handleSubmit, showLoading, showError, loginForm, setShowError } = useLoginForm();
+  const { t } = useTranslation();
 
   return (
     <Background>
       <LoginCard>
         <HeadersContainer>
           <Typography variant='h1' align='center'>
-            Intra in cont
+            {t('login.title')}
           </Typography>
           <Typography variant='h6' align='center'>
-            Foloseste credentialele pentru a accesa contul
+            {t('login.subtitle')}
           </Typography>
         </HeadersContainer>
 
         <form onSubmit={loginForm.handleSubmit(handleSubmit)}>
           <TextField
             fullWidth
-            label='Email'
+            label={t('login.email')}
             variant='outlined'
             error={Boolean(loginForm.formState.errors.email)}
             helperText={loginForm.formState.errors.email?.message}
@@ -34,7 +36,7 @@ export default function LoginScreen() {
           <TextField
             fullWidth
             type='password'
-            label='Password'
+            label={t('login.password')}
             variant='outlined'
             {...loginForm.register('password')}
             error={Boolean(loginForm.formState.errors.password)}
@@ -50,14 +52,14 @@ export default function LoginScreen() {
             size='large'
             loading={showLoading}
           >
-            Intra in cont
+            {t('login.login')}
           </LoadingButton>
         </form>
 
         <Box marginY={4}>
           <Divider />
         </Box>
-        <Link to={PATHS.RECOVER_PASSWORD}>Am uitat parola</Link>
+        <Link to={PATHS.RECOVER_PASSWORD}>{t('login.forgotPass')}</Link>
       </LoginCard>
 
       <Snackbar
@@ -66,7 +68,7 @@ export default function LoginScreen() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-          Ceva nu a mers bine, te rugam sa incerci din nou
+          {t('generic.error')}
         </Alert>
       </Snackbar>
     </Background>

@@ -9,6 +9,7 @@ import { ModalNames } from 'constants/modals';
 import { useModal } from 'screens/usersManagement/hooks/useModal';
 import { AddUserModal } from '../modals/addUserModal';
 import { ChangePasswordModal } from '../modals/changePasswordModal';
+import { useTranslation } from 'react-i18next'
 
 export default function UsersManagementContent () {
 
@@ -19,6 +20,8 @@ export default function UsersManagementContent () {
   const { openModal: openAddUserModal, isModalOpen: isAddUserModalOpen, closeModal  } = useModal(ModalNames.ADD_USER)
 
   const { openModal: openChangePasswordModal, isModalOpen: isChangePasswordModalOpen  } = useModal(ModalNames.CHANGE_PASSWORD)
+
+  const { t } = useTranslation();
 
   const {
     isLoading,
@@ -38,7 +41,7 @@ export default function UsersManagementContent () {
         variant='contained'
         onClick={openAddUserModal}
       >
-        Adauga utilizator
+        {t('usersManagement.addUser')}
       </Button>
     </ButtonBox>
     <Box>
@@ -71,7 +74,7 @@ export default function UsersManagementContent () {
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >
       <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-        Ceva nu a mers bine, te rugam sa incerci din nou
+        {t('generic.error')}
       </Alert>
     </Snackbar>
   </>

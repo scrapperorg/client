@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import joi from 'joi';
 import { LoadingButton } from '@mui/lab';
+import { useTranslation } from 'react-i18next'
 
 export interface ResetPasswordFormValues {
   password: string;
@@ -36,22 +37,23 @@ export const ResetForm = ({ handleSubmit, showLoading } : RestFormProps) => {
     defaultValues: { password: '', repeat_password: 'password' },
     resolver: joiResolver(resetPasswordSchema),
   });
+  const { t } = useTranslation();
 
   return (
     <>
       <HeadersContainer>
         <Typography variant='h1' align='center'>
-          Reseteaza parola
+          {t('resetPassword.resetPass')}
         </Typography>
         <Typography variant='h6' align='center'>
-          Introdu noua parola
+          {t('resetPassword.reenterPass')}
         </Typography>
       </HeadersContainer>
 
       <form onSubmit={recoverPasswordForm.handleSubmit(handleSubmit)}>
         <TextField
           fullWidth
-          label='Parola'
+          label={t('resetPassword.pass')}
           type='password'
           variant='outlined'
           error={Boolean(recoverPasswordForm.formState.errors.password)}
@@ -62,7 +64,7 @@ export const ResetForm = ({ handleSubmit, showLoading } : RestFormProps) => {
 
         <TextField
           fullWidth
-          label='Repeta Parola'
+          label={t('resetPassword.repeatPass')}
           type='password'
           variant='outlined'
           error={Boolean(recoverPasswordForm.formState.errors.password)}
@@ -79,7 +81,7 @@ export const ResetForm = ({ handleSubmit, showLoading } : RestFormProps) => {
           size='large'
           loading={showLoading}
         >
-          Reseteaza parola
+          {t('resetPassword.resetPass')}
         </LoadingButton>
       </form>
     </>

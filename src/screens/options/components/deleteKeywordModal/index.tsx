@@ -5,6 +5,7 @@ import { Box, Button, IconButton, styled, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ModalNames } from 'constants/modals';
 import { KeywordDto } from '../../../../services/api/dtos/keyword';
+import { useTranslation } from 'react-i18next';
 
 interface DeleteKeywordModalProps {
   onDelete: () => void;
@@ -13,6 +14,7 @@ interface DeleteKeywordModalProps {
 
 export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKeywordModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -32,12 +34,12 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
         <CloseIcon />
       </StyledModalCloseButton>
       <StyledModalContainer>
-        <Typography variant='h3'>ATENTIE!</Typography>
+        <Typography variant='h3'>{t('options.deleteTermTitle')}</Typography>
         <br />
         <Typography variant='h3' sx={{ mb: 3 }}>
-          Modificarea cuvintelor cheie va fi aplicata pentru toti utilizatorii aplicatiei.
+            {t('options.firstAttentionMessage')}
           <br />
-          Confirmati?
+            {t('options.secondAttentionMessage')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
           <Button
@@ -46,7 +48,7 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
               closeModal();
             }}
           >
-            Nu
+              {t('options.noDelete')}
           </Button>
           <Button
             variant='contained'
@@ -57,7 +59,7 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
               closeModal();
             }}
           >
-            Da
+              {t('options.yesDelete')}
           </Button>
         </Box>
       </StyledModalContainer>

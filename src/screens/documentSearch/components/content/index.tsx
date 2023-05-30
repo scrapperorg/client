@@ -6,8 +6,7 @@ import { Loading } from 'components/loading';
 import { useDocumentSearchForm } from 'screens/documentSearch/hooks/useDocumentSearchForm';
 import { SearchForm } from '../searchForm';
 import { Alert, Snackbar } from '@mui/material';
-
-
+import { useTranslation } from 'react-i18next';
 
 export default function DocumentsSearchContent() {
 
@@ -19,6 +18,7 @@ export default function DocumentsSearchContent() {
     results,
     documentSearchForm
   } = useDocumentSearchForm();
+  const { t } = useTranslation();
 
   const loading = (
     <Box>
@@ -53,7 +53,7 @@ export default function DocumentsSearchContent() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-          Ceva nu a mers bine, te rugam sa incerci din nou
+            {t('documentSearch.searchError')}
         </Alert>
       </Snackbar>
     </>

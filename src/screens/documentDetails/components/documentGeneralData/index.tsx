@@ -8,6 +8,7 @@ import { PdfViewer } from 'components/pdfViewer';
 import { SourceDescription } from 'constants/sources';
 import styled from 'styled-components';
 import config from '../../../../config/index';
+import { useTranslation } from 'react-i18next';
 
 interface DocumentGeneralDataProps {
   document: DocumentDto;
@@ -15,6 +16,7 @@ interface DocumentGeneralDataProps {
 
 function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
   const [isPdfVisible, setIsPdfVisible] = useState(false);
+  const { t } = useTranslation();
 
   const handleClosePdf = useCallback(() => setIsPdfVisible(false), [setIsPdfVisible]);
   const handleOpenPdf = useCallback(() => setIsPdfVisible(true), [setIsPdfVisible]);
@@ -32,19 +34,19 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
             <Grid container spacing={4}>
               <Grid item md={4}>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Titlu document:
+                  {t('documentView.generalData.title')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Proiect Legislativ:
+                  {t('documentView.generalData.project')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Identificator:
+                  {t('documentView.generalData.identifier')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Data publicarii:
+                  {t('documentView.generalData.publicationDate')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Sursa:
+                  {t('documentView.generalData.source')}
                 </Typography>
               </Grid>
               <Grid item md={8}>
@@ -76,11 +78,11 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
         <Stack gap={4}>
           <Button variant='contained'>
             <LinkNoStyle target='_blank' href={document.link} rel='noreferrer'>
-              Vizualizare document original
+              {t('documentView.generalData.viewOriginal')}
             </LinkNoStyle>
           </Button>
           <Button variant='contained' onClick={handleOpenPdf} disabled={!document.highlightFile}>
-            Vizualizare document procesat
+            {t('documentView.generalData.viewProcessed')}
           </Button>
           {/*<Button variant='contained'>Descarca original</Button>*/}
           {/*<Button variant='contained'>Descarca document procesat</Button>*/}

@@ -6,6 +6,7 @@ import { useProjectSearchForm } from 'screens/projectsSearch/hooks/useProjectSea
 import styled from 'styled-components';
 import { Loading } from 'components/loading';
 import { Alert, Snackbar } from '@mui/material';
+import { useTranslation } from 'react-i18next'
 
 export default function ProjectsSearchContent() {
   const {
@@ -16,6 +17,7 @@ export default function ProjectsSearchContent() {
     results,
     projectSearchForm
   } = useProjectSearchForm()
+  const { t } = useTranslation();
 
   const loading = (
     <Box>
@@ -52,7 +54,7 @@ export default function ProjectsSearchContent() {
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
           <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-            Ceva nu a mers bine, te rugam sa incerci din nou
+            {t('generic.error')}
           </Alert>
         </Snackbar>
     </>

@@ -2,12 +2,15 @@ import React from 'react';
 import { ProjectDto } from "services/api/dtos";
 import { Box, Grid, Typography } from '@mui/material';
 import StarsIcon from '@mui/icons-material/Stars';
+import { useTranslation } from 'react-i18next';
 
 interface ProjectHeaderProps {
   project: ProjectDto;
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ mb: 4 }}>
       <Grid container>
@@ -22,7 +25,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                 <Grid item>
                   <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <StarsIcon color="primary" fontSize="medium" sx={{mr: 2}}/>
-                    <Typography>Proiect legislativ de interes/cu impact</Typography>
+                    <Typography>{t('projectView.projectHeader')}</Typography>
                   </Box>
                 </Grid>
               }

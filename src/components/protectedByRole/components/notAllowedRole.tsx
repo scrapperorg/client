@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const StyledLoading = styled(Box)`
   width: 100%;
@@ -12,9 +13,11 @@ const StyledLoading = styled(Box)`
 `;
 
 export function NotAllowedRole() {
+  const { t } = useTranslation();
+
   return (
     <StyledLoading>
-      <Typography>Sorry, you are not allowed to see this section.</Typography>
+      <Typography>{t('notAllowed')}</Typography>
     </StyledLoading>
   );
 }

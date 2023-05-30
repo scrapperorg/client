@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useProjectLink from "../../hooks/useProjectLink";
 import {Loading} from "../../../../components/loading";
 import {Link} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 interface ProjectGeneralDataProps {
   project: ProjectDto;
@@ -12,6 +13,7 @@ interface ProjectGeneralDataProps {
 
 export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
   const {project: linkProject, loading, fetchProjectLink} = useProjectLink();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchProjectLink(project);
@@ -43,7 +45,6 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
     return <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareCDep || '-'}</Typography>
   }
 
-
   return (
     <Box sx={{mb: 4}}>
       <Grid container>
@@ -58,27 +59,26 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
                   {project.publicationDate &&
                       <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Data publicarii:</Typography>}
                   {project.numarInregistrareSenat &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Senat:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.registrationNumberSenat')}</Typography>}
                   {project.numarInregistrareCDep &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Camera
-                          Deputatilor:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.registrationNumberCD')}</Typography>}
                   {project.numarInregistrareGuvern &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Nr. inregistrare Guvern:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.registrationNumberGov')}</Typography>}
                   {project.proceduraLegislativa &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Procedura Legislativa:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.procedure')}</Typography>}
                   {project.cameraDecizionala &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Camera decizionala:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.decisionChamber')}</Typography>}
                   {project.termenAdoptare &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Termen adoptare:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.term')}</Typography>}
                   {project.tipInitiativa &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Tip initiativa:</Typography>}
-                  {project.caracter && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Caracter:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.type')}</Typography>}
+                  {project.caracter && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.character')}</Typography>}
                   {project.esteProceduraDeUrgenta &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Procedura de urgenta:</Typography>}
-                  {project.stadiu && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Stadiu:</Typography>}
-                  {project.initiator && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Initiator:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.emergencyProcedure')}</Typography>}
+                  {project.stadiu && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.stage')}</Typography>}
+                  {project.initiator && <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.initiator')}</Typography>}
                   {project.consultati &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Consultati:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.consulted')}</Typography>}
                 </PropertiesGrid>
 
                 <Grid item md={8}>
@@ -123,7 +123,7 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
 
         <Grid item md={2} sx={{pl: 4}}>
           <Stack gap={4}>
-            <Button variant='contained'>Ataseaza document</Button>
+            <Button variant='contained'>{t('projectView.attachDoc')}</Button>
           </Stack>
         </Grid>
 

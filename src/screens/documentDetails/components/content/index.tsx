@@ -10,9 +10,11 @@ import DocumentAttachments from '../documentAttachments';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { useDocumentDetails } from 'screens/documentDetails/hooks/useDocumentDetails';
 import { ModalNames } from 'constants/modals';
+import { useTranslation } from 'react-i18next';
 
 export default function DocumentDetailsContent() {
   const { assignableResponsibles } = useContext(DocumentDetailsContext);
+  const { t } = useTranslation();
 
   const { openModal, modalName } = useContext(InteractiveComponentsContext);
 
@@ -39,13 +41,13 @@ export default function DocumentDetailsContent() {
         <Grid item md={10}>
           <Grid container justifyContent='space-between'>
             <Grid item>
-              <Typography variant='h2'>Document</Typography>
+              <Typography variant='h2'>{t('documentView.title')}</Typography>
             </Grid>
             {document.isRulesBreaker && (
               <Grid item>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <WarningIcon color='warning' fontSize='medium' sx={{ mr: 2 }} />
-                  <Typography>Acest document contravine normelor in vigoare</Typography>
+                  <Typography>{t('documentView.rulesBreaker')}</Typography>
                 </Box>
               </Grid>
             )}

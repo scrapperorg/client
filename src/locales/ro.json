@@ -1,0 +1,181 @@
+{
+  "monitor": {
+    "docsNeanalizate": "Documente ne-analizate",
+    "projNeanalizate": "Proiecte ne-analizate",
+    "totalRoboti": "Total roboti",
+    "robotiFunctionali": "Roboti functionali",
+    "monitor": "Monitor",
+    "nou": "Nou",
+    "sources": "Surse"
+  },
+  "tooltips": {
+    "projectPresentsInterest": "Proiect de interes/cu impact",
+    "documentIsRulesBreaker": "Document ce contravine normelor in vigoare",
+    "isDateOverdue": "Data limita atinsa"
+  },
+  "documentsTable": {
+    "status": {
+      "nou": "Nou",
+      "in_analiza": "In analiza",
+      "revizuit": "Revizuit"
+    },
+    "source": {
+      "senat": "Senat",
+      "senat_pl": "Senat",
+      "guvern": "Guvern",
+      "camera_deputatilor": "Camera Deputatilor",
+      "camera_deputatilor_pl": "Camera Deputatilor PL-X",
+      "mfinante": "Ministerul Finantelor",
+      "mmediu": "Ministerul Mediului",
+      "mdezvoltarii": "Ministerul Dezvoltarii",
+      "meducatiei": "Ministerul Educatiei",
+      "mtransport": "Ministerul Transporturilor",
+      "mjustitiei": "Ministerul Justitiei",
+      "mae": "Ministerul Afacerilor Externe",
+      "mai": "Ministerul Afacerilor Interne",
+      "mapn": "Ministerul Apararii Nationale"
+    },
+    "lipsaResponsabil": "Lipsa responsabil"
+  },
+  "documentView": {
+    "title": "Document",
+    "rulesBreaker": "Acest document contravine normelor in vigoare",
+    "generalData": {
+      "title": "Titlu document:",
+      "project": "Proiect Legislativ:",
+      "identifier": "Identificator:",
+      "publicationDate": "Data publicarii:",
+      "source": "Sursa:",
+      "viewOriginal": "Vizualizare document original",
+      "viewProcessed": "Vizualizare document procesat"
+    },
+    "processedData": {
+      "status": "Status OCR-izare:",
+      "format": "Format original:",
+      "pages": "Nr de pagini:",
+      "terms": "Termeni identificati:",
+      "precision": "Precizie procesare inteligenta:",
+      "updateError": "Nu s-a putut actualiza",
+      "downloadProcessedDoc": "Descarca document analizat"
+    },
+    "activity": {
+      "status": "Stare:",
+      "responsible": "Responsabil:",
+      "noResponsible": "Nu exista un responsabil asignat",
+      "deadline": "Termen predare:",
+      "noDeadline": "Lipsa termen predare",
+      "decision": "Concluzia analizei legislative:",
+      "updateAnalysis": "Actualizeaza datele analizei"
+    }
+  },
+  "documentSearch": {
+    "searchError": "Ceva nu a mers bine, te rugam sa incerci din nou",
+    "identifier": "Identificator",
+    "title": "Titlu document",
+    "source": "Sursa",
+    "status": "Stare",
+    "responsible": "Responsabil",
+    "project": "Proiect",
+    "publishedAfter": "Publicat de la:",
+    "publishedBefore": "Publicat pana la:",
+    "content": "Documentul contine textul...",
+    "rulesBreaker": "Document ce contravine normelor in vigoare",
+    "important": "Proiect legislativ cu impact",
+    "noResults": "Nu exista rezultate"
+  },
+  "projectView": {
+    "registrationNumberSenat": "Nr. inregistrare Senat:",
+    "registrationNumberCD": "Nr. inregistrare Camera Deputatilor:",
+    "registrationNumberGov": "Nr. inregistrare Guvern:",
+    "procedure": "Procedura Legislativa:",
+    "decisionChamber": "Camera decizionala:",
+    "term": "Termen adoptare:",
+    "type": "Tip initiativa:",
+    "character": "Caracter:",
+    "emergencyProcedure": "Procedura de urgenta:",
+    "stage": "Stadiu:",
+    "initiator": "Initiator:",
+    "consulted": "Consultati:",
+    "attachDoc": "Ataseaza document",
+    "projectHeader": "Proiect legislativ de interes/cu impact"
+  },
+  "projectSearch": {
+    "title": "Nume proiect",
+    "number": "Nr. de inregistrare",
+    "forum": "Forum legislativ",
+    "initiator": "Initiator",
+    "createdAfter": "Inregistrat de la:",
+    "createdBefore": "Inregistrat pana la:",
+    "presentsInterest": "Proiect legislativ de interes/cu impact"
+  },
+  "generic": {
+    "noResults": "Nu exista rezultate",
+    "noRole": "Lipsa rol",
+    "cancel": "Anuleaza",
+    "save": "Salveaza",
+    "attach": "Ataseaza",
+    "error": "Ceva nu a mers bine, te rugam sa incerci din nou",
+    "search": "Cauta"
+  },
+  "profile": {
+    "goToProfilePage": "Vezi profil",
+    "logout": "Iesi din cont"
+  },
+  "notAllowed": "Sorry, you are not allowed to see this section.",
+  "topbar": {
+    "notifications": "Notificari",
+    "myProfile": "Profilul meu"
+  },
+  "updateAnalysis": {
+    "assignResponsible": "Asigneaza responsabil:",
+    "user": "Utilizator",
+    "updateStatus": "Actualizeaza status:",
+    "status": "Status",
+    "updateDeadline": "Actualizeaza termen:",
+    "deadline": "Termen",
+    "updateDecision": "Concluzia analizei legislative:",
+    "decision": "Concluzie"
+  },
+  "login": {
+    "title": "Intra in cont",
+    "subtitle": "Foloseste credentialele pentru a accesa contul",
+    "email": "Email",
+    "password": "Parola",
+    "login": "Intra in cont",
+    "forgotPass": "Am uitat parola"
+  },
+  "recoverPassword": {
+    "title": "Reseteaza parola",
+    "subtitle": "Introdu emailul asociat contului tau pentru a incepe procesul de resetare a parolei",
+    "email": "Email",
+    "send": "Trimite"
+  },
+  "resetPassword": {
+    "resetPass": "Reseteaza parola",
+    "reenterPass": "Introdu noua parola",
+    "pass": "Parola",
+    "repeatPass": "Repeta Parola"
+  },
+  "options": {
+    "addTerm": "Adauga termen",
+    "editTerm": "Editeaza termen",
+    "name": "Nume",
+    "deleteTermTitle": "Atentie",
+    "firstAttentionMessage": "Modificarea cuvintelor cheie va fi aplicata pentru toti utilizatorii aplicatiei.",
+    "secondAttentionMessage": "Confirmati?",
+    "noDelete": "Nu",
+    "yesDelete": "Da"
+  },
+  "usersManagement": {
+    "addUser": "Adauga utilizator",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "Email",
+    "role": "Rol",
+    "password": "Parola",
+    "confirmPassword": "Confirma parola",
+    "submitForm": "Adauga",
+    "changePassword": "Schimba parola:",
+    "changePasswordConfirmation": "Schimba parola"
+  }
+}

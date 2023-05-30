@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Role } from 'constants/roles';
 import { RoleDescription } from 'constants/roles';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import { useTranslation } from 'react-i18next'
 
 interface AddUserFormProps {
   form: UseFormReturn<AddUserFormValues, any>,
@@ -18,6 +18,7 @@ const roles = [Role.ITA, Role.LSE, Role.LSS]
 
 export const AddUserForm = (props: AddUserFormProps) => {
   const { form, handleSubmit, successMessage } = props;
+  const { t } = useTranslation();
 
   const SuccessMessage = () => (
     <ColoredSuccessMessage variant="h4" sx={{ mb: 8 }}>
@@ -29,7 +30,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
     <form onSubmit={form.handleSubmit(handleSubmit)}>
 
       <Typography variant="h2" sx={{ mb: 8 }}>
-        Adauga utilizator:
+          {t('usersManagement.addUser')}
       </Typography>
 
       {successMessage && <SuccessMessage />}
@@ -39,7 +40,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
           <Grid item md={6}>
             <TextField
               fullWidth
-              label='Prenume'
+              label={t('usersManagement.firstName')}
               variant='outlined'
               error={Boolean(form.formState.errors.name)}
               helperText={form.formState.errors.name?.message}
@@ -49,7 +50,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
           <Grid item md={6} sx={{ pl: 4 }}>
             <TextField
               fullWidth
-              label='Nume'
+              label={t('usersManagement.lastName')}
               variant='outlined'
               error={Boolean(form.formState.errors.surname)}
               helperText={form.formState.errors.surname?.message}
@@ -64,7 +65,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
           <Grid item md={6}>
             <TextField
               fullWidth
-              label='Email'
+              label={t('usersManagement.email')}
               variant='outlined'
               error={Boolean(form.formState.errors.email)}
               helperText={form.formState.errors.email?.message}
@@ -73,11 +74,11 @@ export const AddUserForm = (props: AddUserFormProps) => {
           </Grid>
           <Grid item md={6} sx={{ pl: 4 }}>
             <FormControl fullWidth sx={{ mb: 5 }}>
-              <InputLabel id="role-label">Rol</InputLabel>
+              <InputLabel id="role-label">{t('usersManagement.role')}</InputLabel>
               <Select
                 labelId="role"
                 id="rol"
-                label="Rol"
+                label={t('usersManagement.role')}
                 value={form.watch('role') || ''}
                 {...form.register('role')}
                 endAdornment={
@@ -104,7 +105,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
           <Grid item md={6}>
             <TextField
               fullWidth
-              label='Parola'
+              label={t('usersManagement.password')}
               type='password'
               variant='outlined'
               error={Boolean(form.formState.errors.password)}
@@ -115,7 +116,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
           <Grid item md={6} sx={{ pl: 4 }}>
             <TextField
               fullWidth
-              label='Confirma parola'
+              label={t('usersManagement.confirmPassword')}
               type='password'
               variant='outlined'
               error={Boolean(form.formState.errors.confirmPassword)}
@@ -127,7 +128,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
       </Box>
 
       <ButtonBox>
-        <Button type='submit' variant='contained'>Adauga</Button>
+        <Button type='submit' variant='contained'>{t('usersManagement.submitForm')}</Button>
       </ButtonBox>
       
     </form>

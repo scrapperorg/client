@@ -25,6 +25,7 @@ import { Decision, Status } from 'services/api/dtos/document';
 import { Translations } from 'constants/translations';
 import { UseFormReturn, Controller } from 'react-hook-form';
 import { AssignResponsibleModalFormValues } from 'screens/documentDetails/hooks/useDocumentDetails';
+import { useTranslation } from 'react-i18next';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
@@ -49,6 +50,7 @@ const isOutOfRange = (date: Dayjs) => {
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
   const { assignableResponsibles, responsible, deadline, documentStatus, documentDecision, form, handleSubmitDocumentAnalysis } = props;
+  const { t } = useTranslation();
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     e.preventDefault();
@@ -78,16 +80,18 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
         })}>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
-            Asigneaza responsabil:
+            {t('updateAnalysis.assignResponsible')}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
-            <InputLabel id='sursa-document-label'>Utilizator</InputLabel>
+            <InputLabel id="sursa-document-label">
+              {t('updateAnalysis.user')}
+            </InputLabel>
             <Select
               labelId='responsabil'
               id='responsabil'
-              value={form.watch('assignedUser') || responsible?.id || ''}
-              label='Responsabil'
+              value={form.watch('assignedUser') || (responsible?.id || '')}
+              label={t('updateAnalysis.user')}
               {...form.register('assignedUser')}
             >
               {assignableResponsibles.map((user: UserDto) => (
@@ -100,18 +104,18 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
-            Actualizeaza status:
+            {t('updateAnalysis.updateStatus')}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
             <InputLabel id="status-document-label">
-              Status
+              {t('updateAnalysis.status')}
             </InputLabel>
             <Select
               labelId='status'
               id='status'
               value={form.watch('status') || documentStatus}
-              label='Status'
+              label={t('updateAnalysis.status')}
               {...form.register('status')}
             >
                {Object.values(Status).map((statusValue) => (
@@ -123,7 +127,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
           </FormControl>
 
           <Typography variant='h3' sx={{ mt: 8 }}>
-            Actualizeaza termen:
+            {t('updateAnalysis.updateDeadline')}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4 }}>
@@ -134,7 +138,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
-                    label="Termen"
+                    label={t('updateAnalysis.deadline')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
                     value={field.value || deadline}
                     shouldDisableDate={isOutOfRange}
@@ -151,18 +155,18 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
-            Concluzia analizei legislative:
+            {t('updateAnalysis.updateDecision')}
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 4, mb: 7 }}>
             <InputLabel id="status-document-label">
-              Concluzie
+              {t('updateAnalysis.decision')}
             </InputLabel>
             <Select
               labelId='concluzie'
               id='concluzie'
               value={form.watch('decision') || documentDecision}
-              label='Concluzie'
+              label={t('updateAnalysis.decision')}
               {...form.register('decision')}
             >
                {Object.values(Decision).map((decisionValue) => (
@@ -183,7 +187,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                 form.reset();
               }}
             >
-              Anuleaza
+              {t('generic.cancel')}
             </Button>
             </Grid>
             <Grid item>
@@ -191,7 +195,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
               variant='contained'
               type='submit'
             >
-              Salveaza
+              {t('generic.save')}
             </Button>
             </Grid>
           </Grid>
