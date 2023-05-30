@@ -6,6 +6,8 @@ export interface ProjectDto {
   updatedAt: Date;
   presentsInterest: boolean;
   title: string;
+  url: string;
+  publicationDate: string;
 
   documents: DocumentDto[];
 
