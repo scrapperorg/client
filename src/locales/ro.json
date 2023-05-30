@@ -84,6 +84,8 @@
     "noResults": "Nu exista rezultate"
   },
   "projectView": {
+    "projectUrl": "URL proiect:",
+    "publicationDate": "Data publicarii:",
     "registrationNumberSenat": "Nr. inregistrare Senat:",
     "registrationNumberCD": "Nr. inregistrare Camera Deputatilor:",
     "registrationNumberGov": "Nr. inregistrare Guvern:",

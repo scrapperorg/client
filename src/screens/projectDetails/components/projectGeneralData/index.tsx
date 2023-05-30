@@ -55,9 +55,9 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
               <Grid container spacing={4}>
                 <PropertiesGrid item md={4}>
                   {project.url &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>URL proiect:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.projectUrl')}</Typography>}
                   {project.publicationDate &&
-                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>Data publicarii:</Typography>}
+                      <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.publicationDate')}</Typography>}
                   {project.numarInregistrareSenat &&
                       <Typography variant="h5" sx={{mb: 3, fontWeight: 500}}>{t('projectView.registrationNumberSenat')}</Typography>}
                   {project.numarInregistrareCDep &&
