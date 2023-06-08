@@ -43,7 +43,7 @@ interface AssignResponsibleModalProps {
 const isOutOfRange = (date: Dayjs) => {
   const futureDate = new Date();
   futureDate.setFullYear(futureDate.getFullYear() + 1);
-  return date.toDate() < new Date() || date.toDate() > futureDate;
+  return date.toDate().getTime() < new Date().setHours(0, 0, 0, 0) || date.toDate() > futureDate;
 }
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
