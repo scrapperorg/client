@@ -7,6 +7,7 @@ import { DocumentDto } from 'services/api/dtos';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import { pink } from '@mui/material/colors';
 import { isDateOverdue } from 'helpers/formatters';
+import { useTranslation } from 'react-i18next';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -17,20 +18,22 @@ export interface DocumentMarksProps {
 }
 
 export const DocumentMarks = ({ document }: DocumentMarksProps) => {
+  const { t } = useTranslation();
+
   return (
     <StyledBox>
       {document.project?.presentsInterest && (
-        <Tooltip title='Proiect de interes/cu impact' placement='top'>
+        <Tooltip title={t('tooltips.projectPresentsInterest')} placement='top'>
           <StarsIcon color='primary' fontSize='small' />
         </Tooltip>
       )}
       {document.isRulesBreaker && (
-        <Tooltip title='Document ce contravine normelor in vigoare' placement='top'>
+        <Tooltip title={t('tooltips.documentIsRulesBreaker')} placement='top'>
           <WarningIcon color='warning' fontSize='small' />
         </Tooltip>
       )}
       {isDateOverdue(document.deadline) && (
-        <Tooltip title='Data limita atinsa' placement='top'>
+        <Tooltip title={t('tooltips.isDateOverdue')} placement='top'>
           <EventBusyIcon sx={{ color: pink[400] }} fontSize='small' />
         </Tooltip>
       )}

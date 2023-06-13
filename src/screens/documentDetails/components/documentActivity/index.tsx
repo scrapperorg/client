@@ -8,6 +8,7 @@ import { ModalNames } from 'constants/modals';
 import { Translations } from 'constants/translations';
 import { AssignResponsibleModalFormValues } from 'screens/documentDetails/hooks/useDocumentDetails';
 import { UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface DocumentActivityProps {
   document: DocumentDto;
@@ -24,10 +25,11 @@ interface DocumentActivityProps {
 
 function DocumentActivity(props: DocumentActivityProps) {
   const { document, openModal, assignableResponsibles, assignResponsible, setDeadline, setStatus, setDecision, form, handleSubmitDocumentAnalysis } = props;
+  const { t } = useTranslation();
 
   const assignedUser = document.assignedUser
     ? `${document.assignedUser.surname} ${document.assignedUser.name}`
-    : 'Nu exista un responsabil asignat';
+    : t('documentView.activity.noResponsible');
 
   return (
     <>
@@ -39,16 +41,16 @@ function DocumentActivity(props: DocumentActivityProps) {
               <Grid container spacing={4}>
                 <Grid item md={4}>
                   <Typography variant='h4' sx={{ mb: 3 }}>
-                    Stare:
+                    {t('documentView.activity.status')}
                   </Typography>
                   <Typography variant='h4' sx={{ mb: 3 }}>
-                    Responsabil:
+                    {t('documentView.activity.responsible')}
                   </Typography>
                   <Typography variant='h4' sx={{ mb: 3 }}>
-                    Termen Predare:
+                    {t('documentView.activity.deadline')}
                   </Typography>
                   <Typography variant='h4' sx={{ mb: 3 }}>
-                    Concluzia analizei legislative:
+                    {t('documentView.activity.decision')}
                   </Typography>
                 </Grid>
                 <Grid item md={8}>
@@ -59,7 +61,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                     {assignedUser}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    {document.deadline ? <FormattedDate date={document.deadline} /> : 'Lipsa termen predare'}
+                    {document.deadline ? <FormattedDate date={document.deadline} /> : t('documentView.activity.noDeadline')}
                   </Typography>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     {Translations[document.decision]}
@@ -77,7 +79,7 @@ function DocumentActivity(props: DocumentActivityProps) {
                 openModal(ModalNames.ASSIGN_RESP);
               }}
             >
-              Actualizeaza datele analizei
+              {t('documentView.activity.updateAnalysis')}
             </Button>
           </Stack>
         </Grid>

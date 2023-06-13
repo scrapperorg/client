@@ -26,6 +26,7 @@ import { Dayjs } from 'dayjs';
 import { Translations } from 'constants/translations';
 import { ProjectDto } from 'services/api/dtos';
 import { useProjectSearch } from 'screens/documentSearch/hooks/useProjectSearch';
+import { useTranslation } from 'react-i18next';
 
 const Status: Record<string, string> = {
   nou: 'Nou',
@@ -53,6 +54,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const { form, handleSubmit } = props;
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
+  const { t } = useTranslation();
 
   const renderProjectOption = (props: React.HTMLAttributes<HTMLLIElement>, option: ProjectDto) => {
     return (
@@ -87,7 +89,7 @@ export const SearchForm = (props: SearchFormProps) => {
           <Grid item md={3}>
             <TextField
               fullWidth
-              label='Identificator'
+              label={t('documentSearch.identifier')}
               variant='outlined'
               error={false}
               helperText={''}
@@ -97,7 +99,7 @@ export const SearchForm = (props: SearchFormProps) => {
           <Grid item md={3} sx={{ pl: 4 }}>
             <TextField
               fullWidth
-              label='Titlu document'
+              label={t('documentSearch.title')}
               variant='outlined'
               error={false}
               helperText={''}
@@ -106,11 +108,11 @@ export const SearchForm = (props: SearchFormProps) => {
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
             <FormControl fullWidth>
-              <InputLabel id="sursa-document-label">Sursa</InputLabel>
+              <InputLabel id="sursa-document-label">{t('documentSearch.source')}</InputLabel>
               <Select
                 labelId="sursa-document"
                 id="sursa"
-                label="Sursa"
+                label={t('documentSearch.source')}
                 value={form.watch('source') || ''}
                 {...form.register('source')}
                 endAdornment={
@@ -131,11 +133,11 @@ export const SearchForm = (props: SearchFormProps) => {
           </Grid>
           <Grid item md={3} sx={{ pl: 4 }}>
             <FormControl fullWidth>
-              <InputLabel id="stare-document-label">Stare</InputLabel>
+              <InputLabel id="stare-document-label">{t('documentSearch.status')}</InputLabel>
               <Select
                 labelId="stare-document"
                 id="stare"
-                label="Stare"
+                label={t('documentSearch.status')}
                 {...form.register('status')}
                 value={form.watch('status') || ''}
                 endAdornment={
@@ -161,11 +163,11 @@ export const SearchForm = (props: SearchFormProps) => {
         <Grid container>
           <Grid item md={3}>
             <FormControl fullWidth>
-              <InputLabel id="responsabil-label">Responsabil</InputLabel>
+              <InputLabel id="responsabil-label">{t('documentSearch.responsible')}</InputLabel>
               <Select
                 labelId="responsabil"
                 id="responsabil"
-                label="Responsabil"
+                label={t('documentSearch.responsible')}
                 value={form.watch('assignedUserId') || ''}
                 {...form.register('assignedUserId')}
                 endAdornment={
@@ -209,7 +211,7 @@ export const SearchForm = (props: SearchFormProps) => {
                   includeInputInList
                   filterSelectedOptions
                   value={projectSearchValue}
-                  noOptionsText="Nu exista rezultate"
+                  noOptionsText={t('documentSearch.noResults')}
                   onChange={(event: any, newValue: ProjectDto | null) => {
                     projectSearchSetOptions(newValue ? [newValue, ...projectSearchOptions] : projectSearchOptions);
                     projectSearchSetValue(newValue);
@@ -219,7 +221,7 @@ export const SearchForm = (props: SearchFormProps) => {
                     projectSearchSetInputValue(newInputValue);
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Proiect" fullWidth />
+                    <TextField {...params} label={t('documentSearch.project')} fullWidth />
                   )}
                   renderOption={renderProjectOption}
                 />
@@ -234,7 +236,7 @@ export const SearchForm = (props: SearchFormProps) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
-                    label="Publicat de la:"
+                    label={t('documentSearch.publishedAfter')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
@@ -257,7 +259,7 @@ export const SearchForm = (props: SearchFormProps) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
-                    label="Publicat pana la:"
+                    label={t('documentSearch.publishedBefore')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
                     value={field.value || null}
                     shouldDisableDate={isInTheFuture}
@@ -278,7 +280,7 @@ export const SearchForm = (props: SearchFormProps) => {
       <Box>
         <TextField
           fullWidth
-          label='Documentul contine textul...'
+          label={t('documentSearch.content')}
           variant='outlined'
           error={false}
           helperText={''}
@@ -303,13 +305,13 @@ export const SearchForm = (props: SearchFormProps) => {
                   )}
                 />
               }
-              label="Document ce contravine normelor in vigoare"
+              label={t('documentSearch.rulesBreaker')}
             />
           </Grid>
           <Grid item md={6} sx={{ pl: 4 }}>
             <FormControlLabel
               control={<Checkbox checked={false}/>}
-              label="Proiect legislativ cu impact"
+              label={t('documentSearch.important')}
               disabled
             />
           </Grid>
@@ -317,7 +319,7 @@ export const SearchForm = (props: SearchFormProps) => {
       </Box>
 
       <ButtonBox>
-        <Button type='submit' variant='contained'>Cauta</Button>
+        <Button type='submit' variant='contained'>{t('generic.search')}</Button>
       </ButtonBox>
     </form>
   )

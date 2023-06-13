@@ -5,6 +5,7 @@ import MonitorCard from '../monitorCard';
 import MonitorDoubleCard from '../monitorDoubleCard';
 import { User } from '../../../../contexts/authContext';
 import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 function generateGreet() {
   const nowUtc = new Date();
@@ -30,6 +31,7 @@ export interface CardsListProps {
 export default function CardsList({ user }: CardsListProps) {
   const { monitorCardsList } = useContext(MonitorContext);
   const greet = generateGreet();
+  const { t } = useTranslation();
 
   return (
     <Box>
@@ -38,17 +40,17 @@ export default function CardsList({ user }: CardsListProps) {
       </Typography>
       <Grid container spacing={8}>
         <Grid item xs={3}>
-          <MonitorCard title={monitorCardsList.documentsCount} subtitle='Documente ne-analizate' />
+          <MonitorCard title={monitorCardsList.documentsCount} subtitle={t('monitor.docsNeanalizate')} />
         </Grid>
         <Grid item xs={3}>
-          <MonitorCard title={monitorCardsList.projectsCount} subtitle='Proiecte ne-analizate' />
+          <MonitorCard title={monitorCardsList.projectsCount} subtitle={t('monitor.projNeanalizate')} />
         </Grid>
         <Grid item xs={6}>
           <MonitorDoubleCard
             titleLeft={monitorCardsList.robotsCount}
             titleRight={monitorCardsList.failedRobotsCount}
-            subtitleLeft='Total Roboti'
-            subtitleRight='Roboti functionali'
+            subtitleLeft={t('monitor.totalRoboti')}
+            subtitleRight={t('monitor.robotiFunctionali')}
           />
         </Grid>
       </Grid>

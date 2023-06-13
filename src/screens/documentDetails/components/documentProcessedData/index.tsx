@@ -4,6 +4,7 @@ import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/materia
 import { DocumentDto } from 'services/api/dtos';
 import { Translations } from 'constants/translations';
 import CircularProgressIndicator from 'components/circularProgressIndicator';
+import { useTranslation } from 'react-i18next';
 
 interface DocumentProcessedDataProps {
   onDownloadOcrPdf: () => void;
@@ -13,6 +14,8 @@ interface DocumentProcessedDataProps {
 
 function DocumentProcessedData(props: DocumentProcessedDataProps) {
   const { onDownloadOcrPdf, onReanalyseDocument, document } = props;
+  const { t } = useTranslation();
+
   return (
     <Grid container spacing={4}>
       <Grid item md={10}>
@@ -22,33 +25,33 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
             <Grid container spacing={4}>
               <Grid item md={4}>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Status OCR-izare:
+                  {t('documentView.processedData.status')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Format original:
+                  {t('documentView.processedData.format')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Nr de pagini:
+                  {t('documentView.processedData.pages')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 4 }}>
-                  Termeni identificati:
+                  {t('documentView.processedData.terms')}
                 </Typography>
                 <Typography variant='h4' sx={{ mb: 3 }}>
-                  Precizie procesare inteligenta:
+                  {t('documentView.processedData.precision')}
                 </Typography>
               </Grid>
               <Grid item md={6}>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {Translations[document.processingStatus] || 'Nu s-a putut actualiza'}
+                  {Translations[document.processingStatus] || t('documentView.processedData.updateError')}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.link?.split('.').pop()?.toUpperCase() || 'Nu s-a putut actualiza'}
+                  {document.link?.split('.').pop()?.toUpperCase() || t('documentView.processedData.updateError')}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.numberOfPages || 'Nu s-a putut actualiza'}
+                  {document.numberOfPages || t('documentView.processedData.updateError')}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.numberOfIdentifiedTerms || 'Nu s-a putut actualiza'}
+                  {document.numberOfIdentifiedTerms || t('documentView.processedData.updateError')}
                 </Typography>
                 {document.textInterpretationPrecision ? (
                   <Typography variant='h5' sx={{ mb: 3 }}>
@@ -58,7 +61,7 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
                   </Typography>
                 ) : (
                   <Typography variant='h5' sx={{ mb: 3, mt: 5 }}>
-                    Nu s-a putut actualiza
+                    {t('documentView.processedData.updateError')}
                   </Typography>
                 )}
               </Grid>
@@ -71,7 +74,7 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
       <Grid item md={2}>
         <Stack gap={4}>
           <Button variant='contained' onClick={onDownloadOcrPdf}>
-            Descarca document analizat
+            {t('documentView.processedData.downloadProcessedDoc')}
           </Button>
           <Button variant='contained' onClick={onReanalyseDocument}>
             Re-Analizeaza

@@ -3,6 +3,7 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { UseFormReturn } from "react-hook-form";
 import { ChangePasswordFormValues } from "screens/usersManagement/hooks/useChangePasswordForm";
 import styled from "styled-components";
+import { useTranslation } from 'react-i18next'
 
 interface ChangePasswordFormProps {
   form: UseFormReturn<ChangePasswordFormValues, any>,
@@ -12,6 +13,7 @@ interface ChangePasswordFormProps {
 
 export const ChangePasswordForm = (props: ChangePasswordFormProps) => {
   const { form, handleSubmit, successMessage } = props;
+  const { t } = useTranslation();
 
   const SuccessMessage = () => (
     <ColoredSuccessMessage variant="h4" sx={{ mb: 8 }}>
@@ -22,7 +24,7 @@ export const ChangePasswordForm = (props: ChangePasswordFormProps) => {
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
       <Typography variant="h2" sx={{ mb: 8 }}>
-        Schimba parola:
+          {t('usersManagement.changePassword')}
       </Typography>
 
       {successMessage && <SuccessMessage />}
@@ -32,7 +34,7 @@ export const ChangePasswordForm = (props: ChangePasswordFormProps) => {
           <Grid item md={6}>
             <TextField
               fullWidth
-              label='Parola'
+              label={t('usersManagement.password')}
               type='password'
               variant='outlined'
               error={Boolean(form.formState.errors.password)}
@@ -43,7 +45,7 @@ export const ChangePasswordForm = (props: ChangePasswordFormProps) => {
           <Grid item md={6} sx={{ pl: 4 }}>
             <TextField
               fullWidth
-              label='Confirma parola'
+              label={t('usersManagement.confirmPassword')}
               type='password'
               variant='outlined'
               error={Boolean(form.formState.errors.confirmPassword)}
@@ -55,7 +57,7 @@ export const ChangePasswordForm = (props: ChangePasswordFormProps) => {
       </Box>
 
       <ButtonBox>
-        <Button type='submit' variant='contained'>Schimba parola</Button>
+        <Button type='submit' variant='contained'>{t('usersManagement.changePasswordConfirmation')}</Button>
       </ButtonBox>
 
     </form>

@@ -9,6 +9,7 @@ import { ModalNames } from '../../../../constants/modals';
 import { CreateEditKeywordModal } from '../createKeywordModal';
 import { useOptions } from '../../hooks/useOptions';
 import { DeleteKeywordModal } from '../deleteKeywordModal';
+import { useTranslation } from 'react-i18next';
 
 export default function OptionsContent() {
   const { keywords } = useContext(OptionsContext);
@@ -16,12 +17,13 @@ export default function OptionsContent() {
   const { openModal: openDeleteModal } = useModal(ModalNames.DELETE_KEYWORD);
   const { keywordToEdit, deleteKeyword, createEditKeyword, setKeywordToEdit, setKeywordToDelete } =
     useOptions();
+  const { t } = useTranslation();
 
   return (
     <>
       <ButtonBox>
         <Button variant='contained' onClick={openCreateEditModal}>
-          Adauga termen
+            {t('options.addTerm')}
         </Button>
       </ButtonBox>
       <Box>

@@ -8,11 +8,11 @@ import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { Status } from 'services/api/dtos/document';
 import { FormattedDate } from 'components/formatedDate';
-import { Translations } from '../../constants/translations';
 import { DocumentMarks } from 'components/documentsTableDocumentMarks';
 import { ActionButtons } from 'components/documentsTableActionButtons';
 import { capitalizeString } from 'helpers/formatters';
 import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
+import { useTranslation } from 'react-i18next';
 
 interface DocumentsTableProps {
   documents: DocumentDto[];
@@ -41,6 +41,8 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
 
   const theme = useTheme();
 
+  const { t } = useTranslation();
+
   const documentRows = documents.map((document) => (
     <GenericTableRow
       id={document.id}
@@ -57,10 +59,10 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
         </StyledLink>,
         document.assignedUser
           ? `${capitalizeString(document.assignedUser.surname)} ${capitalizeString(document.assignedUser.name)}`
-          : 'Lipsa responsabil',
+          : `${t('documentsTable.lipsaResponsabil')}`,
         <FormattedDate key={`date-for-${document.id}`} date={document.publicationDate} />,
-        Translations[document.source],
-        Translations[document.status],
+          t(`documentsTable.source.${document.source}`) || '',
+          t(`documentsTable.status.${document.status}`) || '',
         document.numberOfIdentifiedTerms || 0,
         <ActionButtons key={`action-for-${document.id}`} document={document} />,
       ]}

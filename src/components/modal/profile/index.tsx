@@ -12,12 +12,14 @@ import { RoleDescription } from 'constants/roles';
 import { ModalNames } from 'constants/modals';
 import { useNavigate } from "react-router-dom";
 import PATHS from 'constants/paths';
+import { useTranslation } from 'react-i18next';
 
 export const ProfileModal = () => {
   const { closeModal, modalName } = useContext(InteractiveComponentsContext);
   const theme = useTheme();
   const { logoutUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const logout = () => {
     closeModal();
@@ -67,7 +69,7 @@ export const ProfileModal = () => {
         {`${capitalizeString(user?.name)} ${capitalizeString(user?.surname)}`}
       </Typography>
       <Typography id='transition-modal-description' variant='h5' sx={{ mb: 5 }}>
-        {user?.role ? RoleDescription[user?.role] : 'Lipsa rol'}
+        {user?.role ? RoleDescription[user?.role] : t('generic.noRole')}
       </Typography>
       <LoadingButton
         fullWidth
@@ -78,7 +80,7 @@ export const ProfileModal = () => {
         sx={{ mt: 5 }}
         onClick={goToProfilePage}
       >
-        Vezi profil
+          {t('profile.goToProfilePage')}
       </LoadingButton>
       <LoadingButton
         fullWidth
@@ -89,7 +91,7 @@ export const ProfileModal = () => {
         sx={{ mt: 5 }}
         onClick={logout}
       >
-        Iesi din cont
+          {t('profile.logout')}
       </LoadingButton>
     </Modal>
   );

@@ -12,6 +12,7 @@ import { InteractiveComponentsContext } from 'contexts/interactiveComponentsCont
 import { ModalNames } from 'constants/modals';
 import NotificationsMenu from './components/notificationsMenu';
 import { NotificationDto } from '../../services/api/dtos';
+import { useTranslation } from 'react-i18next';
 
 export interface TopBarProps {
   notifications: NotificationDto[];
@@ -22,6 +23,7 @@ export default function TopBar({ notifications, onDeleteNotification }: TopBarPr
   const { openModal, toggleSidebar, isCollapsed, toggleNotificationMenu, isNotificationMenuOpen } =
     useContext(InteractiveComponentsContext);
   const anchorRef = React.useRef(null);
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -40,7 +42,7 @@ export default function TopBar({ notifications, onDeleteNotification }: TopBarPr
             </LeftSide>
             <RightSide>
               <Box sx={{ display: { md: 'flex' } }}>
-                <Tooltip title='Notificari'>
+                <Tooltip title={t('topbar.notifications')}>
                   <IconButton
                     ref={anchorRef}
                     size='large'
@@ -58,7 +60,7 @@ export default function TopBar({ notifications, onDeleteNotification }: TopBarPr
                     {notifications.length === 0 && <NotificationsIcon />}
                   </IconButton>
                 </Tooltip>
-                <Tooltip title='Profilul meu'>
+                <Tooltip title={t('topbar.myProfile')}>
                   <IconButton
                     size='large'
                     edge='end'

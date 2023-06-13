@@ -4,6 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
 import { Translations } from '../../../../constants/translations';
+import { useTranslation } from 'react-i18next';
 
 interface SelectorProps {
   value: string[];
@@ -38,6 +39,7 @@ const translationToValueMap = sources_of_interest_list.reduce((map, source) => {
 
 export const SourcesSelector = (props: SelectorProps) => {
   const { value: selectedOptions, onSelect, onMenuOpen, onMenuClose } = props;
+  const { t } = useTranslation();
 
   const handleChange = (_: any, newValue: string[]) => {
     const originalValues = newValue.map((translation) => translationToValueMap[translation]);
@@ -58,8 +60,8 @@ export const SourcesSelector = (props: SelectorProps) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Surse"
-            placeholder="Search"
+            label={t('monitor.sources')}
+            placeholder={t('generic.search') as string}
             InputLabelProps={{ shrink: true }}
           />
         )}

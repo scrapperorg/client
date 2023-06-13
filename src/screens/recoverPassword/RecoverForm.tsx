@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import joi from 'joi';
 import { LoadingButton } from '@mui/lab';
+import { useTranslation } from 'react-i18next'
 
 export interface RecoverPasswordFormValues {
   email: string;
@@ -33,22 +34,23 @@ export const RecoverForm = ({ handleSubmit, showLoading } : RecoverFormProps) =>
     defaultValues: { email: '' },
     resolver: joiResolver(recoverPasswordSchema),
   });
+  const { t } = useTranslation();
 
   return (
     <>
       <HeadersContainer>
           <Typography variant='h1' align='center'>
-            Reseteaza parola
+              {t('recoverPassword.title')}
           </Typography>
           <Typography variant='h6' align='center'>
-            Introdu emailul asociat contului tau pentru a incepe procesul de resetare a parolei
+              {t('recoverPassword.subtitle')}
           </Typography>
         </HeadersContainer>
 
         <form onSubmit={recoverPasswordForm.handleSubmit(handleSubmit)}>
           <TextField
             fullWidth
-            label='Email'
+            label={t('recoverPassword.email')}
             variant='outlined'
             error={Boolean(recoverPasswordForm.formState.errors.email)}
             helperText={recoverPasswordForm.formState.errors.email?.message}
@@ -64,7 +66,7 @@ export const RecoverForm = ({ handleSubmit, showLoading } : RecoverFormProps) =>
             size='large'
             loading={showLoading}
           >
-            Trimite
+              {t('recoverPassword.send')}
           </LoadingButton>
         </form>
     </>
