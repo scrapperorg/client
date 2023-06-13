@@ -49,6 +49,15 @@ export const theme: ThemeOptions = createTheme({
       color: '#A0AEC0',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1480,
+      xl: 1920,
+    },
+  },
 });
 
 theme.components = {
