@@ -53,5 +53,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
+    overflowWrap: 'break-word',
+    maxWidth: 300,
+    [theme.breakpoints.down('xl')]: {
+      maxWidth: 220,
+    },
+    [theme.breakpoints.down('lg')]: {
+      maxWidth: 185,
+    },
   },
 }));
