@@ -8,10 +8,11 @@ import EmailIcon from '@mui/icons-material/Email';
 import BadgeIcon from '@mui/icons-material/Badge';
 import TodayIcon from '@mui/icons-material/Today';
 import dayjs from "dayjs";
+import 'dayjs/locale/ro';
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
-  const formattedCreationDate = dayjs(user?.createdAt).format('DD MMMM YYYY');
+  const formattedCreationDate = dayjs(user?.createdAt).locale('ro').format('dddd, DD MMMM YYYY');
 
   return (
     <Grid container spacing={10}>
