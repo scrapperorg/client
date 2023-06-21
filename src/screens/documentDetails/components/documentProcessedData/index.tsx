@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
-import { DocumentDto, ProcessingStatus, Status } from 'services/api/dtos';
+import { DocumentDto, ProcessingStatus } from 'services/api/dtos';
 import { Translations } from 'constants/translations';
 import CircularProgressIndicator from 'components/circularProgressIndicator';
 import { useTranslation } from 'react-i18next';
