@@ -45,11 +45,14 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
     return <Typography variant="h5" sx={{mb: 3}}>{project?.numarInregistrareCDep || '-'}</Typography>
   }
 
+  const sources = ['camera_deputatilor', 'senat_pl', 'camera_deputatilor_pl'];
+  const isSourceOfInterest = project.source && sources.includes(project.source);
+
   return (
     <Box sx={{mb: 4}}>
       <Grid container>
 
-        <Grid item md={6}>
+        {isSourceOfInterest && <Grid item md={6}>
           <Card>
             <GeneralDataCardContent>
               <Grid container spacing={4}>
@@ -110,9 +113,9 @@ export function ProjectGeneralData({project}: ProjectGeneralDataProps) {
               </Grid>
             </GeneralDataCardContent>
           </Card>
-        </Grid>
+        </Grid>}
 
-        <Grid item md={4} sx={{pl: 4, display: 'flex'}}>
+        <Grid item md={isSourceOfInterest ? 4 : 10} sx={{pl: 4, display: 'flex'}}>
           <Card>
             <CardContent>
               <Chip label="Atasamente" color="primary" size="medium" sx={{mb: 3}}/>
