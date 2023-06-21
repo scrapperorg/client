@@ -27,6 +27,7 @@ import { Translations } from 'constants/translations';
 import { ProjectDto } from 'services/api/dtos';
 import { useProjectSearch } from 'screens/documentSearch/hooks/useProjectSearch';
 import { useTranslation } from 'react-i18next';
+import { sources } from 'constants/sources';
 
 const Status: Record<string, string> = {
   nou: 'Nou',
@@ -34,8 +35,8 @@ const Status: Record<string, string> = {
   revizuit: 'Revizuit',
 }
 
-const sources_of_interest_list = ['camera_deputatilor', 'mfinante', 'mmediu', 'mdezvoltarii', 'meducatiei', 'mtransport', 'mai', 'mae', 'mapn', 'mjustitiei', 'senat_pl', 'camera_deputatilor_pl'];
-const sources = sources_of_interest_list.map((source: string) => <MenuItem key={`sursa-document-${source}`} value={source}>{Translations[source]}</MenuItem>)
+
+const sourceOptions = sources.map((source: string) => <MenuItem key={`sursa-document-${source}`} value={source}>{Translations[source]}</MenuItem>)
 
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>,
@@ -127,7 +128,7 @@ export const SearchForm = (props: SearchFormProps) => {
                     </IconButton>
                 }
               >
-                {sources}
+                {sourceOptions}
               </Select>
             </FormControl>
           </Grid>

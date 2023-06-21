@@ -6,12 +6,14 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   styled,
   TextField,
 } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -19,18 +21,8 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 import { ProjectSearchFormValues } from 'screens/projectsSearch/hooks/useProjectSearchForm';
 import { Dayjs } from 'dayjs';
 import { useTranslation } from 'react-i18next'
-
-const initiator: Record<string, string> = {
-  TO_CHANGE_1: 'TO_CHANGE_1',
-  TO_CHANGE_2: 'TO_CHANGE_2',
-  TO_CHANGE_3: 'TO_CHANGE_3',
-};
-
-const forumLegislativ: Record<string, string> = {
-  TO_CHANGE_4: 'TO_CHANGE_4',
-  TO_CHANGE_5: 'TO_CHANGE_5',
-  TO_CHANGE_6: 'TO_CHANGE_6',
-};
+import { sources } from 'constants/sources';
+import { Translations } from 'constants/translations';
 
 interface SearchFormProps {
   form: UseFormReturn<ProjectSearchFormValues, any>,
@@ -45,6 +37,8 @@ const onKeyDown = (e: React.KeyboardEvent) => {
   e.preventDefault();
 };
 
+const sourceOptions = sources.map((source: string) => <MenuItem key={`sursa-document-${source}`} value={source}>{Translations[source]}</MenuItem>)
+
 export const SearchForm = (props: SearchFormProps) => {
   const { form, handleSubmit } = props;
   const { t } = useTranslation();
@@ -58,20 +52,9 @@ export const SearchForm = (props: SearchFormProps) => {
               fullWidth
               label={t('projectSearch.title')}
               variant='outlined'
-              error={false}
-              helperText={''}
+              error={Boolean(form.formState.errors.title)}
+              helperText={form.formState.errors.title?.message}
               {...form.register('title')}
-            />
-          </Grid>
-          <Grid item md={4} sx={{ pl: 4 }}>
-            <TextField
-              fullWidth
-              label={t('projectSearch.number')}
-              variant='outlined'
-              error={false}
-              helperText={''}
-              disabled
-              // {...form.register('')}
             />
           </Grid>
           <Grid item md={4} sx={{ pl: 4 }}>
@@ -80,20 +63,34 @@ export const SearchForm = (props: SearchFormProps) => {
               <Select
                 labelId='forum-legislativ'
                 id='forum'
-                value={''}
+                value={form.watch('source') || ''}
                 label={t('projectSearch.forum')}
-                disabled
-                onChange={() => {
-                  /** */
-                }}
+                {...form.register('source')}
+                endAdornment={
+                    form.getValues('source') && <IconButton
+                      onClick={() => {
+                        form.resetField('source');
+                      }}
+                      size="small"
+                      sx={{marginRight: 5}}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                }
               >
-                {Object.entries(forumLegislativ).map(([key, value]) => (
-                  <MenuItem key={key} value={key}>
-                    {value}
-                  </MenuItem>
-                ))}
+                {sourceOptions}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item md={4} sx={{ pl: 4 }}>
+          <TextField
+              fullWidth
+              label='Initiator'
+              variant='outlined'
+              error={Boolean(form.formState.errors.initiator)}
+              helperText={form.formState.errors.initiator?.message}
+              {...form.register('initiator')}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -101,30 +98,10 @@ export const SearchForm = (props: SearchFormProps) => {
       <Box>
         <Grid container>
           <Grid item md={4}>
-            <FormControl fullWidth>
-              <InputLabel id='sursa-document-label'>{t('projectSearch.initiator')}</InputLabel>
-              <Select
-                labelId='initiator'
-                id='initiator'
-                value={''}
-                label={t('projectSearch.initiator')}
-                disabled
-                onChange={() => {
-                  /** */
-                }}
-              >
-                {Object.entries(initiator).map(([key, value]) => (
-                  <MenuItem key={key} value={key}>
-                    {value}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item md={4} sx={{ pl: 4 }}>
             <Controller
               name="createdAfter"
               control={form.control}
+
               render={({ field }) => (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
