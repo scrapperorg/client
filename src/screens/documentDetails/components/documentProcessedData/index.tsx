@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
-import { DocumentDto } from 'services/api/dtos';
+import { DocumentDto, ProcessingStatus, Status } from 'services/api/dtos';
 import { Translations } from 'constants/translations';
 import CircularProgressIndicator from 'components/circularProgressIndicator';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,45 @@ interface DocumentProcessedDataProps {
 function DocumentProcessedData(props: DocumentProcessedDataProps) {
   const { onDownloadOcrPdf, onReanalyseDocument, document } = props;
   const { t } = useTranslation();
+
+
+  const processingProperties = [document.link, document.numberOfPages, document.numberOfIdentifiedTerms, document.textInterpretationPrecision];
+
+  const isBeingReanalyzed = document.processingStatus === ProcessingStatus.downloaded && processingProperties.some((property) => !!property);
+
+  Translations
+
+  let processingStatus: string = Translations[document.processingStatus];
+  let originalFormat: string = document.link;
+  let numberOfPages: number | string | undefined | null = document.numberOfPages;
+  let numberOfIdentifiedTerms: number | string | undefined | null = document.numberOfIdentifiedTerms;
+  const textInterpretationPrecision: number | undefined | null = document.textInterpretationPrecision;
+  let textInterpretationPrecisionDisplay: string | JSX.Element | null = ''
+
+  if (isBeingReanalyzed) {
+    processingStatus = t('documentView.processedData.reanalyzationStatus');
+    originalFormat = numberOfPages = numberOfIdentifiedTerms = textInterpretationPrecisionDisplay = '';
+  }
+  
+  if (
+    document.processingStatus === ProcessingStatus.ocr_done ||
+    document.processingStatus === ProcessingStatus.ocr_failed
+  ) {
+    processingStatus = processingStatus || t('documentView.processedData.updateError');
+    originalFormat = originalFormat || t('documentView.processedData.updateError');
+    numberOfPages = numberOfPages || t('documentView.processedData.updateError');
+    numberOfIdentifiedTerms = numberOfIdentifiedTerms || t('documentView.processedData.updateError');
+    if (textInterpretationPrecision) {
+      textInterpretationPrecisionDisplay = (
+        <CircularProgressIndicator
+          percentage={textInterpretationPrecision}
+        />
+      );
+    } else {
+      textInterpretationPrecisionDisplay = t('documentView.processedData.updateError');
+    }
+  }
+
 
   return (
     <Grid container spacing={4}>
@@ -40,30 +79,22 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
                   {t('documentView.processedData.precision')}
                 </Typography>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {Translations[document.processingStatus] || t('documentView.processedData.updateError')}
+                  {processingStatus}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.link?.split('.').pop()?.toUpperCase() || t('documentView.processedData.updateError')}
+                  {originalFormat}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.numberOfPages || t('documentView.processedData.updateError')}
+                  {numberOfPages}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {document.numberOfIdentifiedTerms || t('documentView.processedData.updateError')}
+                  {numberOfIdentifiedTerms}
                 </Typography>
-                {document.textInterpretationPrecision ? (
-                  <Typography variant='h5' sx={{ mb: 3 }}>
-                    <CircularProgressIndicator
-                      percentage={document.textInterpretationPrecision}
-                    />
-                  </Typography>
-                ) : (
-                  <Typography variant='h5' sx={{ mb: 3, mt: 5 }}>
-                    {t('documentView.processedData.updateError')}
-                  </Typography>
-                )}
+                <Typography variant='h5' sx={{ mb: 3 }}>
+                  {textInterpretationPrecisionDisplay} 
+                </Typography>
               </Grid>
               <Grid item md={4}></Grid>
             </Grid>

@@ -56,7 +56,8 @@
       "terms": "Termeni identificati:",
       "precision": "Precizie procesare inteligenta:",
       "updateError": "Nu s-a putut actualiza",
-      "downloadProcessedDoc": "Descarca document analizat"
+      "downloadProcessedDoc": "Descarca document analizat",
+      "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat"
     },
     "activity": {
       "status": "Stare:",
