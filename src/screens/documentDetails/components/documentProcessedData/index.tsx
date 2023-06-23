@@ -21,8 +21,6 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
 
   const isBeingReanalyzed = document.processingStatus === ProcessingStatus.downloaded && processingProperties.some((property) => !!property);
 
-  Translations
-
   let processingStatus: string = Translations[document.processingStatus];
   let originalFormat: string = document.link;
   let numberOfPages: number | string | undefined | null = document.numberOfPages;
