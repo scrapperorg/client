@@ -3,6 +3,7 @@ import { ProjectDto } from "services/api/dtos";
 import { Box, Grid, Typography } from '@mui/material';
 import StarsIcon from '@mui/icons-material/Stars';
 import { useTranslation } from 'react-i18next';
+import { Translations } from 'constants/translations';
 
 interface ProjectHeaderProps {
   project: ProjectDto;
@@ -17,6 +18,11 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         <Grid item md={10}>
           <Grid container justifyContent='space-between'>
             <Grid item>
+                {project.source && 
+                  <Typography variant='h2'>
+                    { Translations[project.source] }
+                  </Typography>
+                }
                 <Typography variant='h2'>
                   { project.title }
                 </Typography>
