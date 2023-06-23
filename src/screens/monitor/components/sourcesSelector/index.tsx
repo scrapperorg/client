@@ -5,6 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/system';
 import { Translations } from '../../../../constants/translations';
 import { useTranslation } from 'react-i18next';
+import { translatedSources, sources } from 'constants/sources';
 
 interface SelectorProps {
   value: string[];
@@ -13,24 +14,7 @@ interface SelectorProps {
   onMenuClose: () => void;
 }
 
-const sources_of_interest_list = [
-  'camera_deputatilor',
-  'mfinante',
-  'mmediu',
-  'mdezvoltarii',
-  'meducatiei',
-  'mtransport',
-  'mai',
-  'mae',
-  'mapn',
-  'mjustitiei',
-  'senat_pl',
-  'camera_deputatilor_pl',
-];
-
-const translatedSources = sources_of_interest_list.map((source) => Translations[source]);
-
-const translationToValueMap = sources_of_interest_list.reduce((map, source) => {
+export const translationToValueMap = sources.reduce((map, source) => {
   const translation = Translations[source];
   map[translation] = source;
   return map;

@@ -10,6 +10,8 @@ import { useSessionStorage } from "hooks/useSessionStorage";
 
 export interface ProjectSearchFormValues {
   title: string,
+  initiator: string,
+  source: string,
   createdAfter: string,
   createdBefore: string,
   presentsInterest: boolean,
