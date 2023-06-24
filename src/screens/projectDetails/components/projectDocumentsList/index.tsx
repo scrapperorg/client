@@ -15,7 +15,7 @@ interface ProjectDocumentsListProps {
 const columns = [
   '',
   'Identificator',
-  'Titlu',
+  'Titlu document',
   'Data publicarii',
   'Sursa',
   'Stare',

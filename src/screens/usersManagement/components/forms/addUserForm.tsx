@@ -7,6 +7,7 @@ import { Role } from 'constants/roles';
 import { RoleDescription } from 'constants/roles';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useTranslation } from 'react-i18next'
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface AddUserFormProps {
   form: UseFormReturn<AddUserFormValues, any>,
@@ -79,6 +80,7 @@ export const AddUserForm = (props: AddUserFormProps) => {
                 labelId="role"
                 id="rol"
                 label={t('usersManagement.role')}
+                error={Boolean(form.formState.errors.role)}
                 value={form.watch('role') || ''}
                 {...form.register('role')}
                 endAdornment={
@@ -95,6 +97,9 @@ export const AddUserForm = (props: AddUserFormProps) => {
               >
                 { roles.map((role: Role) => <MenuItem key={role} value={role}>{`${RoleDescription[role]}` }</MenuItem>) }
               </Select>
+              <FormHelperText error={!!form.formState.errors}>
+                {form.formState.errors.role && <span>{form.formState.errors.role.message}</span>}
+              </FormHelperText>
             </FormControl>
           </Grid>
         </Grid>

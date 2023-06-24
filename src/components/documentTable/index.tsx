@@ -26,7 +26,7 @@ interface DocumentsTableProps {
 const columns = [
   '',
   'Identificator',
-  'Titlu',
+  'Titlu document',
   'Proiect',
   'Responsabil',
   'Data publicarii',
