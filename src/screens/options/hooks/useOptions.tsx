@@ -56,6 +56,7 @@ export function useOptions() {
   return {
     keywords,
     keywordToEdit,
+    keywordToDelete,
     createEditKeyword,
     deleteKeyword,
     getAll,

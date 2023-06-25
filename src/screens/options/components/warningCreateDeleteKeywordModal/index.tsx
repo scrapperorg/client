@@ -8,11 +8,14 @@ import { KeywordDto } from '../../../../services/api/dtos/keyword';
 import { useTranslation } from 'react-i18next';
 
 interface DeleteKeywordModalProps {
-  onDelete: () => void;
+  onYes: () => void;
   onSetKeywordToDelete: (keyword: KeywordDto | null) => void;
 }
 
-export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKeywordModalProps) => {
+export const WarningCreateDeleteKeywordModal = ({
+  onYes,
+  onSetKeywordToDelete,
+}: DeleteKeywordModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
   const { t } = useTranslation();
 
@@ -37,9 +40,9 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
         <Typography variant='h3'>{t('options.deleteTermTitle')}</Typography>
         <br />
         <Typography variant='h3' sx={{ mb: 3 }}>
-            {t('options.firstAttentionMessage')}
+          {t('options.firstAttentionMessage')}
           <br />
-            {t('options.secondAttentionMessage')}
+          {t('options.secondAttentionMessage')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
           <Button
@@ -48,18 +51,16 @@ export const DeleteKeywordModal = ({ onDelete, onSetKeywordToDelete }: DeleteKey
               closeModal();
             }}
           >
-              {t('options.noDelete')}
+            {t('options.noDelete')}
           </Button>
           <Button
             variant='contained'
             color='error'
             onClick={async () => {
-              await onDelete();
-              onSetKeywordToDelete(null);
-              closeModal();
+              await onYes();
             }}
           >
-              {t('options.yesDelete')}
+            {t('options.yesDelete')}
           </Button>
         </Box>
       </StyledModalContainer>

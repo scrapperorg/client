@@ -8,22 +8,36 @@ import { useModal } from '../../../usersManagement/hooks/useModal';
 import { ModalNames } from '../../../../constants/modals';
 import { CreateEditKeywordModal } from '../createKeywordModal';
 import { useOptions } from '../../hooks/useOptions';
-import { DeleteKeywordModal } from '../deleteKeywordModal';
+import { WarningCreateDeleteKeywordModal } from '../warningCreateDeleteKeywordModal';
 import { useTranslation } from 'react-i18next';
 
 export default function OptionsContent() {
   const { keywords } = useContext(OptionsContext);
   const { openModal: openCreateEditModal } = useModal(ModalNames.ADD_EDIT_KEYWORD);
-  const { openModal: openDeleteModal } = useModal(ModalNames.DELETE_KEYWORD);
-  const { keywordToEdit, deleteKeyword, createEditKeyword, setKeywordToEdit, setKeywordToDelete } =
-    useOptions();
+  const { openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal(
+    ModalNames.DELETE_KEYWORD,
+  );
+  const {
+    keywordToEdit,
+    keywordToDelete,
+    deleteKeyword,
+    createEditKeyword,
+    setKeywordToEdit,
+    setKeywordToDelete,
+  } = useOptions();
   const { t } = useTranslation();
 
   return (
     <>
       <ButtonBox>
-        <Button variant='contained' onClick={openCreateEditModal}>
-            {t('options.addTerm')}
+        <Button
+          variant='contained'
+          onClick={() => {
+            setKeywordToDelete(null);
+            openDeleteModal();
+          }}
+        >
+          {t('options.addTerm')}
         </Button>
       </ButtonBox>
       <Box>
@@ -44,7 +58,24 @@ export default function OptionsContent() {
         onSetKeyword={setKeywordToEdit}
         keyword={keywordToEdit}
       />
-      <DeleteKeywordModal onDelete={deleteKeyword} onSetKeywordToDelete={setKeywordToDelete} />
+      <WarningCreateDeleteKeywordModal
+        onYes={
+          keywordToDelete
+            ? async () => {
+                await deleteKeyword();
+                setKeywordToDelete(null);
+                closeDeleteModal();
+              }
+            : openCreateEditModal
+        }
+        onSetKeywordToDelete={
+          keywordToDelete
+            ? () => {
+                return null;
+              }
+            : setKeywordToDelete
+        }
+      />
     </>
   );
 }
