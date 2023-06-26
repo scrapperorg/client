@@ -140,7 +140,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                     {...field}
                     label={t('updateAnalysis.deadline')}
                     renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
-                    value={field.value || deadline}
+                    value={field.value ?? deadline ?? null}
                     shouldDisableDate={isOutOfRange}
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
@@ -152,6 +152,9 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                 </LocalizationProvider>
               )}
               />
+            <FormHelperText error={!!form.formState.errors}>
+              {form.formState.errors.deadline && <span>{form.formState.errors.deadline.message}</span>}
+            </FormHelperText>
           </FormControl>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
