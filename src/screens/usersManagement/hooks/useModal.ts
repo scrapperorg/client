@@ -11,7 +11,6 @@ export function useModal(currentModal: string) {
   const isModalOpen = modalName === currentModal;
 
   const openModal = () => {
-    console.log('currentModal', currentModal);
     openGenericModal(currentModal);
   };
 
