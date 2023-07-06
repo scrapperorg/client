@@ -20,7 +20,7 @@ export const SIDEBAR_BUTTONS_LIST = [
     Icon: ScreenSearchDesktopOutlinedIcon,
   },
   {
-    key: 'Optiuni',
+    key: 'Cuvinte cheie',
     Icon: SettingsOutlinedIcon,
   },
   {

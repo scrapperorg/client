@@ -13,7 +13,7 @@ export const Translations: Record<string, string> = {
     mae: 'Ministerul Afacerilor Externe',
     mai: 'Ministerul Afacerilor Interne',
     mapn: 'Ministerul Apararii Nationale',
-    DELETED: 'Sters',
+    DELETED: 'Dezactivat',
     ACTIVE: 'Activ',
     created: 'Creat',
     downloaded: 'Descarcat',

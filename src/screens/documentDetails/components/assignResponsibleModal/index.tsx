@@ -145,9 +145,10 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ['cancel', 'accept'],
                       },
                     }}
+                    closeOnSelect={false}
                   />
                 </LocalizationProvider>
               )}
