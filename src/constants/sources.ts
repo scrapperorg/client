@@ -3,7 +3,27 @@ import { Translations } from "./translations";
 export enum SourceDescription {
     senat = 'Senat',
     guvern = 'Guvern',
-    camera_deputatilor = 'Camera deputatilor'
+    camera_deputatilor = 'Camera deputatilor',
+    mfinante = 'Ministerul Finantelor',
+    mmediu = 'Ministerul Mediului',
+    mdezvoltarii = 'Ministerul Dezvoltarii',
+    meducatiei = 'Ministerul Educatiei',
+    mtransport = 'Ministerul Transporturilor',
+    mjustitiei = 'Ministerul Justitiei',
+    mae = 'Ministerul Afacerilor Externe',
+    mai = 'Ministerul Afacerilor Interne',
+    mapn = 'Ministerul Apararii Nationale',
+    magriculturii = 'Ministerul Agriculturii',
+    mcercetarii = 'Ministerul Cercetarii',
+    mculturii = 'Ministerul Culturii',
+    meconomiei = 'Ministerul Economiei',
+    menergiei = 'Ministerul Energiei',
+    mfamiliei = 'Ministerul Familiei',
+    minvestitiilor = 'Ministerul Investitiilor',
+    mmuncii = 'Ministerul Muncii',
+    msanatatii = 'Ministerul Sanatatii',
+    msport = 'Ministerul Sportului',
+    mturism = 'Ministerul Turismului',
 }
 
 
@@ -20,6 +40,17 @@ export const sources = [
     'mjustitiei',
     'senat_pl',
     'camera_deputatilor_pl',
+    'magriculturii',
+    'mcercetarii',
+    'mculturii',
+    'meconomiei',
+    'menergiei',
+    'mfamiliei',
+    'minvestitiilor',
+    'mmuncii',
+    'msanatatii',
+    'msport',
+    'mturism',
   ];
   
   export const translatedSources = sources.map((source) => Translations[source]);
