@@ -2,9 +2,7 @@ import React from 'react';
 import {
   Box,
   Button,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   Grid,
   IconButton,
   InputLabel,
@@ -143,29 +141,6 @@ export const SearchForm = (props: SearchFormProps) => {
                 </LocalizationProvider>
               )}
               />
-          </Grid>
-        </Grid>
-      </Box>
-
-      <Box>
-        <Grid container>
-          <Grid item md={6}>
-            <FormControlLabel
-              control={
-                <Controller
-                  name="presentsInterest"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      {...field}
-                      checked={field.value}
-                      onChange={(e) => field.onChange(e.target.checked)}
-                    />
-                  )}
-                />
-              }
-              label={t('projectSearch.presentsInterest')}
-            />
           </Grid>
         </Grid>
       </Box>

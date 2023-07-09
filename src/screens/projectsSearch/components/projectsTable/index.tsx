@@ -22,7 +22,6 @@ interface ProjectsTableProps {
 
 const columns = [
   '',
-  'Nr. de inregistrare',
   'Nume Proiect',
   'Forum legislativ',
   'Initiator',
@@ -40,9 +39,6 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       key={project.id}
       values={[
         <ProjectMarks project={project} key={`${project.id}-marks`} />,
-        <span key={`${project.id}-identificator`}>
-          {!!project.numarInregistrareGuvern && project.numarInregistrareGuvern !== '-' ? project.numarInregistrareGuvern : project.numarInregistrareSenat}
-        </span>,
         <StyledLink to={`/project/${project.id}`} key={`${project.id}-title`} theme={theme}>
           {project.title}
         </StyledLink>,
