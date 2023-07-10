@@ -244,9 +244,10 @@ export const SearchForm = (props: SearchFormProps) => {
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ['clear', 'accept'],
                       },
                     }}
+                    closeOnSelect={false}
                   />
                 </LocalizationProvider>
               )}
@@ -267,9 +268,10 @@ export const SearchForm = (props: SearchFormProps) => {
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ['clear', 'accept'],
                       },
                     }}
+                    closeOnSelect={false}
                   />
                 </LocalizationProvider>
               )}
@@ -307,13 +309,6 @@ export const SearchForm = (props: SearchFormProps) => {
                 />
               }
               label={t('documentSearch.rulesBreaker')}
-            />
-          </Grid>
-          <Grid item md={6} sx={{ pl: 4 }}>
-            <FormControlLabel
-              control={<Checkbox checked={false}/>}
-              label={t('documentSearch.important')}
-              disabled
             />
           </Grid>
         </Grid>
