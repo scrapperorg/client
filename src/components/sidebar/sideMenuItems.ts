@@ -42,7 +42,7 @@ export const menuItems: SubMenuProps[] = [
     items: [
       {
         icon: BuildIcon,
-        text: 'Optiuni',
+        text: 'Cuvinte cheie',
         href: Paths.OPTIONS,
       },
       {

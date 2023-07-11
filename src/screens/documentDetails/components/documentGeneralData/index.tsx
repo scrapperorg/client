@@ -9,6 +9,7 @@ import { SourceDescription } from 'constants/sources';
 import styled from 'styled-components';
 import config from '../../../../config/index';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface DocumentGeneralDataProps {
   document: DocumentDto;
@@ -53,12 +54,14 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
                 <Typography variant='h5' sx={{ mb: 3 }}>
                   {document.title}
                 </Typography>
-                <Typography variant='h5' sx={{ mb: 3 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {document.project.title}
-                    <StarsIcon color='primary' fontSize='small' sx={{ ml: 2 }} />
-                  </Box>
-                </Typography>
+                <StyledLink target='_blank' to={`/project/${document.project?.id}`} rel='noreferrer'>
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      {document.project.title}
+                      <StarsIcon color='primary' fontSize='small' sx={{ ml: 2 }} />
+                    </Box>
+                  </Typography>
+                </StyledLink>
                 <Typography variant='h5' sx={{ mb: 3 }}>
                   {document.identifier}
                 </Typography>
@@ -107,3 +110,14 @@ const LinkNoStyle = styled.a`
   text-decoration: none;
   color: inherit;
 `;
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.text.primary,
+  ['&:focus, &:visited, &:active, &:active']: {
+    color: theme.palette.text.primary,
+  },
+  ['&:hover']: {
+    color: theme.palette.text.secondary,
+  },
+}));
