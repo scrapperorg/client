@@ -9,6 +9,7 @@ import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import AlarmOffIcon from '@mui/icons-material/AlarmOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PATHS from 'constants/paths';
+import { useNavigate } from 'react-router-dom';
 
 export interface NotificationIconProps {
   type: NotificationType;
@@ -49,6 +50,7 @@ export function NotificationMenuItem({
 }: NotificationMenuItemProps) {
   const [isHover, setIsHover] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -65,6 +67,12 @@ export function NotificationMenuItem({
           sx={{ m: '16px', display: 'flex', alignItems: 'flex-start', width: 'calc(100% - 50px)' }}
           onClick={() => {
             onClose();
+
+            if (notification.type === NotificationType.RESET_PASSWORD) {
+              navigate(PATHS.USERS_MANAGEMENT);
+              return;
+            }
+
             window.location.href =
               PATHS.DOCUMENT_DETAILS.split(':id')[0] + notification.document.id;
           }}
