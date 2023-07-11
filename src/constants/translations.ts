@@ -24,7 +24,7 @@ export const Translations: Record<string, string> = {
   msanatatii: 'Ministerul Sanatatii',
   msport: 'Ministerul Sportului',
   mturism: 'Ministerul Turismului',
-  DELETED: 'Sters',
+  DELETED: 'Dezactivat',
   ACTIVE: 'Activ',
   created: 'Creat',
   downloaded: 'Descarcat',
