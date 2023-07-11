@@ -111,9 +111,10 @@ export const SearchForm = (props: SearchFormProps) => {
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ['clear', 'accept'],
                       },
                     }}
+                    closeOnSelect={false}
                   />
                 </LocalizationProvider>
               )}
@@ -134,9 +135,10 @@ export const SearchForm = (props: SearchFormProps) => {
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
                     componentsProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ['clear', 'accept'],
                       },
                     }}
+                    closeOnSelect={false}
                   />
                 </LocalizationProvider>
               )}
