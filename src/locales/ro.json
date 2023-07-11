@@ -166,7 +166,8 @@
     "firstAttentionMessage": "Modificarea cuvintelor cheie va fi aplicata pentru toti utilizatorii aplicatiei.",
     "secondAttentionMessage": "Confirmati?",
     "noDelete": "Nu",
-    "yesDelete": "Da"
+    "yesDelete": "Da",
+    "searchKeyword": "Cauta termen"
   },
   "usersManagement": {
     "addUser": "Adauga utilizator",

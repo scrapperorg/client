@@ -1,8 +1,7 @@
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { OptionsContext } from '../../context';
 import { OptionsTable } from '../keywordsTable';
 import { useModal } from '../../../usersManagement/hooks/useModal';
 import { ModalNames } from '../../../../constants/modals';
@@ -12,12 +11,13 @@ import { WarningCreateDeleteKeywordModal } from '../warningCreateDeleteKeywordMo
 import { useTranslation } from 'react-i18next';
 
 export default function OptionsContent() {
-  const { keywords } = useContext(OptionsContext);
   const { openModal: openCreateEditModal } = useModal(ModalNames.ADD_EDIT_KEYWORD);
   const { openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal(
     ModalNames.DELETE_KEYWORD,
   );
   const {
+    keywords,
+    filterKeywords,
     keywordToEdit,
     keywordToDelete,
     deleteKeyword,
@@ -40,6 +40,12 @@ export default function OptionsContent() {
           {t('options.addTerm')}
         </Button>
       </ButtonBox>
+      <TextField
+        placeholder={t('options.searchKeyword')!}
+        onChange={(e) => {
+          filterKeywords(e.target.value);
+        }}
+      />
       <Box>
         <OptionsTable
           keywords={keywords}
