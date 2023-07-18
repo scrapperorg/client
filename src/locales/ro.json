@@ -167,7 +167,8 @@
     "secondAttentionMessage": "Confirmati?",
     "noDelete": "Nu",
     "yesDelete": "Da",
-    "searchKeyword": "Cauta termen"
+    "searchKeyword": "Cauta termen",
+    "emptyFieldError": "Camp obligatoriu! Trebuie sa introduceți un nume."
   },
   "usersManagement": {
     "addUser": "Adauga utilizator",

@@ -58,9 +58,9 @@ export const CreateEditKeywordModal = ({
               fullWidth
               label={t('options.name')}
               variant='outlined'
-              error={false}
-              helperText={''}
-              {...form.register('name')}
+              error={!!form.formState.errors.name}
+              helperText={form.formState.errors.name ? t('options.emptyFieldError') : ''}
+              {...form.register('name', { required: true })}
             />
           </FormControl>
 
