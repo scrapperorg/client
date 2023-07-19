@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedDate, GenericTableRow } from 'components';
-import { UserDto } from 'services/api/dtos';
+import { USER_STATUS, UserDto } from 'services/api/dtos';
 import { ActionButtons } from './actionsButttons';
 import { Translations } from 'constants/translations';
 import { ScrollableTable } from 'components/scrollableTable/table';
@@ -16,7 +16,15 @@ interface UsersTableProps {
   setCurrentUserId: (id: string) => void;
 }
 
-const columns = ["Nume", "Email", "Rol", "Data crearii", "Status", "Actiuni"];
+const columns = [
+  'Nume',
+  'Email',
+  'Rol',
+  'Data crearii',
+  'Status',
+  'Actiuni',
+  'Cerere resetare parola',
+];
 
 export const UsersTable = (props: UsersTableProps) => {
   const {
@@ -30,7 +38,6 @@ export const UsersTable = (props: UsersTableProps) => {
   } = props;
 
   const userRows = users.map((user) => {
-
     const isCurrentUser = currentUser?.id === user.id;
 
     const disabledClassName = isLoading ? 'disabled' : '';
@@ -38,7 +45,9 @@ export const UsersTable = (props: UsersTableProps) => {
     const onOpenChangePasswordModal = () => {
       openChangePasswordModal();
       setCurrentUserId(user.id);
-    }
+    };
+
+    const userRequestedPasswordChange = user.status === USER_STATUS.REQUESTED_PASSWORD_CHANGE;
 
     return (
       <GenericTableRow
@@ -58,18 +67,17 @@ export const UsersTable = (props: UsersTableProps) => {
             deleteUser={deleteUser}
             activateUser={activateUser}
             openChangePasswordModal={onOpenChangePasswordModal}
-          />
+          />,
+          userRequestedPasswordChange ? (
+            <span key={`${user.id}-last-column`}>{Translations[user.status]}</span>
+          ) : (
+            ''
+          ),
         ]}
-        className={disabledClassName}
+        className={`${disabledClassName} ${userRequestedPasswordChange ? 'new' : ''}`}
       />
-    )
+    );
   });
 
-  return (
-    <ScrollableTable
-      columns={columns}
-      tableRows={userRows}    
-      maxHeight='60vh'
-    />
-  )
-}
+  return <ScrollableTable columns={columns} tableRows={userRows} maxHeight='60vh' />;
+};
