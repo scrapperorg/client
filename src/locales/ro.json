@@ -33,7 +33,18 @@
       "mjustitiei": "Ministerul Justitiei",
       "mae": "Ministerul Afacerilor Externe",
       "mai": "Ministerul Afacerilor Interne",
-      "mapn": "Ministerul Apararii Nationale"
+      "mapn": "Ministerul Apararii Nationale",
+      "magriculturii": "Ministerul Agriculturii",
+      "mcercetarii": "Ministerul Cercetarii",
+      "mculturii": "Ministerul Culturii",
+      "meconomiei": "Ministerul Economiei",
+      "menergiei": "Ministerul Energiei",
+      "mfamiliei": "Ministerul Familiei",
+      "minvestitiilor": "Ministerul Investitiilor",
+      "mmuncii": "Ministerul Muncii",
+      "msanatatii": "Ministerul Sanatatii",
+      "msport": "Ministerul Sportului",
+      "mturism": "Ministerul Turismului"
     },
     "lipsaResponsabil": "Lipsa responsabil"
   },
