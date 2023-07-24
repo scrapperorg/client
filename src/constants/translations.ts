@@ -9,7 +9,7 @@ export const Translations: Record<string, string> = {
   mdezvoltarii: 'Ministerul Dezvoltarii',
   meducatiei: 'Ministerul Educatiei',
   mtransport: 'Ministerul Transporturilor',
-  mjustitiei: 'Ministerul Justitiei',
+  mjustitie: 'Ministerul Justitiei',
   mae: 'Ministerul Afacerilor Externe',
   mai: 'Ministerul Afacerilor Interne',
   mapn: 'Ministerul Apararii Nationale',
