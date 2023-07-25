@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ProjectDto } from 'services/api/dtos';
-import { Box, Button, Card, CardContent, Chip, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import styled from 'styled-components';
 import useProjectLink from '../../hooks/useProjectLink';
 import { Loading } from '../../../../components/loading';
@@ -70,7 +70,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
     <Box sx={{ mb: 4 }}>
       <Grid container>
         {isSourceOfInterest && (
-          <Grid item md={6}>
+          <Grid item>
             <Card>
               <GeneralDataCardContent>
                 <Grid container spacing={4}>
@@ -218,20 +218,6 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
             </Card>
           </Grid>
         )}
-
-        <Grid item md={isSourceOfInterest ? 4 : 10} sx={{ pl: 4, display: 'flex' }}>
-          <Card>
-            <CardContent>
-              <Chip label='Atasamente' color='primary' size='medium' sx={{ mb: 3 }} />
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item md={2} sx={{ pl: 4 }}>
-          <Stack gap={4}>
-            <Button variant='contained'>{t('projectView.attachDoc')}</Button>
-          </Stack>
-        </Grid>
       </Grid>
     </Box>
   );
