@@ -36,7 +36,7 @@ export const SourcesSelector = (props: SelectorProps) => {
         multiple
         id="sources_of_interest"
         sx={{ width: 250 }}
-        options={translatedSources}
+        options={translatedSources.sort()}
         value={selectedOptions.map((value) => Translations[value])}
         onChange={handleChange}
         onOpen={onMenuOpen}
