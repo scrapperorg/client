@@ -1,4 +1,5 @@
-import { DocumentDto } from "./document";
+import { DocumentDto } from './document';
+import { Attachment } from './attachment';
 
 export interface ProjectDto {
   id: string;
@@ -24,6 +25,5 @@ export interface ProjectDto {
   initiator?: string;
   consultati?: string;
   source?: string;
-
-  attachments: string[];
+  attachments?: Attachment[];
 }

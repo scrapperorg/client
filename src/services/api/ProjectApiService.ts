@@ -4,15 +4,75 @@ import { OperationStatus, ProjectDto, QueryAll } from './dtos';
 import { handleUnauthorized } from 'helpers/errorHandlers';
 
 interface SearchProps {
-  title: string,
-  createdAfter: string,
-  createdBefore: string,
-  presentsInterest: boolean,
-  postOcrContent: string
+  title: string;
+  createdAfter: string;
+  createdBefore: string;
+  presentsInterest: boolean;
+  postOcrContent: string;
 }
 
 class ProjectApiService {
   constructor(private readonly httpClient: AxiosInstance) {}
+
+  async deleteAttachment(
+    projectId: string,
+    attachmentId: string,
+  ): Promise<OperationStatus<ProjectDto>> {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await this.httpClient.delete<ProjectDto>(
+        `/project/${projectId}/attachment/${attachmentId}`,
+        {
+          headers: { authorization: token },
+        },
+      );
+
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
+
+  async uploadAttachment(
+    projectId: string,
+    attachment: File,
+  ): Promise<OperationStatus<ProjectDto>> {
+    const token = localStorage.getItem('token');
+
+    const formData = new FormData();
+    formData.append('attachment', attachment);
+
+    try {
+      const response = await this.httpClient.post<ProjectDto>(
+        `/project/upload/${projectId}`,
+        formData,
+        {
+          headers: { authorization: token, 'Content-Type': 'multipart/form-data' },
+        },
+      );
+
+      return {
+        success: true,
+        payload: response.data,
+      };
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return {
+        success: false,
+        error: error.response?.statusText,
+      };
+    }
+  }
 
   async getProjects(
     page: number,
@@ -49,7 +109,7 @@ class ProjectApiService {
     }
   }
 
-  async getProjectByFilter(filters: { title?: string, nrInrCDep?: string, nrInrSenat?: string }) {
+  async getProjectByFilter(filters: { title?: string; nrInrCDep?: string; nrInrSenat?: string }) {
     const token = localStorage.getItem('token');
 
     try {
@@ -103,13 +163,9 @@ class ProjectApiService {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await this.httpClient.post(
-        '/project/search',
-        props,
-        {
-          headers: { authorization: token },
-        },
-      );
+      const response = await this.httpClient.post('/project/search', props, {
+        headers: { authorization: token },
+      });
       return {
         success: true,
         payload: response.data,
@@ -121,7 +177,6 @@ class ProjectApiService {
         error: error.response?.statusText,
       };
     }
-
   }
 }
 
