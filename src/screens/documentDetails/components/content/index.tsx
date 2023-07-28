@@ -56,17 +56,13 @@ export default function DocumentDetailsContent() {
       </Grid>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentGeneralData document={document} />
+        <DocumentGeneralData document={document} onDownloadOcrPdf={downloadOcrPdf} />
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        <DocumentProcessedData
-          onDownloadOcrPdf={downloadOcrPdf}
-          onReanalyseDocument={handleReanalyseDocument}
-          document={document}
-        />
+        <DocumentProcessedData onReanalyseDocument={handleReanalyseDocument} document={document} />
       </Box>
-      
+
       <Box sx={{ mb: 4 }}>
         <DocumentActivity
           document={document}

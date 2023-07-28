@@ -327,7 +327,7 @@ class DocumentApiService {
     }
   }
 
-  async downloadRawPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
+  async downloadPdf(url: string): Promise<OperationStatus<{ blob: Blob; fileName: string }>> {
     try {
       const response = await this.httpClient.get(url, { responseType: 'blob' });
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -349,7 +349,10 @@ class DocumentApiService {
     }
   }
 
-  async updateDocument(documentId: string, props: Partial<DocumentDto>): Promise<OperationStatus<DocumentDto>> {
+  async updateDocument(
+    documentId: string,
+    props: Partial<DocumentDto>,
+  ): Promise<OperationStatus<DocumentDto>> {
     const token = localStorage.getItem('token');
 
     try {

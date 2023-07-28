@@ -11,10 +11,10 @@ interface DownloadDocumentButtonProps {
 const DownloadDocumentButton: React.FC<DownloadDocumentButtonProps> = ({ fileUrl }) => {
   const rawPdfDownloaderUrl = `${config.BASE_URL}/document/download-pdf/${fileUrl}`;
 
-  const { downloadRawPdf } = useDocuments();
+  const { downloadPdf } = useDocuments();
 
   const handleDownload = () => {
-    downloadRawPdf(rawPdfDownloaderUrl);
+    downloadPdf(rawPdfDownloaderUrl);
   };
 
   return (

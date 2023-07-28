@@ -1,38 +1,64 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import { DocumentDto, ProcessingStatus } from 'services/api/dtos';
 import { Translations } from 'constants/translations';
 import CircularProgressIndicator from 'components/circularProgressIndicator';
 import { useTranslation } from 'react-i18next';
+import { PdfViewer } from 'components/pdfViewer';
+import config from '../../../../config/index';
+import styled from 'styled-components';
+import { useDocuments } from 'screens/monitor/hooks/useDocuments';
 
 interface DocumentProcessedDataProps {
-  onDownloadOcrPdf: () => void;
   onReanalyseDocument: () => void;
   document: DocumentDto;
 }
 
 function DocumentProcessedData(props: DocumentProcessedDataProps) {
-  const { onDownloadOcrPdf, onReanalyseDocument, document } = props;
+  const { onReanalyseDocument, document } = props;
   const { t } = useTranslation();
+  const [isPdfVisible, setIsPdfVisible] = useState(false);
+  const { downloadPdf } = useDocuments();
 
+  const handleClosePdf = useCallback(() => setIsPdfVisible(false), [setIsPdfVisible]);
+  const handleOpenPdf = useCallback(() => setIsPdfVisible(true), [setIsPdfVisible]);
 
-  const processingProperties = [document.link, document.numberOfPages, document.numberOfIdentifiedTerms, document.textInterpretationPrecision];
+  const pdfViewerUrl = `${config.BASE_URL}/document/download-highlight-pdf/${document.id}`;
 
-  const isBeingReanalyzed = document.processingStatus === ProcessingStatus.downloaded && processingProperties.some((property) => !!property);
+  const handleDownloadHighlightPdf = () => {
+    downloadPdf(pdfViewerUrl);
+  };
+
+  const processingProperties = [
+    document.link,
+    document.numberOfPages,
+    document.numberOfIdentifiedTerms,
+    document.textInterpretationPrecision,
+  ];
+
+  const isBeingReanalyzed =
+    document.processingStatus === ProcessingStatus.downloaded &&
+    processingProperties.some((property) => !!property);
 
   let processingStatus: string = Translations[document.processingStatus];
   let originalFormat: string = document.link;
   let numberOfPages: number | string | undefined | null = document.numberOfPages;
-  let numberOfIdentifiedTerms: number | string | undefined | null = document.numberOfIdentifiedTerms;
-  const textInterpretationPrecision: number | undefined | null = document.textInterpretationPrecision;
-  let textInterpretationPrecisionDisplay: string | JSX.Element | null = ''
+  let numberOfIdentifiedTerms: number | string | undefined | null =
+    document.numberOfIdentifiedTerms;
+  const textInterpretationPrecision: number | undefined | null =
+    document.textInterpretationPrecision;
+  let textInterpretationPrecisionDisplay: string | JSX.Element | null = '';
 
   if (isBeingReanalyzed) {
     processingStatus = t('documentView.processedData.reanalyzationStatus');
-    originalFormat = numberOfPages = numberOfIdentifiedTerms = textInterpretationPrecisionDisplay = '';
+    originalFormat =
+      numberOfPages =
+      numberOfIdentifiedTerms =
+      textInterpretationPrecisionDisplay =
+        '';
   }
-  
+
   if (
     document.processingStatus === ProcessingStatus.ocr_done ||
     document.processingStatus === ProcessingStatus.ocr_failed
@@ -40,18 +66,16 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
     processingStatus = processingStatus || t('documentView.processedData.updateError');
     originalFormat = originalFormat || t('documentView.processedData.updateError');
     numberOfPages = numberOfPages || t('documentView.processedData.updateError');
-    numberOfIdentifiedTerms = numberOfIdentifiedTerms || t('documentView.processedData.updateError');
+    numberOfIdentifiedTerms =
+      numberOfIdentifiedTerms || t('documentView.processedData.updateError');
     if (textInterpretationPrecision) {
       textInterpretationPrecisionDisplay = (
-        <CircularProgressIndicator
-          percentage={textInterpretationPrecision}
-        />
+        <CircularProgressIndicator percentage={textInterpretationPrecision} />
       );
     } else {
       textInterpretationPrecisionDisplay = t('documentView.processedData.updateError');
     }
   }
-
 
   return (
     <Grid container spacing={4}>
@@ -91,7 +115,7 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
                   {numberOfIdentifiedTerms}
                 </Typography>
                 <Typography variant='h5' sx={{ mb: 3 }}>
-                  {textInterpretationPrecisionDisplay} 
+                  {textInterpretationPrecisionDisplay}
                 </Typography>
               </Grid>
               <Grid item md={4}></Grid>
@@ -102,18 +126,40 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
 
       <Grid item md={2}>
         <Stack gap={4}>
-          <Button variant='contained' onClick={onDownloadOcrPdf}>
-            {t('documentView.processedData.downloadProcessedDoc')}
+          <Button variant='contained'>
+            <LinkNoStyle onClick={onReanalyseDocument} rel='noreferrer'>
+              Re-Analizeaza
+            </LinkNoStyle>
           </Button>
-          <Button variant='contained' onClick={onReanalyseDocument}>
-            Re-Analizeaza
+          <Button variant='contained' disabled={!document.highlightFile}>
+            <LinkNoStyle onClick={handleOpenPdf} rel='noreferrer'>
+              {t('documentView.processedData.viewProcessed')}
+            </LinkNoStyle>
           </Button>
-          {/*<Button variant='contained'>Actualizeaza stare</Button>*/}
-          {/*<Button variant='contained'>Analizeaza rezultat analiza</Button>*/}
+          <Button variant='contained' disabled={!document.highlightFile}>
+            <LinkNoStyle onClick={handleDownloadHighlightPdf} rel='noreferrer'>
+              {t('documentView.processedData.downloadProcessed')}
+            </LinkNoStyle>
+          </Button>
         </Stack>
       </Grid>
+
+      {document.highlightFile && (
+        <PdfViewer
+          pdf={pdfViewerUrl}
+          highlightCoords={document.highlightMetadata}
+          isOpen={isPdfVisible}
+          onClose={handleClosePdf}
+        />
+      )}
     </Grid>
   );
 }
 
 export default React.memo(DocumentProcessedData);
+
+const LinkNoStyle = styled.a`
+  text-decoration: none;
+  color: inherit;
+  font-size: 12px;
+`;

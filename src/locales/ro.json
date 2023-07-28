@@ -58,7 +58,9 @@
       "publicationDate": "Data publicarii:",
       "source": "Sursa:",
       "viewOriginal": "Vizualizare document original",
-      "viewProcessed": "Vizualizare document procesat"
+      "downloadOriginal": "Descarcare document original",
+      "viewOCRDoc": "Vizualizare document OCR-izat",
+      "downloadOCRDoc": "Descarcare document OCR-izat"
     },
     "processedData": {
       "status": "Status OCR-izare:",
@@ -67,8 +69,9 @@
       "terms": "Termeni identificati:",
       "precision": "Precizie procesare inteligenta:",
       "updateError": "Nu s-a putut actualiza",
-      "downloadProcessedDoc": "Descarca document analizat",
-      "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat"
+      "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat",
+      "viewProcessed": "Vizualizare document procesat",
+      "downloadProcessed": "Descarcare document procesat"
     },
     "activity": {
       "status": "Stare:",
