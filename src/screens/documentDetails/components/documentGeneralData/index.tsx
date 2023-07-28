@@ -2,29 +2,47 @@ import Grid from '@mui/material/Grid';
 import { Box, Button, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import StarsIcon from '@mui/icons-material/Stars';
 import { FormattedDate } from '../../../../components/formatedDate';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { DocumentDto } from '../../../../services/api/dtos';
-import { PdfViewer } from 'components/pdfViewer';
 import { SourceDescription } from 'constants/sources';
 import styled from 'styled-components';
 import config from '../../../../config/index';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useDocuments } from 'screens/monitor/hooks/useDocuments';
+import { documentApiService } from 'services/api/DocumentApiService';
 
 interface DocumentGeneralDataProps {
+  onDownloadOcrPdf: () => void;
   document: DocumentDto;
 }
 
-function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
-  const [isPdfVisible, setIsPdfVisible] = useState(false);
+function DocumentGeneralData(props: DocumentGeneralDataProps) {
+  const { onDownloadOcrPdf, document } = props;
   const { t } = useTranslation();
-
-  const handleClosePdf = useCallback(() => setIsPdfVisible(false), [setIsPdfVisible]);
-  const handleOpenPdf = useCallback(() => setIsPdfVisible(true), [setIsPdfVisible]);
+  const { downloadPdf } = useDocuments();
 
   const source = document.source as keyof typeof SourceDescription;
   const documentSourceDescription = SourceDescription[source];
-  const pdfViewerUrl = `${config.BASE_URL}/document/download-highlight-pdf/${document.id}`;
+  const rawPdfDownloaderUrl = `${config.BASE_URL}/document/download-pdf/${document.id}`;
+
+  const handleDownloadRawPdf = () => {
+    downloadPdf(rawPdfDownloaderUrl);
+  };
+
+  const handleViewProcessedDoc = async () => {
+    if (!document.id) return;
+
+    try {
+      const data = await documentApiService.downloadOcrPdf(document.id);
+      if (data.payload) {
+        const pdfUrl = URL.createObjectURL(data.payload.blob);
+        window.open(pdfUrl, '_blank');
+      }
+    } catch (err) {
+      console.error('Documentul nu a putut fi deschis: ', err);
+    }
+  };
 
   return (
     <Grid container spacing={4}>
@@ -54,7 +72,11 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
                 <Typography variant='h5' sx={{ mb: 3 }}>
                   {document.title}
                 </Typography>
-                <StyledLink target='_blank' to={`/project/${document.project?.id}`} rel='noreferrer'>
+                <StyledLink
+                  target='_blank'
+                  to={`/project/${document.project?.id}`}
+                  rel='noreferrer'
+                >
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       {document.project.title}
@@ -84,22 +106,23 @@ function DocumentGeneralData({ document }: DocumentGeneralDataProps) {
               {t('documentView.generalData.viewOriginal')}
             </LinkNoStyle>
           </Button>
-          <Button variant='contained' onClick={handleOpenPdf} disabled={!document.highlightFile}>
-            {t('documentView.generalData.viewProcessed')}
+          <Button variant='contained'>
+            <LinkNoStyle onClick={handleDownloadRawPdf} rel='noreferrer'>
+              {t('documentView.generalData.downloadOriginal')}
+            </LinkNoStyle>
           </Button>
-          {/*<Button variant='contained'>Descarca original</Button>*/}
-          {/*<Button variant='contained'>Descarca document procesat</Button>*/}
+          <Button variant='contained'>
+            <LinkNoStyle onClick={handleViewProcessedDoc} rel='noreferrer'>
+              {t('documentView.generalData.viewOCRDoc')}
+            </LinkNoStyle>
+          </Button>
+          <Button variant='contained'>
+            <LinkNoStyle onClick={onDownloadOcrPdf} rel='noreferrer'>
+              {t('documentView.generalData.downloadOCRDoc')}
+            </LinkNoStyle>
+          </Button>
         </Stack>
       </Grid>
-
-      {document.highlightFile && (
-        <PdfViewer
-          pdf={pdfViewerUrl}
-          highlightCoords={document.highlightMetadata}
-          isOpen={isPdfVisible}
-          onClose={handleClosePdf}
-        />
-      )}
     </Grid>
   );
 }
@@ -109,6 +132,7 @@ export default React.memo(DocumentGeneralData);
 const LinkNoStyle = styled.a`
   text-decoration: none;
   color: inherit;
+  font-size: 12px;
 `;
 
 const StyledLink = styled(Link)(({ theme }) => ({

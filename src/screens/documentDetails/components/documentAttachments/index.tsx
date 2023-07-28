@@ -73,7 +73,7 @@ function DocumentAttachments({
             loadingPosition='end'
             variant='contained'
           >
-            <span>{t('generic.attach')}</span>
+            <span style={{ fontSize: '12px' }}>{t('generic.attach')}</span>
           </LoadingButton>
         </Stack>
       </Grid>
