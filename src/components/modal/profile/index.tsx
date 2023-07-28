@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Typography, Avatar, Box, IconButton } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import avatar from '../../../static/images/john-doe.png';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
@@ -56,7 +55,7 @@ export const ProfileModal = () => {
       </IconButton>
       <Avatar
         alt={`${capitalizeString(user?.name)} ${capitalizeString(user?.surname)}`}
-        src={avatar}
+        src={`data:image/png;base64,${user?.avatar}`}
         sx={{ width: 100, height: 100, border: `3px solid ${theme.palette.primary.main}` }}
       />
       <Typography

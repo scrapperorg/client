@@ -12,6 +12,7 @@ export interface User {
   role: Role;
   sourcesOfInterest: string[];
   createdAt: Date;
+  avatar?: string;
 }
 export interface AuthProviderState {
   isAuthenticated: boolean;

@@ -27,9 +27,6 @@ export function useProjectSearchForm() {
 
   const projectSearchForm = useForm<ProjectSearchFormValues>({
     mode: 'onSubmit',
-    defaultValues: { 
-      presentsInterest: false,
-    },
     resolver: joiResolver(projectSearchSchema),
   })
 

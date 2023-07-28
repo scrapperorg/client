@@ -9,6 +9,9 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import TodayIcon from '@mui/icons-material/Today';
 import dayjs from "dayjs";
 import 'dayjs/locale/ro';
+import { UploadPhoto } from '../uploadPhoto';
+import config from 'config';
+
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -17,8 +20,13 @@ const ProfilePage = () => {
   return (
     <Grid container spacing={10}>
       <Grid item xs={12} md={3}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+          <Avatar alt='Remy Sharp' src={`data:image/png;base64,${user?.avatar}`} sx={{ width: 180, height: 180}} />
+        </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-          <Avatar alt='Remy Sharp' src='' sx={{ width: 180, height: 180}} />
+          <UploadPhoto
+            serverUrl={`${config.BASE_URL}/user/${user?.id}/avatar`}
+          />
         </Box>
       </Grid>
       <Grid item xs={12} md={9} sx={{ display: 'flex', justifyContent: 'left' }}>
