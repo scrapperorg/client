@@ -29,7 +29,7 @@ const ProfilePage = () => {
       <Grid item xs={12} md={3}>
         <Box sx={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
           <Avatar
-            alt='Remy Sharp'
+            alt={user?.name}
             src={`data:image/png;base64,${user?.avatar}`}
             sx={{ width: 180, height: 180 }}
           />
