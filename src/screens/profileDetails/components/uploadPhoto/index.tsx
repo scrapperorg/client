@@ -11,11 +11,12 @@ import styled from 'styled-components';
 
 export interface UploadPhotoProps {
   serverUrl: string;
+  labelText: string;
 }
 
 export const UploadPhoto = (props: UploadPhotoProps) => {
 
-  const { serverUrl } = props;
+  const { serverUrl, labelText } = props;
 
   const { files, setFiles } = useUploadPhoto();
 
@@ -25,7 +26,7 @@ export const UploadPhoto = (props: UploadPhotoProps) => {
           files={files}
           onupdatefiles={setFiles}
           onprocessfiles={() => window.location.reload()}
-          labelIdle='Drag & Drop pozei tale sau <span class="filepond--label-action">cauta</span>'
+          labelIdle={labelText}
           credits={false}
           acceptedFileTypes={['image/png', 'image/jpeg']}
           server={serverUrl}

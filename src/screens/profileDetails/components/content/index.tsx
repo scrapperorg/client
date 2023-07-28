@@ -11,11 +11,14 @@ import dayjs from "dayjs";
 import 'dayjs/locale/ro';
 import { UploadPhoto } from '../uploadPhoto';
 import config from 'config';
+import { useTranslation } from 'react-i18next';
 
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
   const formattedCreationDate = dayjs(user?.createdAt).locale('ro').format('dddd, DD MMMM YYYY');
+
+  const { t } = useTranslation();
 
   return (
     <Grid container spacing={10}>
@@ -26,6 +29,7 @@ const ProfilePage = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <UploadPhoto
             serverUrl={`${config.BASE_URL}/user/${user?.id}/avatar`}
+            labelText={t('profile.uploadPhoto')}
           />
         </Box>
       </Grid>
