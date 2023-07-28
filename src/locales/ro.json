@@ -132,7 +132,8 @@
   },
   "profile": {
     "goToProfilePage": "Vezi profil",
-    "logout": "Iesi din cont"
+    "logout": "Iesi din cont",
+    "uploadPhoto": "Adauga imaginea sau <span class='filepond--label-action'>cauta</span>"
   },
   "notAllowed": "Sorry, you are not allowed to see this section.",
   "topbar": {
