@@ -34,13 +34,7 @@ const ProfilePage = () => {
             sx={{ width: 180, height: 180 }}
           />
         </Box>
-<<<<<<< Updated upstream
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}
-        >
-=======
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
->>>>>>> Stashed changes
           <UploadPhoto
             serverUrl={`${config.BASE_URL}/user/${user?.id}/avatar`}
             labelText={t('profile.uploadPhoto')}
