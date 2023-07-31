@@ -25,8 +25,8 @@ const ProfilePage = () => {
   const { t } = useTranslation();
 
   return (
-    <Grid container spacing={10}>
-      <Grid item xs={12} md={3}>
+    <Grid container spacing={10} sx={{ minHeight: '350px' }}>
+      <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
           <Avatar
             alt={user?.name}
@@ -34,9 +34,7 @@ const ProfilePage = () => {
             sx={{ width: 180, height: 180 }}
           />
         </Box>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}
-        >
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <UploadPhoto
             serverUrl={`${config.BASE_URL}/user/${user?.id}/avatar`}
             labelText={t('profile.uploadPhoto')}
