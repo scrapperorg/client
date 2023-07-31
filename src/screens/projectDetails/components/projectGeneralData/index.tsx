@@ -69,7 +69,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
   return (
     <Box sx={{ mb: 4 }}>
       <Grid container>
-        {isSourceOfInterest && (
+        {isSourceOfInterest ? (
           <Grid item>
             <Card>
               <GeneralDataCardContent>
@@ -210,6 +210,42 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                     {project.consultati && (
                       <Typography variant='h5' sx={{ mb: 3 }}>
                         {project?.consultati || '-'}
+                      </Typography>
+                    )}
+                  </Grid>
+                </Grid>
+              </GeneralDataCardContent>
+            </Card>
+          </Grid>
+        ) : (
+          <Grid item>
+            <Card>
+              <GeneralDataCardContent>
+                <Grid container spacing={4}>
+                  <PropertiesGrid item md={4}>
+                    {project.url && (
+                      <Typography variant='h5' sx={{ mb: 3, fontWeight: 500 }}>
+                        {t('projectView.projectUrl')}
+                      </Typography>
+                    )}
+                    {project.publicationDate && (
+                      <Typography variant='h5' sx={{ mb: 3, fontWeight: 500 }}>
+                        {t('projectView.publicationDate')}
+                      </Typography>
+                    )}
+                  </PropertiesGrid>
+
+                  <Grid item md={8}>
+                    {project.url && (
+                      <Typography variant='h5' sx={{ mb: 3 }}>
+                        <a href={project?.url} target='_blank' rel='noreferrer'>
+                          {project?.url}
+                        </a>
+                      </Typography>
+                    )}
+                    {project.publicationDate && (
+                      <Typography variant='h5' sx={{ mb: 3 }}>
+                        {project?.publicationDate || '-'}
                       </Typography>
                     )}
                   </Grid>
