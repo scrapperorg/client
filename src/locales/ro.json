@@ -1,9 +1,9 @@
 {
   "monitor": {
-    "docsNeanalizate": "Documente ne-analizate",
-    "projNeanalizate": "Proiecte ne-analizate",
+    "docsNeanalizate": "Documente noi",
+    "projNeanalizate": "Proiecte noi",
     "totalRoboti": "Total roboti",
-    "robotiNefunctionali": "Roboti ne-functionali",
+    "robotiFunctionali": "Roboti functionali",
     "monitor": "Monitor",
     "nou": "Nou",
     "sources": "Surse"
@@ -71,7 +71,8 @@
       "updateError": "Nu s-a putut actualiza",
       "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat",
       "viewProcessed": "Vizualizare document procesat",
-      "downloadProcessed": "Descarcare document procesat"
+      "downloadProcessed": "Descarcare document procesat",
+      "reAnalyze": "Analizeaza din nou"
     },
     "activity": {
       "status": "Stare:",

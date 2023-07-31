@@ -72,6 +72,7 @@ function DocumentAttachments({
             loading={loading}
             loadingPosition='end'
             variant='contained'
+            sx={{ minHeight: 36.5 }}
           >
             <span style={{ fontSize: '12px' }}>{t('generic.attach')}</span>
           </LoadingButton>

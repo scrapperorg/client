@@ -101,26 +101,26 @@ function DocumentGeneralData(props: DocumentGeneralDataProps) {
 
       <Grid item md={2}>
         <Stack gap={4}>
-          <Button variant='contained'>
+          <StyledButton variant='contained'>
             <LinkNoStyle target='_blank' href={document.link} rel='noreferrer'>
               {t('documentView.generalData.viewOriginal')}
             </LinkNoStyle>
-          </Button>
-          <Button variant='contained'>
+          </StyledButton>
+          <StyledButton variant='contained'>
             <LinkNoStyle onClick={handleDownloadRawPdf} rel='noreferrer'>
               {t('documentView.generalData.downloadOriginal')}
             </LinkNoStyle>
-          </Button>
-          <Button variant='contained'>
+          </StyledButton>
+          <StyledButton variant='contained'>
             <LinkNoStyle onClick={handleViewProcessedDoc} rel='noreferrer'>
               {t('documentView.generalData.viewOCRDoc')}
             </LinkNoStyle>
-          </Button>
-          <Button variant='contained'>
+          </StyledButton>
+          <StyledButton variant='contained'>
             <LinkNoStyle onClick={onDownloadOcrPdf} rel='noreferrer'>
               {t('documentView.generalData.downloadOCRDoc')}
             </LinkNoStyle>
-          </Button>
+          </StyledButton>
         </Stack>
       </Grid>
     </Grid>
@@ -145,3 +145,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
     color: theme.palette.text.secondary,
   },
 }));
+
+const StyledButton = styled(Button)`
+  min-height: 36.5px;
+`;

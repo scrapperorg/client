@@ -6,6 +6,7 @@ import MonitorDoubleCard from '../monitorDoubleCard';
 import { User } from '../../../../contexts/authContext';
 import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { capitalizeString } from 'helpers/formatters';
 
 function generateGreet() {
   const nowUtc = new Date();
@@ -18,9 +19,9 @@ function generateGreet() {
   );
 
   if (nowRomanian >= 0 && nowRomanian < 12) {
-    return 'Buna dimineata';
+    return 'Buna dimineata,';
   } else if (nowRomanian >= 12 && nowRomanian < 24) {
-    return 'Bine ai venit';
+    return 'Bine ai venit,';
   }
 }
 
@@ -32,31 +33,33 @@ export default function CardsList({ user }: CardsListProps) {
   const { monitorCardsList } = useContext(MonitorContext);
   const greet = generateGreet();
   const { t } = useTranslation();
+  const { robotsCount, failedRobotsCount } = monitorCardsList;
+  const workingRobots = robotsCount - failedRobotsCount;
 
   return (
     <Box>
       <Typography variant={'h2'}>
-        {greet} {user?.name}!
+        {greet} {capitalizeString(user?.name)}!
       </Typography>
       <Grid container spacing={8}>
         <Grid item xs={3}>
           <MonitorCard
-            title={monitorCardsList.documentsCount}
+            title={monitorCardsList.documentsCount.toLocaleString()}
             subtitle={t('monitor.docsNeanalizate')}
           />
         </Grid>
         <Grid item xs={3}>
           <MonitorCard
-            title={monitorCardsList.projectsCount}
+            title={monitorCardsList.projectsCount.toLocaleString()}
             subtitle={t('monitor.projNeanalizate')}
           />
         </Grid>
         <Grid item xs={6}>
           <MonitorDoubleCard
-            titleLeft={monitorCardsList.robotsCount}
-            titleRight={monitorCardsList.failedRobotsCount}
+            titleLeft={monitorCardsList.robotsCount.toLocaleString()}
+            titleRight={workingRobots.toLocaleString()}
             subtitleLeft={t('monitor.totalRoboti')}
-            subtitleRight={t('monitor.robotiNefunctionali')}
+            subtitleRight={t('monitor.robotiFunctionali')}
           />
         </Grid>
       </Grid>
