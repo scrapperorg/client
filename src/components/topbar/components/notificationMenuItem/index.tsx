@@ -1,5 +1,5 @@
 import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NotificationDto, NotificationType } from '../../../../services/api/dtos';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
@@ -52,6 +52,25 @@ export function NotificationMenuItem({
   const [isDeleting, setIsDeleting] = React.useState(false);
   const navigate = useNavigate();
 
+  const navigateToNotificationPage = useCallback(
+    (notificationType: NotificationType) => {
+      switch (notificationType) {
+        case NotificationType.RESET_PASSWORD: {
+          navigate(PATHS.USERS_MANAGEMENT);
+          break;
+        }
+        case NotificationType.ROBOT_NOT_FUNCTIONAL: {
+          navigate(PATHS.ROBOTS_STATUS);
+          break;
+        }
+        default: {
+          window.location.href = PATHS.DOCUMENT_DETAILS.split(':id')[0] + notification.document.id;
+        }
+      }
+    },
+    [navigate],
+  );
+
   return (
     <Box
       key={notification.id}
@@ -67,14 +86,7 @@ export function NotificationMenuItem({
           sx={{ m: '16px', display: 'flex', alignItems: 'flex-start', width: 'calc(100% - 50px)' }}
           onClick={() => {
             onClose();
-
-            if (notification.type === NotificationType.RESET_PASSWORD) {
-              navigate(PATHS.USERS_MANAGEMENT);
-              return;
-            }
-
-            window.location.href =
-              PATHS.DOCUMENT_DETAILS.split(':id')[0] + notification.document.id;
+            navigateToNotificationPage(notification.type);
           }}
         >
           <NotificationIcon type={notification.type} />

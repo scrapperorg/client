@@ -40,17 +40,23 @@ export default function CardsList({ user }: CardsListProps) {
       </Typography>
       <Grid container spacing={8}>
         <Grid item xs={3}>
-          <MonitorCard title={monitorCardsList.documentsCount} subtitle={t('monitor.docsNeanalizate')} />
+          <MonitorCard
+            title={monitorCardsList.documentsCount}
+            subtitle={t('monitor.docsNeanalizate')}
+          />
         </Grid>
         <Grid item xs={3}>
-          <MonitorCard title={monitorCardsList.projectsCount} subtitle={t('monitor.projNeanalizate')} />
+          <MonitorCard
+            title={monitorCardsList.projectsCount}
+            subtitle={t('monitor.projNeanalizate')}
+          />
         </Grid>
         <Grid item xs={6}>
           <MonitorDoubleCard
             titleLeft={monitorCardsList.robotsCount}
             titleRight={monitorCardsList.failedRobotsCount}
             subtitleLeft={t('monitor.totalRoboti')}
-            subtitleRight={t('monitor.robotiFunctionali')}
+            subtitleRight={t('monitor.robotiNefunctionali')}
           />
         </Grid>
       </Grid>
