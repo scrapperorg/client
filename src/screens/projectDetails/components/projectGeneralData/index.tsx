@@ -6,6 +6,7 @@ import useProjectLink from '../../hooks/useProjectLink';
 import { Loading } from '../../../../components/loading';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {Translations} from "../../../../constants/translations";
 
 interface ProjectGeneralDataProps {
   project: ProjectDto;
@@ -255,7 +256,7 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                     )}
                     {project.source && (
                       <Typography variant='h5' sx={{ mb: 3 }}>
-                        {project?.source}
+                        {Translations[project.source]}
                       </Typography>
                     )}
                   </Grid>
