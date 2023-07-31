@@ -197,5 +197,14 @@
     "submitForm": "Adauga",
     "changePassword": "Schimba parola:",
     "changePasswordConfirmation": "Schimba parola"
+  },
+  "notifications": {
+    "noNotifications": {
+      "title": "Nu sunt notificari",
+      "body": "In prezent, nu aveti nicio notificare."
+    },
+    "cta": {
+      "seeAll": "VEZI TOATE NOTIFICARILE"
+    }
   }
 }
