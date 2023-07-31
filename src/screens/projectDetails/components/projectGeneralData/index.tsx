@@ -233,6 +233,11 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                         {t('projectView.publicationDate')}
                       </Typography>
                     )}
+                    {project.source && (
+                      <Typography variant='h5' sx={{ mb: 3, fontWeight: 500 }}>
+                        {t('projectView.source')}
+                      </Typography>
+                    )}
                   </PropertiesGrid>
 
                   <Grid item md={8}>
@@ -246,6 +251,11 @@ export function ProjectGeneralData({ project }: ProjectGeneralDataProps) {
                     {project.publicationDate && (
                       <Typography variant='h5' sx={{ mb: 3 }}>
                         {project?.publicationDate || '-'}
+                      </Typography>
+                    )}
+                    {project.source && (
+                      <Typography variant='h5' sx={{ mb: 3 }}>
+                        {project?.source}
                       </Typography>
                     )}
                   </Grid>
