@@ -1,5 +1,5 @@
 import { documentApiService } from 'services/api/DocumentApiService';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { DocumentDto, OperationStatus, ProcessingStatus } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
@@ -94,10 +94,20 @@ export function useDocumentDetails() {
   const assignResponsibleModalForm = useForm<AssignResponsibleModalFormValues>({
     mode: 'onSubmit',
     resolver: joiResolver(documentDetailsSchema),
-    defaultValues: {
-      deadline: document?.deadline || new Date(),
-    }
+    defaultValues: useMemo(() => {
+      return {
+        deadline: document?.deadline || new Date(),
+      }
+    }, [document?.deadline])
   });
+
+  useEffect(() => {
+    if (isAnalysisUpdateSuccesfull) {
+      assignResponsibleModalForm.reset({
+        deadline: document?.deadline,
+      });
+    }
+  }, [document?.deadline]);
 
   const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {
     modalParams.documentId = document?.id;

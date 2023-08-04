@@ -156,6 +156,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                   <DatePicker
                     {...field}
                     label={t('updateAnalysis.deadline')}
+                    inputFormat='DD/MM/YYYY'
                     renderInput={
                       (params) => (
                         <TextField
