@@ -85,6 +85,9 @@ export function useDocumentDetails() {
   const assignResponsibleModalForm = useForm<AssignResponsibleModalFormValues>({
     mode: 'onSubmit',
     resolver: joiResolver(documentDetailsSchema),
+    defaultValues: {
+      deadline: document?.deadline,
+    }
   });
 
   const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {

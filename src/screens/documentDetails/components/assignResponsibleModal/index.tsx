@@ -49,7 +49,14 @@ const isOutOfRange = (date: Dayjs) => {
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
-  const { assignableResponsibles, responsible, deadline, documentStatus, documentDecision, form, handleSubmitDocumentAnalysis } = props;
+  const { assignableResponsibles,
+    responsible,
+    deadline,
+    documentStatus,
+    documentDecision,
+    form,
+    handleSubmitDocumentAnalysis
+  } = props;
   const { t } = useTranslation();
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -139,7 +146,17 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                   <DatePicker
                     {...field}
                     label={t('updateAnalysis.deadline')}
-                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    renderInput={
+                      (params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          onKeyDown={onKeyDown}
+                          error={Boolean(form.formState.errors.deadline)}
+                          helperText={form.formState.errors.deadline?.message}
+                        />
+                      )
+                    }
                     value={field.value ?? deadline ?? null}
                     shouldDisableDate={isOutOfRange}
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
