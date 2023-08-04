@@ -196,6 +196,8 @@
     "confirmPassword": "Confirma parola",
     "submitForm": "Adauga",
     "changePassword": "Schimba parola:",
-    "changePasswordConfirmation": "Schimba parola"
+    "changePasswordConfirmation": "Schimba parola",
+    "requestedPasswordChange": "Solicitare parola",
+    "activePasswordChangeRequests": "Solicitari active"
   }
 }
