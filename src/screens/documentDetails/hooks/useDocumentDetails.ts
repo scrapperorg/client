@@ -95,7 +95,7 @@ export function useDocumentDetails() {
     mode: 'onSubmit',
     resolver: joiResolver(documentDetailsSchema),
     defaultValues: {
-      deadline: document?.deadline,
+      deadline: document?.deadline || new Date(),
     }
   });
 
