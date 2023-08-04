@@ -26,7 +26,6 @@ export const Translations: Record<string, string> = {
   mturism: 'Ministerul Turismului',
   DELETED: 'Dezactivat',
   ACTIVE: 'Activ',
-  REQUESTED_PASSWORD_CHANGE: 'ACTIV',
   created: 'Creat',
   downloaded: 'Descarcat',
   unable_to_download: 'Nu se poate descarca',

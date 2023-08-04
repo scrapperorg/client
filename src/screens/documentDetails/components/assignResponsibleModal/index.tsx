@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { InteractiveComponentsContext } from 'contexts/interactiveComponentsContext';
 import { Modal } from 'components/modal';
 import {
@@ -26,6 +26,7 @@ import { Translations } from 'constants/translations';
 import { UseFormReturn, Controller } from 'react-hook-form';
 import { AssignResponsibleModalFormValues } from 'screens/documentDetails/hooks/useDocumentDetails';
 import { useTranslation } from 'react-i18next';
+import { LoadingButton } from '@mui/lab';
 
 interface AssignResponsibleModalProps {
   assignableResponsibles: UserDto[];
@@ -39,6 +40,9 @@ interface AssignResponsibleModalProps {
   setDecision: (status: string) => void;
   form: UseFormReturn<AssignResponsibleModalFormValues, any>;
   handleSubmitDocumentAnalysis: (props: AssignResponsibleModalFormValues) => Promise<void>;
+  isAnalysisUpdateLoading: boolean;
+  isAnalysisUpdateSuccesfull: boolean;
+  analysisUpdateError: string;
 }
 
 const isOutOfRange = (date: Dayjs) => {
@@ -49,12 +53,26 @@ const isOutOfRange = (date: Dayjs) => {
 
 export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
-  const { assignableResponsibles, responsible, deadline, documentStatus, documentDecision, form, handleSubmitDocumentAnalysis } = props;
+  const { assignableResponsibles,
+    responsible,
+    deadline,
+    documentStatus,
+    documentDecision,
+    form,
+    handleSubmitDocumentAnalysis
+  } = props;
   const { t } = useTranslation();
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (props.isAnalysisUpdateSuccesfull) {
+      closeModal();
+      form.reset();
+    }
+  }, [props.isAnalysisUpdateSuccesfull]);
 
   return (
     <Modal
@@ -76,7 +94,6 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
       <StyledModalContainer>
         <form onSubmit={form.handleSubmit((data) => {
           handleSubmitDocumentAnalysis(data);
-          closeModal();
         })}>
 
           <Typography variant="h3" sx={{ mt: 3 }}>
@@ -139,7 +156,18 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
                   <DatePicker
                     {...field}
                     label={t('updateAnalysis.deadline')}
-                    renderInput={(params) => <TextField {...params} fullWidth onKeyDown={onKeyDown} />}
+                    inputFormat='DD/MM/YYYY'
+                    renderInput={
+                      (params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          onKeyDown={onKeyDown}
+                          error={Boolean(form.formState.errors.deadline)}
+                          helperText={form.formState.errors.deadline?.message}
+                        />
+                      )
+                    }
                     value={field.value ?? deadline ?? null}
                     shouldDisableDate={isOutOfRange}
                     onChange={(newDate: Dayjs | null) => field.onChange(newDate?.toString())}
@@ -186,6 +214,7 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             <Button
               variant='contained'
               color='secondary'
+              disabled={props.isAnalysisUpdateLoading}
               onClick={() => {
                 closeModal();
                 form.reset();
@@ -195,12 +224,14 @@ export const AssignResponsibleModal = (props: AssignResponsibleModalProps) => {
             </Button>
             </Grid>
             <Grid item>
-            <Button
+            <LoadingButton
               variant='contained'
               type='submit'
+              disabled={props.isAnalysisUpdateLoading}
+              loading={props.isAnalysisUpdateLoading}
             >
               {t('generic.save')}
-            </Button>
+            </LoadingButton>
             </Grid>
           </Grid>
         </form>

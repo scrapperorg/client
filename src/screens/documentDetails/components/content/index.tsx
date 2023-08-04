@@ -31,6 +31,10 @@ export default function DocumentDetailsContent() {
     assignResponsibleModalForm,
     handleSubmitDocumentAnalysis,
     handleReanalyseDocument,
+    resetAnalysisUpdateStatus,
+    isAnalysisUpdateLoading,
+    isAnalysisUpdateSuccesfull,
+    analysisUpdateError
   } = useDocumentDetails();
 
   if (!document) return null;
@@ -77,6 +81,10 @@ export default function DocumentDetailsContent() {
           setDecision={setDecision}
           form={assignResponsibleModalForm}
           handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
+          resetAnalysisUpdateStatus={resetAnalysisUpdateStatus}
+          isAnalysisUpdateLoading={isAnalysisUpdateLoading}
+          isAnalysisUpdateSuccesfull={isAnalysisUpdateSuccesfull}
+          analysisUpdateError={analysisUpdateError}
         />
       </Box>
 
