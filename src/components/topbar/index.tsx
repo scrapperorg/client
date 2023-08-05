@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 export interface TopBarProps {
   notifications: NotificationDto[];
-  onDeleteNotification: (id: string) => Promise<boolean>;
+  onDeleteNotification: (id: string) => Promise<void>;
 }
 
 export default function TopBar({ notifications, onDeleteNotification }: TopBarProps) {

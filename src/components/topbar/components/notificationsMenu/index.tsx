@@ -12,7 +12,7 @@ export interface NotificationsMenuProps {
   anchor: HTMLAnchorElement | null;
   isOpen: boolean;
   onClose: () => void;
-  onDeleteNotification: (id: string) => Promise<boolean>;
+  onDeleteNotification: (id: string) => Promise<void>;
 }
 export default function NotificationsMenu({
   anchor,
