@@ -210,7 +210,8 @@
       "body": "In prezent, nu aveti nicio notificare."
     },
     "cta": {
-      "seeAll": "VEZI TOATE NOTIFICARILE"
+      "seeAll": "Vezi toate notificarile",
+      "deleteAll": "Sterge toate notificarile"
     },
     "changePasswordConfirmation": "Schimba parola",
     "requestedPasswordChange": "Solicitare parola",

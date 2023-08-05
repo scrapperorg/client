@@ -38,6 +38,10 @@ export function LayoutContent() {
             await notificationApiService.delete(id);
             await fetchNotifications();
           }}
+          onDeleteAllNotifications={async () => {
+            await notificationApiService.deleteAll();
+            await fetchNotifications();
+          }}
         />
         <Main>
           <Outlet />

@@ -17,9 +17,14 @@ import { useTranslation } from 'react-i18next';
 export interface TopBarProps {
   notifications: NotificationDto[];
   onDeleteNotification: (id: string) => Promise<void>;
+  onDeleteAllNotifications: () => Promise<void>;
 }
 
-export default function TopBar({ notifications, onDeleteNotification }: TopBarProps) {
+export default function TopBar({
+  notifications,
+  onDeleteNotification,
+  onDeleteAllNotifications,
+}: TopBarProps) {
   const { openModal, toggleSidebar, isCollapsed, toggleNotificationMenu, isNotificationMenuOpen } =
     useContext(InteractiveComponentsContext);
   const anchorRef = React.useRef(null);
@@ -86,6 +91,7 @@ export default function TopBar({ notifications, onDeleteNotification }: TopBarPr
           isOpen={isNotificationMenuOpen}
           onClose={() => toggleNotificationMenu(false)}
           onDeleteNotification={onDeleteNotification}
+          onDeleteAllNotifications={onDeleteAllNotifications}
         />
       </AppBar>
     </Box>
