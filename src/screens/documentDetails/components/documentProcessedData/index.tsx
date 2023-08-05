@@ -126,21 +126,21 @@ function DocumentProcessedData(props: DocumentProcessedDataProps) {
 
       <Grid item md={2}>
         <Stack gap={4}>
-          <Button variant='contained'>
+          <StyledButton variant='contained'>
             <LinkNoStyle onClick={onReanalyseDocument} rel='noreferrer'>
-              Re-Analizeaza
+              {t('documentView.processedData.reAnalyze')}
             </LinkNoStyle>
-          </Button>
-          <Button variant='contained' disabled={!document.highlightFile}>
+          </StyledButton>
+          <StyledButton variant='contained' disabled={!document.highlightFile}>
             <LinkNoStyle onClick={handleOpenPdf} rel='noreferrer'>
               {t('documentView.processedData.viewProcessed')}
             </LinkNoStyle>
-          </Button>
-          <Button variant='contained' disabled={!document.highlightFile}>
+          </StyledButton>
+          <StyledButton variant='contained' disabled={!document.highlightFile}>
             <LinkNoStyle onClick={handleDownloadHighlightPdf} rel='noreferrer'>
               {t('documentView.processedData.downloadProcessed')}
             </LinkNoStyle>
-          </Button>
+          </StyledButton>
         </Stack>
       </Grid>
 
@@ -162,4 +162,8 @@ const LinkNoStyle = styled.a`
   text-decoration: none;
   color: inherit;
   font-size: 12px;
+`;
+
+const StyledButton = styled(Button)`
+  min-height: 36.5px;
 `;

@@ -1,9 +1,9 @@
 {
   "monitor": {
-    "docsNeanalizate": "Documente ne-analizate",
-    "projNeanalizate": "Proiecte ne-analizate",
+    "docsNeanalizate": "Documente noi",
+    "projNeanalizate": "Proiecte noi",
     "totalRoboti": "Total roboti",
-    "robotiNefunctionali": "Roboti ne-functionali",
+    "robotiFunctionali": "Roboti functionali",
     "monitor": "Monitor",
     "nou": "Nou",
     "sources": "Surse",
@@ -76,7 +76,8 @@
       "updateError": "Nu s-a putut actualiza",
       "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat",
       "viewProcessed": "Vizualizare document procesat",
-      "downloadProcessed": "Descarcare document procesat"
+      "downloadProcessed": "Descarcare document procesat",
+      "reAnalyze": "Analizeaza din nou"
     },
     "activity": {
       "status": "Stare:",
@@ -201,6 +202,16 @@
     "confirmPassword": "Confirma parola",
     "submitForm": "Adauga",
     "changePassword": "Schimba parola:",
+    "changePasswordConfirmation": "Schimba parola"
+  },
+  "notifications": {
+    "noNotifications": {
+      "title": "Nu sunt notificari",
+      "body": "In prezent, nu aveti nicio notificare."
+    },
+    "cta": {
+      "seeAll": "VEZI TOATE NOTIFICARILE"
+    },
     "changePasswordConfirmation": "Schimba parola",
     "requestedPasswordChange": "Solicitare parola",
     "activePasswordChangeRequests": "Solicitari active"

@@ -96,7 +96,7 @@ function DocumentActivity(props: DocumentActivityProps) {
         </Grid>
         <Grid item md={2}>
           <Stack gap={4}>
-            <Button variant='contained'>
+            <StyledButton variant='contained'>
               <LinkNoStyle
                 onClick={() => {
                   resetAnalysisUpdateStatus();
@@ -106,7 +106,7 @@ function DocumentActivity(props: DocumentActivityProps) {
               >
                 {t('documentView.activity.updateAnalysis')}
               </LinkNoStyle>
-            </Button>
+            </StyledButton>
           </Stack>
         </Grid>
       </Grid>
@@ -136,4 +136,8 @@ const LinkNoStyle = styled.a`
   text-decoration: none;
   color: inherit;
   font-size: 12px;
+`;
+
+const StyledButton = styled(Button)`
+  min-height: 36.5px;
 `;
