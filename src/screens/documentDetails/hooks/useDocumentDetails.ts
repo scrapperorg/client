@@ -1,5 +1,5 @@
 import { documentApiService } from 'services/api/DocumentApiService';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { DocumentDto, OperationStatus, ProcessingStatus } from 'services/api/dtos';
 import { DocumentDetailsContext } from '../context';
 import { attachmentApiService } from 'services/api/AttachmentApiService';
@@ -20,6 +20,15 @@ export function useDocumentDetails() {
   const { document: contextDocument } = useContext(DocumentDetailsContext);
 
   const [document, setDocument] = useState<DocumentDto | null>(contextDocument);
+  const [isAnalysisUpdateLoading, setIsAnalysisUpdateLoading] = useState<boolean>(false);
+  const [isAnalysisUpdateSuccesfull, setIsAnalysisUpdateSuccesfull] = useState<boolean>(false);
+  const [analysisUpdateError, setAnalysisUpdateError] = useState<string>('');
+
+  const resetAnalysisUpdateStatus = () => {
+    setIsAnalysisUpdateLoading(false);
+    setIsAnalysisUpdateSuccesfull(false);
+    setAnalysisUpdateError('');
+  };
 
   const assignResponsible = async (userId: string) => {
     if (!document?.id) return false;
@@ -85,17 +94,42 @@ export function useDocumentDetails() {
   const assignResponsibleModalForm = useForm<AssignResponsibleModalFormValues>({
     mode: 'onSubmit',
     resolver: joiResolver(documentDetailsSchema),
+    defaultValues: useMemo(() => {
+      return {
+        deadline: document?.deadline || new Date(),
+      }
+    }, [document?.deadline])
   });
+
+  useEffect(() => {
+    if (isAnalysisUpdateSuccesfull) {
+      assignResponsibleModalForm.reset({
+        deadline: document?.deadline,
+      });
+    }
+  }, [document?.deadline]);
 
   const handleSubmitDocumentAnalysis = async (modalParams: AssignResponsibleModalFormValues) => {
     modalParams.documentId = document?.id;
+
+    setIsAnalysisUpdateLoading(true);
+
     const response = await documentApiService.updateAnalysis(modalParams);
     
     const documentResponse = response as OperationStatus<DocumentDto>;
   
     if (documentResponse.success && documentResponse.payload) {
       setDocument(documentResponse.payload);
+      setIsAnalysisUpdateLoading(false);
+      setIsAnalysisUpdateSuccesfull(true);
     }
+
+    if (!documentResponse.success && documentResponse.error) {
+      setIsAnalysisUpdateLoading(false);
+      setAnalysisUpdateError(documentResponse.error);
+    }
+
+
   };
 
   const handleReanalyseDocument = async () => {
@@ -126,5 +160,9 @@ export function useDocumentDetails() {
     assignResponsibleModalForm,
     handleSubmitDocumentAnalysis,
     handleReanalyseDocument,
+    resetAnalysisUpdateStatus,
+    isAnalysisUpdateLoading,
+    isAnalysisUpdateSuccesfull,
+    analysisUpdateError
   };
 }

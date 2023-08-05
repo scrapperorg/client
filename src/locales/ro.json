@@ -6,7 +6,12 @@
     "robotiFunctionali": "Roboti functionali",
     "monitor": "Monitor",
     "nou": "Nou",
-    "sources": "Surse"
+    "sources": "Surse",
+    "quickActionsTooltips": {
+      "viewDoc": "Vizualizare document original",
+      "downloadDoc": "Descarcare document original",
+      "quickAnalysis": "Analiza rapida"
+    }
   },
   "tooltips": {
     "projectPresentsInterest": "Proiect de interes/cu impact",
@@ -101,6 +106,7 @@
   "projectView": {
     "projectUrl": "URL proiect:",
     "publicationDate": "Data publicarii:",
+    "source": "Forum legislativ",
     "registrationNumberSenat": "Nr. inregistrare Senat:",
     "registrationNumberCD": "Nr. inregistrare Camera Deputatilor:",
     "registrationNumberGov": "Nr. inregistrare Guvern:",
@@ -205,6 +211,9 @@
     },
     "cta": {
       "seeAll": "VEZI TOATE NOTIFICARILE"
-    }
+    },
+    "changePasswordConfirmation": "Schimba parola",
+    "requestedPasswordChange": "Solicitare parola",
+    "activePasswordChangeRequests": "Solicitari active"
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FormattedDate, GenericTableRow } from 'components';
 import { USER_STATUS, UserDto } from 'services/api/dtos';
 import { ActionButtons } from './actionsButttons';
@@ -16,16 +17,6 @@ interface UsersTableProps {
   setCurrentUserId: (id: string) => void;
 }
 
-const columns = [
-  'Nume',
-  'Email',
-  'Rol',
-  'Data crearii',
-  'Status',
-  'Actiuni',
-  'Cerere resetare parola',
-];
-
 export const UsersTable = (props: UsersTableProps) => {
   const {
     users,
@@ -36,6 +27,18 @@ export const UsersTable = (props: UsersTableProps) => {
     openChangePasswordModal,
     setCurrentUserId,
   } = props;
+
+  const { t } = useTranslation();
+
+  const columns = [
+    'Nume',
+    'Email',
+    'Rol',
+    'Data crearii',
+    'Status',
+    'Actiuni',
+    t('usersManagement.activePasswordChangeRequests'),
+  ];
 
   const userRows = users.map((user) => {
     const isCurrentUser = currentUser?.id === user.id;
@@ -69,7 +72,7 @@ export const UsersTable = (props: UsersTableProps) => {
             openChangePasswordModal={onOpenChangePasswordModal}
           />,
           userRequestedPasswordChange ? (
-            <span key={`${user.id}-last-column`}>{Translations[user.status]}</span>
+            <span key={`${user.id}-last-column`}>{t('usersManagement.requestedPasswordChange')}</span>
           ) : (
             ''
           ),

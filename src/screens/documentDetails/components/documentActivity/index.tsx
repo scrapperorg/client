@@ -22,6 +22,10 @@ interface DocumentActivityProps {
   setDecision: (status: string) => void;
   form: UseFormReturn<AssignResponsibleModalFormValues, any>;
   handleSubmitDocumentAnalysis: (props: AssignResponsibleModalFormValues) => Promise<void>;
+  resetAnalysisUpdateStatus: () => void;
+  isAnalysisUpdateLoading: boolean;
+  isAnalysisUpdateSuccesfull: boolean;
+  analysisUpdateError: string;
 }
 
 function DocumentActivity(props: DocumentActivityProps) {
@@ -35,6 +39,10 @@ function DocumentActivity(props: DocumentActivityProps) {
     setDecision,
     form,
     handleSubmitDocumentAnalysis,
+    resetAnalysisUpdateStatus,
+    isAnalysisUpdateLoading,
+    isAnalysisUpdateSuccesfull,
+    analysisUpdateError
   } = props;
   const { t } = useTranslation();
 
@@ -91,6 +99,7 @@ function DocumentActivity(props: DocumentActivityProps) {
             <StyledButton variant='contained'>
               <LinkNoStyle
                 onClick={() => {
+                  resetAnalysisUpdateStatus();
                   openModal(ModalNames.ASSIGN_RESP);
                 }}
                 rel='noreferrer'
@@ -113,6 +122,9 @@ function DocumentActivity(props: DocumentActivityProps) {
         setDecision={setDecision}
         form={form}
         handleSubmitDocumentAnalysis={handleSubmitDocumentAnalysis}
+        isAnalysisUpdateLoading={isAnalysisUpdateLoading}
+        isAnalysisUpdateSuccesfull={isAnalysisUpdateSuccesfull}
+        analysisUpdateError={analysisUpdateError}
       />
     </>
   );
