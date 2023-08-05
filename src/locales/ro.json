@@ -6,7 +6,12 @@
     "robotiNefunctionali": "Roboti ne-functionali",
     "monitor": "Monitor",
     "nou": "Nou",
-    "sources": "Surse"
+    "sources": "Surse",
+    "quickActionsTooltips": {
+      "viewDoc": "Vizualizare document original",
+      "downloadDoc": "Descarcare document original",
+      "quickAnalysis": "Analiza rapida"
+    }
   },
   "tooltips": {
     "projectPresentsInterest": "Proiect de interes/cu impact",
