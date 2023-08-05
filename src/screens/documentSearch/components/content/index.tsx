@@ -9,32 +9,25 @@ import { Alert, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export default function DocumentsSearchContent() {
-
-  const {
-    handleSubmit,
-    setShowError,
-    showError,
-    showLoading,
-    results,
-    documentSearchForm
-  } = useDocumentSearchForm();
+  const { handleSubmit, setShowError, showError, showLoading, results, documentSearchForm } =
+    useDocumentSearchForm();
   const { t } = useTranslation();
 
   const loading = (
     <Box>
       <Searching />
     </Box>
-  )
+  );
 
   const documents = (
     <Box>
-      <DocumentsTable
-        documents={results}
-      />
+      <DocumentsTable documents={results} />
     </Box>
-  )
+  );
 
-  const content = showLoading ? loading : documents
+  const content = showLoading ? loading : documents;
+
+  console.log('faking res', results);
 
   return (
     <>
@@ -42,6 +35,28 @@ export default function DocumentsSearchContent() {
         <SearchForm
           form={documentSearchForm}
           handleSubmit={handleSubmit}
+          csvData={[
+            [
+              'Identificator',
+              'Titlu Document',
+              'Proiect',
+              'Responsabil',
+              'Data publicarii',
+              'Sursa',
+              'Stare',
+              'Termeni identificati',
+            ],
+            ...results.map((d) => [
+              d.identifier,
+              d.title,
+              d.project.title,
+              d.assignedUser?.name || 'Lipsa responsabil',
+              d.publicationDate,
+              d.source,
+              d.status,
+              d.numberOfIdentifiedTerms,
+            ]),
+          ]}
         />
       </Box>
 
@@ -53,15 +68,13 @@ export default function DocumentsSearchContent() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert onClose={() => setShowError(false)} severity='error' sx={{ width: '100%' }}>
-            {t('documentSearch.searchError')}
+          {t('documentSearch.searchError')}
         </Alert>
       </Snackbar>
     </>
-
   );
 }
 
-
 const Searching = styled(Loading)`
   height: auto !important;
-`
+`;

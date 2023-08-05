@@ -76,6 +76,7 @@ export default function NotificationsMenu({
             }}
           >
             <LoadingButton
+              loading={isDeletingAll}
               onClick={async () => {
                 setIsDeletingAll(true);
                 await onDeleteAllNotifications();

@@ -101,7 +101,8 @@
     "publishedBefore": "Publicat pana la:",
     "content": "Documentul contine textul...",
     "rulesBreaker": "Document ce contravine normelor in vigoare",
-    "noResults": "Nu exista rezultate"
+    "noResults": "Nu exista rezultate",
+    "downloadCsv": "Descarca"
   },
   "projectView": {
     "projectUrl": "URL proiect:",

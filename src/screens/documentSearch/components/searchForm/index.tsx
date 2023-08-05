@@ -28,6 +28,7 @@ import { ProjectDto } from 'services/api/dtos';
 import { useProjectSearch } from 'screens/documentSearch/hooks/useProjectSearch';
 import { useTranslation } from 'react-i18next';
 import { sources } from 'constants/sources';
+import { CSVLink } from 'react-csv';
 
 const Status: Record<string, string> = {
   nou: 'Nou',
@@ -44,6 +45,8 @@ const sourceOptions = sources.map((source: string) => (
 interface SearchFormProps {
   form: UseFormReturn<DocumentSearchFormValues, any>;
   handleSubmit: (props: DocumentSearchFormValues) => Promise<void>;
+
+  csvData: any;
 }
 
 const isInTheFuture = (date: Dayjs) => {
@@ -55,7 +58,7 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 };
 
 export const SearchForm = (props: SearchFormProps) => {
-  const { form, handleSubmit } = props;
+  const { form, csvData, handleSubmit } = props;
 
   const { assignableResponsibles } = useContext(DocumentSearchContext);
   const { t } = useTranslation();
@@ -336,6 +339,16 @@ export const SearchForm = (props: SearchFormProps) => {
       </Box>
 
       <ButtonBox>
+        <Button variant='contained'>
+          <CSVLink
+            data={csvData}
+            target='_blank'
+            style={{ textDecoration: 'none', background: 'none', color: 'white' }}
+            filename={'Documente.csv'}
+          >
+            Descarca
+          </CSVLink>
+        </Button>
         <Button type='submit' variant='contained'>
           {t('generic.search')}
         </Button>
@@ -348,4 +361,5 @@ const ButtonBox = styled(Box)`
   display: flex;
   justify-content: end;
   padding: 15px 0;
+  gap: 20px;
 `;
