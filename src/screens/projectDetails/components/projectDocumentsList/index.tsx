@@ -10,6 +10,9 @@ import { Status } from 'services/api/dtos/document';
 
 interface ProjectDocumentsListProps {
   project: ProjectDto;
+  actionsCallbacks?: {
+    quickAnalysisSuccess?: () => void;
+  };
 }
 
 const columns = [
@@ -24,7 +27,7 @@ const columns = [
   'Actiuni',
 ];
 
-export function ProjectDocumentsList({ project }: ProjectDocumentsListProps) {
+export function ProjectDocumentsList({ project, actionsCallbacks }: ProjectDocumentsListProps) {
   const { documents = [] } = project;
 
   const theme = useTheme();
@@ -45,7 +48,12 @@ export function ProjectDocumentsList({ project }: ProjectDocumentsListProps) {
         Translations[document.status],
         document.numberOfIdentifiedTerms || 0,
         Translations[document.decision],
-        <ActionButtons key={`action-for-${document.id}`} document={document} />,
+        <ActionButtons
+          key={`action-for-${document.id}`}
+          document={document}
+          actionsCallbacks={actionsCallbacks}
+
+        />,
       ]}
     />
   ));

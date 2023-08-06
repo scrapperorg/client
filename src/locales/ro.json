@@ -203,7 +203,9 @@
     "confirmPassword": "Confirma parola",
     "submitForm": "Adauga",
     "changePassword": "Schimba parola:",
-    "changePasswordConfirmation": "Schimba parola"
+    "changePasswordConfirmation": "Schimba parola",
+    "requestedPasswordChange": "Solicitare parola",
+    "activePasswordChangeRequests": "Solicitari active"
   },
   "notifications": {
     "noNotifications": {
@@ -214,8 +216,6 @@
       "seeAll": "Vezi toate notificarile",
       "deleteAll": "Sterge toate notificarile"
     },
-    "changePasswordConfirmation": "Schimba parola",
-    "requestedPasswordChange": "Solicitare parola",
-    "activePasswordChangeRequests": "Solicitari active"
+    "changePasswordConfirmation": "Schimba parola"
   }
 }

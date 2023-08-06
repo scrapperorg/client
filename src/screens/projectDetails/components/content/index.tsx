@@ -14,7 +14,12 @@ export default function ProjectDetailsContent() {
     <>
       <ProjectHeader project={project} />
       <ProjectGeneralData project={project} />
-      <ProjectDocumentsList project={project} />
+      <ProjectDocumentsList
+        project={project}
+        actionsCallbacks={{
+          quickAnalysisSuccess: () => window.location.reload(),
+        }}
+      />
       <ProjectAttachments
         project={project}
         onUploadAttachment={uploadAttachment}
