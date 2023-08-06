@@ -34,6 +34,8 @@ export function useOptions() {
     }
 
     const res = await keywordApiService.update(keywordToEdit.id, name);
+    setKeywordToEdit(null);
+
     if (res.success) {
       await getAllKeywords();
     }
@@ -45,6 +47,7 @@ export function useOptions() {
       return;
     }
     const res = await keywordApiService.delete(keywordToDelete.id);
+    setKeywordToDelete(null);
 
     if (res.success) {
       await getAllKeywords();
