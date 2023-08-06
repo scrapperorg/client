@@ -16,7 +16,7 @@ export interface MonitorProviderState {
   error?: string;
   sourcesOfInterest: string[];
   monitorCardsList: MonitorCardsListDto;
-  fetch: (page: number, pageSize: number, sourceOfInterest?: string[]) => void;
+  fetch: (sourceOfInterest?: string[]) => void;
   onPageSizeChange: (pageSize: number) => void;
   onPageChange: (page: number) => void;
   updateSourcesOfInterest: (sources: string[]) => void;

@@ -7,6 +7,8 @@ import { useDocumentSearchForm } from 'screens/documentSearch/hooks/useDocumentS
 import { SearchForm } from '../searchForm';
 import { Alert, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import PATHS from 'constants/paths';
 
 export default function DocumentsSearchContent() {
 
@@ -20,6 +22,8 @@ export default function DocumentsSearchContent() {
   } = useDocumentSearchForm();
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
   const loading = (
     <Box>
       <Searching />
@@ -30,6 +34,9 @@ export default function DocumentsSearchContent() {
     <Box>
       <DocumentsTable
         documents={results}
+        actionsCallbacks={{
+          quickAnalysisSuccess: document => navigate(PATHS.DOCUMENT_DETAILS.split(':id')[0] + document.id),
+        }}
       />
     </Box>
   )

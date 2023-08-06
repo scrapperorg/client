@@ -22,7 +22,7 @@ interface SearchProps {
 interface UpdateAnalysisProps {
   documentId: string | undefined;
   assignedUser?: string | undefined;
-  deadline: Date | undefined;
+  deadline?: Date;
   status: string | undefined;
   decision: string | undefined;
 }
