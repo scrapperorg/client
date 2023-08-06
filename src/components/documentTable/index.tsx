@@ -21,6 +21,9 @@ interface DocumentsTableProps {
   pageSize?: number;
   onPageChange?: (page: number) => void | undefined;
   onPageSizeChange?: (pageSize: number) => void | undefined;
+  actionsCallbacks?: {
+    quickAnalysisSuccess?: (document: DocumentDto) => void;
+  };
 }
 
 const columns = [
@@ -37,7 +40,15 @@ const columns = [
 ];
 
 export const DocumentsTable = (props: DocumentsTableProps) => {
-  const { documents, totalNumberOfDocuments, page, onPageChange, pageSize, onPageSizeChange } = props;
+  const {
+    documents,
+    totalNumberOfDocuments,
+    page,
+    onPageChange,
+    pageSize,
+    onPageSizeChange,
+    actionsCallbacks
+  } = props;
 
   const theme = useTheme();
 
@@ -64,7 +75,11 @@ export const DocumentsTable = (props: DocumentsTableProps) => {
           t(`documentsTable.source.${document.source}`) || '',
           t(`documentsTable.status.${document.status}`) || '',
         document.numberOfIdentifiedTerms || 0,
-        <ActionButtons key={`action-for-${document.id}`} document={document} />,
+        <ActionButtons
+          key={`action-for-${document.id}`}
+          document={document}
+          actionsCallbacks={actionsCallbacks}
+        />,
       ]}
     />
   ));
