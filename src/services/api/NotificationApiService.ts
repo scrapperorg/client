@@ -46,6 +46,22 @@ class NotificationApiService {
       return false;
     }
   }
+
+  async deleteAll(): Promise<boolean> {
+    const token = localStorage.getItem('token');
+
+    try {
+      await this.httpClient.delete(`/notification`, {
+        headers: { authorization: token },
+      });
+
+      return true;
+    } catch (err: any) {
+      const error: AxiosError = err;
+      handleUnauthorized(error);
+      return false;
+    }
+  }
 }
 
 export const notificationApiService = new NotificationApiService(axios);

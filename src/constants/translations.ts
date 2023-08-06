@@ -38,7 +38,7 @@ export const Translations: Record<string, string> = {
   adera_legislatiei: 'Documentul NU contravine legislatiei achizitiilor publice in vigoare',
   in_analiza: 'In analiza',
   nou: 'Nou',
-  revizuit: 'Revizuit',
+  revizuit: 'Analizat',
   NOT_FUNCTIONAL: 'Eroare',
   FUNCTIONAL: 'Succes',
 };

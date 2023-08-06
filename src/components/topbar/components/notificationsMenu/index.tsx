@@ -6,13 +6,15 @@ import { NotificationMenuItem } from '../notificationMenuItem';
 import PATHS from '../../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { LoadingButton } from '@mui/lab';
 
 export interface NotificationsMenuProps {
   notifications: NotificationDto[];
   anchor: HTMLAnchorElement | null;
   isOpen: boolean;
   onClose: () => void;
-  onDeleteNotification: (id: string) => Promise<boolean>;
+  onDeleteNotification: (id: string) => Promise<void>;
+  onDeleteAllNotifications: () => Promise<void>;
 }
 export default function NotificationsMenu({
   anchor,
@@ -20,7 +22,9 @@ export default function NotificationsMenu({
   onClose,
   notifications,
   onDeleteNotification,
+  onDeleteAllNotifications,
 }: NotificationsMenuProps) {
+  const [isDeletingAll, setIsDeletingAll] = React.useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -65,10 +69,22 @@ export default function NotificationsMenu({
             })}
           <Box
             sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
               mx: '16px',
               marginTop: '8px',
             }}
           >
+            <LoadingButton
+              loading={isDeletingAll}
+              onClick={async () => {
+                setIsDeletingAll(true);
+                await onDeleteAllNotifications();
+              }}
+            >
+              {t('notifications.cta.deleteAll')}
+            </LoadingButton>
+
             <Button
               onClick={() => {
                 onClose();

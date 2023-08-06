@@ -1,21 +1,21 @@
 import { DocumentDto } from 'services/api/dtos';
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { documentApiService } from "services/api/DocumentApiService";
-import { documentSearchSchema } from "../formSchemas/documentSearchSchema";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { documentApiService } from 'services/api/DocumentApiService';
+import { documentSearchSchema } from '../formSchemas/documentSearchSchema';
 import { removeNullishEntries } from 'helpers/formatters';
 import { useSessionStorage } from 'hooks/useSessionStorage';
 
 export interface DocumentSearchFormValues {
-  identificator: string,
-  title: string,
-  source: string,
-  status: string,
-  assignedUserId: string,
-  projectId: string,
-  publishedAfter: string,
-  publishedBefore: string,
+  identificator: string;
+  title: string;
+  source: string;
+  status: string;
+  assignedUserId: string;
+  projectId: string;
+  publishedAfter: string;
+  publishedBefore: string;
   postOcrContent: string;
   isRulesBreaker: boolean;
 }
@@ -23,45 +23,44 @@ export interface DocumentSearchFormValues {
 export function useDocumentSearchForm() {
   const [showLoading, setShowLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [results, setResults] = useState<DocumentDto[]>([])
+  const [results, setResults] = useState<DocumentDto[]>([]);
 
-  const { setItem, getItem } = useSessionStorage()
+  const { setItem, getItem } = useSessionStorage();
 
   const documentSearchForm = useForm<DocumentSearchFormValues>({
     mode: 'onSubmit',
-    defaultValues: { 
+    defaultValues: {
       isRulesBreaker: false,
     },
     resolver: joiResolver(documentSearchSchema),
-  })
-
+  });
 
   const shouldFetch = useRef(true);
   useEffect(() => {
-    if(!shouldFetch.current) return;
+    if (!shouldFetch.current) return;
     shouldFetch.current = false;
 
     const savedSearchParams = getItem('documentSearchParams');
-    let searchParams = {}
+    let searchParams = {};
     if (savedSearchParams?.length) {
       searchParams = JSON.parse(savedSearchParams);
     }
 
     if (Object.entries(searchParams).length) {
-      documentSearchForm.reset(searchParams, { keepDefaultValues: true})
+      documentSearchForm.reset(searchParams, { keepDefaultValues: true });
       performSearch(searchParams);
     }
-  }, [])
+  }, []);
 
   const persistSearchParams = (searchParams: Partial<DocumentSearchFormValues>) => {
-    const params = removeNullishEntries(searchParams)
-    setItem('documentSearchParams', JSON.stringify(params))
-  }
+    const params = removeNullishEntries(searchParams);
+    setItem('documentSearchParams', JSON.stringify(params));
+  };
 
   const performSearch = async (searchParams: Partial<DocumentSearchFormValues>) => {
     setShowLoading(true);
 
-    const response = await documentApiService.search(searchParams)
+    const response = await documentApiService.search(searchParams);
 
     if (!response.success || !response.payload) {
       setShowLoading(false);
@@ -71,12 +70,12 @@ export function useDocumentSearchForm() {
 
     setShowLoading(false);
     setResults(response.payload);
-  }
+  };
 
   const handleSubmit = async (searchParams: DocumentSearchFormValues) => {
     performSearch(searchParams);
     persistSearchParams(searchParams);
-  }
+  };
 
   return {
     showLoading,
@@ -84,6 +83,6 @@ export function useDocumentSearchForm() {
     results,
     handleSubmit,
     setShowError,
-    documentSearchForm
-  }
+    documentSearchForm,
+  };
 }

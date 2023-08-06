@@ -1,7 +1,7 @@
 {
   "monitor": {
-    "docsNeanalizate": "Documente noi",
-    "projNeanalizate": "Proiecte noi",
+    "docsNeanalizate": "Documente neanalizate",
+    "projNeanalizate": "Proiecte neanalizate",
     "totalRoboti": "Total roboti",
     "robotiFunctionali": "Roboti functionali",
     "monitor": "Monitor",
@@ -22,7 +22,7 @@
     "status": {
       "nou": "Nou",
       "in_analiza": "In analiza",
-      "revizuit": "Revizuit"
+      "revizuit": "Analizat"
     },
     "source": {
       "senat": "Senat",
@@ -64,25 +64,25 @@
       "source": "Sursa:",
       "viewOriginal": "Vizualizare document original",
       "downloadOriginal": "Descarcare document original",
-      "viewOCRDoc": "Vizualizare document OCR-izat",
-      "downloadOCRDoc": "Descarcare document OCR-izat"
+      "viewOCRDoc": "Vizualizare document in format OCR",
+      "downloadOCRDoc": "Descarcare document in format OCR"
     },
     "processedData": {
-      "status": "Status OCR-izare:",
+      "status": "Stadiu proces OCR:",
       "format": "Format original:",
-      "pages": "Nr de pagini:",
+      "pages": "Nr. de pagini:",
       "terms": "Termeni identificati:",
       "precision": "Precizie procesare inteligenta:",
       "updateError": "Nu s-a putut actualiza",
-      "reanalyzationStatus": "Document in curs de re-analizare. Rezultatele vor fi disponibile imediat",
+      "reanalyzationStatus": "Document in curs de reanalizare. Rezultatele vor fi disponibile imediat",
       "viewProcessed": "Vizualizare document procesat",
       "downloadProcessed": "Descarcare document procesat",
       "reAnalyze": "Analizeaza din nou"
     },
     "activity": {
-      "status": "Stare:",
+      "status": "Stadiu:",
       "responsible": "Responsabil:",
-      "noResponsible": "Nu exista un responsabil asignat",
+      "noResponsible": "Nu exista un responsabil desemnat",
       "deadline": "Termen predare:",
       "noDeadline": "Lipsa termen predare",
       "decision": "Concluzia analizei legislative:",
@@ -101,7 +101,8 @@
     "publishedBefore": "Publicat pana la:",
     "content": "Documentul contine textul...",
     "rulesBreaker": "Document ce contravine normelor in vigoare",
-    "noResults": "Nu exista rezultate"
+    "noResults": "Nu exista rezultate",
+    "downloadCsv": "Descarca"
   },
   "projectView": {
     "projectUrl": "URL proiect:",
@@ -145,16 +146,16 @@
     "logout": "Iesi din cont",
     "uploadPhoto": "Adauga imaginea sau <span class='filepond--label-action'>cauta</span>"
   },
-  "notAllowed": "Sorry, you are not allowed to see this section.",
+  "notAllowed": "Ne pare rau, nu sunteti autorizat sa vizualizati aceasta sectiune.",
   "topbar": {
     "notifications": "Notificari",
     "myProfile": "Profilul meu"
   },
   "updateAnalysis": {
-    "assignResponsible": "Asigneaza responsabil:",
+    "assignResponsible": "Desemneaza responsabil:",
     "user": "Utilizator",
-    "updateStatus": "Actualizeaza status:",
-    "status": "Status",
+    "updateStatus": "Actualizeaza stadiu:",
+    "status": "Stadiu",
     "updateDeadline": "Actualizeaza termen:",
     "deadline": "Termen",
     "updateDecision": "Concluzia analizei legislative:",
@@ -212,7 +213,8 @@
       "body": "In prezent, nu aveti nicio notificare."
     },
     "cta": {
-      "seeAll": "VEZI TOATE NOTIFICARILE"
+      "seeAll": "Vezi toate notificarile",
+      "deleteAll": "Sterge toate notificarile"
     },
     "changePasswordConfirmation": "Schimba parola"
   }

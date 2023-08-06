@@ -26,7 +26,7 @@ const title: SidebarTitleProps = {
 export function LayoutContent() {
   const { isCollapsed } = useContext(InteractiveComponentsContext);
   const { pathname } = useLocation();
-  const { notifications } = useContext(LayoutContext);
+  const { notifications, fetchNotifications } = useContext(LayoutContext);
 
   return (
     <StyledLayout>
@@ -34,7 +34,14 @@ export function LayoutContent() {
       <Content>
         <TopBar
           notifications={notifications}
-          onDeleteNotification={(id) => notificationApiService.delete(id)}
+          onDeleteNotification={async (id) => {
+            await notificationApiService.delete(id);
+            await fetchNotifications();
+          }}
+          onDeleteAllNotifications={async () => {
+            await notificationApiService.deleteAll();
+            await fetchNotifications();
+          }}
         />
         <Main>
           <Outlet />

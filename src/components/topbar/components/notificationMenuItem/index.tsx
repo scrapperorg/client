@@ -39,7 +39,7 @@ export function NotificationIcon({ type }: NotificationIconProps) {
 
 export interface NotificationMenuItemProps {
   notification: NotificationDto;
-  onDeleteNotification: (id: string) => Promise<boolean>;
+  onDeleteNotification: (id: string) => Promise<void>;
   onClose: () => void;
 }
 

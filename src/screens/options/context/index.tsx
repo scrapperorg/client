@@ -29,7 +29,9 @@ const OptionsDataProvider = ({ children }: any) => {
   }
 
   const state: OptionsProviderState = {
-    keywords: data ?? defaultState.keywords,
+    keywords: data
+      ? data.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+      : defaultState.keywords,
     getAllKeywords: fetch,
   };
 
