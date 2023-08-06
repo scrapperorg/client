@@ -339,7 +339,7 @@ export const SearchForm = (props: SearchFormProps) => {
       </Box>
 
       <ButtonBox>
-        <Button variant='contained'>
+        <Button variant='contained' disabled={csvData.length <= 1}>
           <CSVLink
             data={csvData}
             target='_blank'
