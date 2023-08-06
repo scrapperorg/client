@@ -20,6 +20,7 @@ export default function MonitorContent() {
     stopPolling,
     startPolling,
     fetch,
+    fetchMonitorCardsList,
   } = useContext(MonitorContext);
 
   const { user } = useContext(AuthContext);
@@ -50,7 +51,8 @@ export default function MonitorContent() {
             onPageSizeChange={onPageSizeChange}
             actionsCallbacks={{
               quickAnalysisSuccess: () => {
-                fetch(sourcesOfInterest)
+                fetch(sourcesOfInterest);
+                fetchMonitorCardsList();
               },
             }}
           />

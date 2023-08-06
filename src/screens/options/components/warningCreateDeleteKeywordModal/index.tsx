@@ -10,11 +10,13 @@ import { useTranslation } from 'react-i18next';
 interface DeleteKeywordModalProps {
   onYes: () => void;
   onSetKeywordToDelete: (keyword: KeywordDto | null) => void;
+  onSetKeywordToEdit: (keyword: KeywordDto | null) => void;
 }
 
 export const WarningCreateDeleteKeywordModal = ({
   onYes,
   onSetKeywordToDelete,
+  onSetKeywordToEdit,
 }: DeleteKeywordModalProps) => {
   const { modalName, closeModal } = useContext(InteractiveComponentsContext);
   const { t } = useTranslation();
@@ -24,6 +26,7 @@ export const WarningCreateDeleteKeywordModal = ({
       isModalOpened={modalName === ModalNames.DELETE_KEYWORD}
       closeModal={() => {
         onSetKeywordToDelete(null);
+        onSetKeywordToEdit(null);
         closeModal();
       }}
     >
@@ -31,6 +34,7 @@ export const WarningCreateDeleteKeywordModal = ({
         aria-label='close'
         onClick={() => {
           onSetKeywordToDelete(null);
+          onSetKeywordToEdit(null);
           closeModal();
         }}
       >

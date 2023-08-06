@@ -10,6 +10,7 @@ import AlarmOffIcon from '@mui/icons-material/AlarmOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PATHS from 'constants/paths';
 import { useNavigate } from 'react-router-dom';
+import { SourceDescription } from '../../../../constants/sources';
 
 export interface NotificationIconProps {
   type: NotificationType;
@@ -91,7 +92,13 @@ export function NotificationMenuItem({
         >
           <NotificationIcon type={notification.type} />
           <Box sx={{ marginLeft: '8px' }}>
-            <Typography variant='body1'>{notification.message}</Typography>
+            <Typography variant='body1'>
+              {notification.type === NotificationType.ROBOT_NOT_FUNCTIONAL
+                ? `Robotul ${
+                    SourceDescription[notification.message as keyof typeof SourceDescription]
+                  } a incetat sa mai functioneze`
+                : notification.message}
+            </Typography>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', width: '50px' }}>

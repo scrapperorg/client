@@ -55,7 +55,8 @@ export default function OptionsContent() {
           }}
           onUpdateKeyword={(keyword) => {
             setKeywordToEdit(keyword);
-            openCreateEditModal();
+            openDeleteModal();
+            // openCreateEditModal();
           }}
         />
       </Box>
@@ -74,13 +75,8 @@ export default function OptionsContent() {
               }
             : openCreateEditModal
         }
-        onSetKeywordToDelete={
-          keywordToDelete
-            ? () => {
-                return null;
-              }
-            : setKeywordToDelete
-        }
+        onSetKeywordToEdit={setKeywordToEdit}
+        onSetKeywordToDelete={setKeywordToDelete}
       />
     </>
   );

@@ -22,6 +22,8 @@ export interface MonitorProviderState {
   updateSourcesOfInterest: (sources: string[]) => void;
   startPolling: () => void;
   stopPolling: () => void;
+
+  fetchMonitorCardsList: () => void;
 }
 
 const defaultState: MonitorProviderState = {
@@ -54,6 +56,9 @@ const defaultState: MonitorProviderState = {
   stopPolling: () => {
     console.log('method not implemented');
   },
+  fetchMonitorCardsList: () => {
+    console.log('method not implemented');
+  },
 };
 
 export const MonitorContext = createContext(defaultState);
@@ -66,10 +71,11 @@ const MonitorDataProvider = ({ children }: any) => {
       documentApiService.getDocuments,
       sourcesOfInterest,
     );
-  const { data: monitorCardsList } = useApiService<MonitorCardsListDto>(
-    presentationApiService,
-    presentationApiService.getMonitorCardsList,
-  );
+  const { data: monitorCardsList, fetch: fetchMonitorCardsList } =
+    useApiService<MonitorCardsListDto>(
+      presentationApiService,
+      presentationApiService.getMonitorCardsList,
+    );
 
   const { start: startPolling, stop: stopPolling } = useInterval(
     async () => {
@@ -99,6 +105,7 @@ const MonitorDataProvider = ({ children }: any) => {
     startPolling,
     stopPolling,
     monitorCardsList: monitorCardsList ?? defaultState.monitorCardsList,
+    fetchMonitorCardsList,
   };
 
   return <MonitorContext.Provider value={state}>{children}</MonitorContext.Provider>;

@@ -27,6 +27,8 @@ export const CreateEditKeywordModal = ({
     if (keyword) {
       form.reset({ name: keyword.name });
     }
+
+    return () => form.reset({ name: '' });
   }, [keyword]);
 
   return (

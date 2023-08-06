@@ -1,10 +1,11 @@
 import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { NotificationIcon } from '../../../../components/topbar/components/notificationMenuItem';
 import React from 'react';
-import { NotificationDto } from 'services/api/dtos';
+import { NotificationDto, NotificationType } from 'services/api/dtos';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PATHS from '../../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
+import { SourceDescription } from '../../../../constants/sources';
 
 export interface NotificationListItemProps {
   notification: NotificationDto;
@@ -41,7 +42,11 @@ export function NotificationsListItem({
       >
         <NotificationIcon type={notification.type} />
         <Typography sx={{ marginLeft: '8px' }} key={notification.id}>
-          {notification.message}
+          {notification.type === NotificationType.ROBOT_NOT_FUNCTIONAL
+            ? `Robotul ${
+                SourceDescription[notification.message as keyof typeof SourceDescription]
+              } a incetat sa mai functioneze`
+            : notification.message}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
