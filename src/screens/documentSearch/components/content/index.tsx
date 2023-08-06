@@ -36,7 +36,6 @@ export default function DocumentsSearchContent() {
 
   const content = showLoading ? loading : documents;
 
-  console.log('faking res', results);
 
   return (
     <>
