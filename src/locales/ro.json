@@ -202,7 +202,9 @@
     "confirmPassword": "Confirma parola",
     "submitForm": "Adauga",
     "changePassword": "Schimba parola:",
-    "changePasswordConfirmation": "Schimba parola"
+    "changePasswordConfirmation": "Schimba parola",
+    "requestedPasswordChange": "Solicitare parola",
+    "activePasswordChangeRequests": "Solicitari active"
   },
   "notifications": {
     "noNotifications": {
@@ -212,8 +214,6 @@
     "cta": {
       "seeAll": "VEZI TOATE NOTIFICARILE"
     },
-    "changePasswordConfirmation": "Schimba parola",
-    "requestedPasswordChange": "Solicitare parola",
-    "activePasswordChangeRequests": "Solicitari active"
+    "changePasswordConfirmation": "Schimba parola"
   }
 }
