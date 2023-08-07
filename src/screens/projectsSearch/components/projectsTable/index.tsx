@@ -21,7 +21,6 @@ interface ProjectsTableProps {
 }
 
 const columns = [
-  '',
   'Nume Proiect',
   'Forum legislativ',
   'Initiator',
@@ -38,7 +37,6 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       id={project.id}
       key={project.id}
       values={[
-        <ProjectMarks project={project} key={`${project.id}-marks`} />,
         <StyledLink to={`/project/${project.id}`} key={`${project.id}-title`} theme={theme}>
           {project.title}
         </StyledLink>,
