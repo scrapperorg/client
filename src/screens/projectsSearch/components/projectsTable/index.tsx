@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
-import { ProjectMarks } from '../projectsTableDocumentMarks';
 import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
 import { Translations } from '../../../../constants/translations';
 

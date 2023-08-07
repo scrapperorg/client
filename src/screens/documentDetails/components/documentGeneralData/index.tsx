@@ -148,4 +148,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const StyledButton = styled(Button)`
   min-height: 36.5px;
+  padding: 0 !Important;
+  a {
+    padding: 6px 16px;
+    width: 100%;
+  }
 `;
