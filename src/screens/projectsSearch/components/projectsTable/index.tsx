@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import styled from 'styled-components';
 import { FormattedDate } from 'components/formatedDate';
-import { ProjectMarks } from '../projectsTableDocumentMarks';
 import { EmptyTableRow } from 'components/genericTableRow/emptyTableRow';
 import { Translations } from '../../../../constants/translations';
 
@@ -21,7 +20,6 @@ interface ProjectsTableProps {
 }
 
 const columns = [
-  '',
   'Nume Proiect',
   'Forum legislativ',
   'Initiator',
@@ -38,7 +36,6 @@ export const ProjectsTable = (props: ProjectsTableProps) => {
       id={project.id}
       key={project.id}
       values={[
-        <ProjectMarks project={project} key={`${project.id}-marks`} />,
         <StyledLink to={`/project/${project.id}`} key={`${project.id}-title`} theme={theme}>
           {project.title}
         </StyledLink>,

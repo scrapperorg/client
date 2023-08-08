@@ -9,7 +9,7 @@ export const EmptyTableRow = (props: EmptyTableRowProps) => {
     const { t } = useTranslation();
 
     return (
-      <TableRow>
+      <TableRow key='emptyTableRow'>
         <TableCell colSpan={props.colSpan || 10}>
           <Grid container alignItems='center' justifyContent='center'>
             <Typography variant='h5' color='grey'>

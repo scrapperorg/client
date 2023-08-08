@@ -144,7 +144,7 @@
   "profile": {
     "goToProfilePage": "Vezi profil",
     "logout": "Iesi din cont",
-    "uploadPhoto": "Adauga imaginea sau <span class='filepond--label-action'>cauta</span>"
+    "uploadPhoto": "Incarca o imaginea"
   },
   "notAllowed": "Ne pare rau, nu sunteti autorizat sa vizualizati aceasta sectiune.",
   "topbar": {
