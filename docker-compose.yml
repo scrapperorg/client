@@ -3,6 +3,7 @@ version: '3.9'
 services:
   screening-client:
     build: .
+    restart: on-failure
     ports:
       - 3001:80
     env_file:
